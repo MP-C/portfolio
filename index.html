@@ -1153,6 +1153,30 @@
             background: var(--accent-orange);
             border-radius: 3px;
         }
+
+        .project-image.code-matrix-dynamic {
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .matrix-code-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            color: var(--accent-orange);
+            white-space: pre;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -1255,7 +1279,7 @@
                             </div>
                             <div class="card-back">
                                 <h3 style="font-size: 1.2rem;">Easter Egg 2/5</h3>
-                                <p style="font-size: 0.9rem; line-height: 1.4;">Tap on keyboard:<br>↑ ↓ ← → ↑ ↓ ← → M C</p>
+                                <p style="font-size: 0.9rem; line-height: 1.4;">Tap on keyboard:<br>↑ ↓ ← → ↑ ↓ ← → m c</p>
                             </div>
                         </div>
                     </div>
@@ -1386,22 +1410,22 @@
             </div>
             
             <h3 class="fade-in-up stagger-7" style="text-align: center; font-size: 1.8rem; margin-top: 4rem; margin-bottom: 2rem; color: var(--text-light);">Featured Projects</h3>
-            
+            <!-- Patient Repport -->
             <div class="projects-grid">
                 <div class="project-card fade-in-up stagger-2">
                     <div class="project-image" style="background: linear-gradient(135deg, rgba(232, 168, 124, 0.1), rgba(232, 168, 124, 0.05)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a1a%22 width=%22200%22 height=%22200%22/><path fill=%22%23e8a87c%22 d=%22M100 40 L160 100 L100 160 L40 100 Z%22 opacity=%220.3%22/><circle cx=%22100%22 cy=%22100%22 r=%2230%22 fill=%22none%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/><path d=%22M90 100 L97 107 L115 89%22 fill=%22none%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/></svg>'); background-size: cover; background-position: center;"></div>
                     <div class="project-content">
                         <h3>Digital Patient Reporting System</h3>
-                        <p>Robust digital reporting system implemented at hospital, significantly improving accuracy and accessibility of clinical documentation for a team of 14+ professionals.</p>
+                        <p>Spearheaded the implementation of a digital reporting system that optimized documentation accuracy for 14+ clinical staff. Orchestrated updates on live production systems within a complex enterprise environment supporting over 5,000 workers.</p>
                         <div class="project-tags">
-                            <span class="tag">C#</span>
-                            <span class="tag">.NET</span>
+                            <span class="tag">Code</span>
+                            <span class="tag">Network</span>
                             <span class="tag">Healthcare</span>
                             <span class="tag">Leadership</span>
                         </div>
                     </div>
                 </div>
-
+                <!-- Microservices -->
                 <div class="project-card fade-in-up stagger-3">
                     <div class="project-image" style="background: linear-gradient(135deg, rgba(232, 168, 124, 0.1), rgba(232, 168, 124, 0.05)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a1a%22 width=%22200%22 height=%22200%22/><circle cx=%2260%22 cy=%22100%22 r=%2220%22 fill=%22%23e8a87c%22 opacity=%220.3%22/><circle cx=%22100%22 cy=%22100%22 r=%2220%22 fill=%22%23e8a87c%22 opacity=%220.5%22/><circle cx=%22140%22 cy=%22100%22 r=%2220%22 fill=%22%23e8a87c%22 opacity=%220.3%22/><line x1=%2275%22 y1=%22100%22 x2=%2285%22 y2=%22100%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/><line x1=%22115%22 y1=%22100%22 x2=%22125%22 y2=%22100%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/></svg>'); background-size: cover; background-position: center;"></div>
                     <div class="project-content">
@@ -1409,13 +1433,15 @@
                         <p>Design and implementation of scalable microservices architecture for enterprise applications, applying DDD and proven design patterns. Focus on quality with TDD and integration testing.</p>
                         <div class="project-tags">
                             <span class="tag">.NET Core</span>
+                            <span class="tag">Database</span>
                             <span class="tag">DDD</span>
                             <span class="tag">TDD</span>
                             <span class="tag">Microservices</span>
                         </div>
                     </div>
                 </div>
-
+                
+                <!--CI/CD Pipeline Automation -->
                 <div class="project-card fade-in-up stagger-4">
                     <div class="project-image" style="background: linear-gradient(135deg, rgba(232, 168, 124, 0.1), rgba(232, 168, 124, 0.05)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a1a%22 width=%22200%22 height=%22200%22/><circle cx=%22100%22 cy=%2270%22 r=%2225%22 fill=%22none%22 stroke=%22%23e8a87c%22 stroke-width=%223%22 opacity=%220.5%22/><path d=%22M100 95 L100 130%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/><path d=%22M100 130 L85 145%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/><path d=%22M100 130 L115 145%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/><circle cx=%22100%22 cy=%2270%22 r=%225%22 fill=%22%23e8a87c%22/></svg>'); background-size: cover; background-position: center;"></div>
                     <div class="project-content">
@@ -1425,11 +1451,13 @@
                             <span class="tag">Python</span>
                             <span class="tag">Bash</span>
                             <span class="tag">CI/CD</span>
+                            <span class="tag">Linux</span>
                             <span class="tag">Docker</span>
                         </div>
                     </div>
                 </div>
-
+                
+                <!-- Rest Api Integration -->
                 <div class="project-card fade-in-up stagger-5">
                     <div class="project-image" style="background: linear-gradient(135deg, rgba(232, 168, 124, 0.1), rgba(232, 168, 124, 0.05)), url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22><rect fill=%22%231a1a1a%22 width=%22200%22 height=%22200%22/><rect x=%2250%22 y=%2280%22 width=%2230%22 height=%2240%22 fill=%22none%22 stroke=%22%23e8a87c%22 stroke-width=%223%22 opacity=%220.5%22/><rect x=%22120%22 y=%2280%22 width=%2230%22 height=%2240%22 fill=%22none%22 stroke=%22%23e8a87c%22 stroke-width=%223%22 opacity=%220.5%22/><path d=%22M80 100 L120 100%22 stroke=%22%23e8a87c%22 stroke-width=%223%22/><circle cx=%22100%22 cy=%22100%22 r=%225%22 fill=%22%23e8a87c%22/><path d=%22M95 100 L90 95 M95 100 L90 105%22 stroke=%22%23e8a87c%22 stroke-width=%222%22/><path d=%22M105 100 L110 95 M105 100 L110 105%22 stroke=%22%23e8a87c%22 stroke-width=%222%22/></svg>'); background-size: cover; background-position: center;"></div>
                     <div class="project-content">
@@ -1439,6 +1467,24 @@
                             <span class="tag">REST API</span>
                             <span class="tag">SQL Server</span>
                             <span class="tag">Integration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coder -->
+                <div class="project-card fade-in-up stagger-4" id="matrixCodeCard" onmouseenter="startMatrixMutation()">
+                    <div class="project-image code-matrix-dynamiccode-matrix-dynamic" id="matrixCodeCard">
+                        <!-- Conteúdo dinâmico será injetado aqui -->
+                    </div>
+                    <div class="project-content">
+                        <h3>CODE</h3>
+                        <p>Architecting robust software solutions to work on operations in high-pressure, mission-critical environments, that simplifies daily work in fast-paced with sensible data.</p>
+                        <div class="project-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">C#</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">JS</span>
+                            <span class="tag">React</span>
                         </div>
                     </div>
                 </div>
@@ -2188,7 +2234,65 @@
 
         //Activation Invisible button
         document.getElementById("openTerminalBtn").addEventListener("click", openTerminal);
+        
 
+        // ===== MATRIX CODE DYNAMIC EFFECT =====
+        function initMatrixCodeCard() {
+            const container = document.getElementById('matrixCodeCard');
+            if (!container) return;
+
+            const baseLines = [
+                "using System;",
+                "namespace Mario.Software.Cloud.Developpement;",
+                "const tech = [\"C#\", \"JS\", \"React\"];",
+                "SELECT * FROM skills WHERE lang IN ('C#', 'JS', 'SQL');",
+                "docker build -t mario/portfolio .",
+                "{\"tech\": [\"Python\",\"React\", \"Linux\", \"Docker\"]}",
+                "// Full Stack Engineer"
+            ];
+
+            let currentLines = [...baseLines];
+            const symbols = "01@#/\\$%&*+-=<>~?X)(=/-+|";
+
+            const pre = document.createElement('pre');
+            pre.className = 'matrix-code-overlay';
+            container.appendChild(pre);
+
+            function mutateLine(line) {
+                return line
+                .split('')
+                .map(char => {
+                    // Mantém letras/chaves importantes ~60% do tempo
+                    if (/[a-zA-Z0-9_{}().;'"#]/.test(char) && Math.random() > 0.05) {
+                    return char;
+                    }
+                    return symbols[Math.floor(Math.random() * symbols.length)];
+                })
+                .join('');
+            }
+
+            function updateDisplay() {
+                pre.textContent = currentLines.join('\n');
+            }
+
+            function animate() {
+                // Mutar 1–2 linhas por frame
+                const idx1 = Math.floor(Math.random() * currentLines.length);
+                const idx2 = Math.floor(Math.random() * currentLines.length);
+                currentLines[idx1] = mutateLine(baseLines[idx1]);
+                currentLines[idx2] = mutateLine(baseLines[idx2]);
+                updateDisplay();
+                requestAnimationFrame(animate);
+            }
+
+            updateDisplay();
+                animate(); // Inicia a animação contínua
+            }
+
+            // Inicializa quando o DOM estiver pronto
+            document.addEventListener('DOMContentLoaded', () => {
+            initMatrixCodeCard();
+        });
     </script>
 </body>
 </html>
