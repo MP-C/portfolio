@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Mário Carvalho - Full Stack Developer specialized in .NET, React and healthcare solutions. Professional portfolio and experience.">
-    <meta name="keywords" content="Full Stack Developer, .NET, React, C#, Java, JavaScript, HTML, CSS, IT, Software Engineer">
-    <title>Mário Carvalho | Full Stack Developer</title>
+    <meta name="description" content="Mário Carvalho - Software Developer specialized in .NET, React and healthcare solutions. Professional portfolio and experience.">
+    <meta name="keywords" content="Software Developer, .NET, React, C#, Java, JavaScript, HTML, CSS, IT, Software Engineer">
+    <title>Mário Carvalho | Software Developer</title>
     <style>
         * {
             margin: 0;
@@ -258,29 +258,20 @@
             color: #0f0;
         }
 
-        body.matrix-mode::before {
-            content: '';
-            position: fixed;
+        #matrixRainCard {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 255, 0, 0.03) 2px, rgba(0, 255, 0, 0.03) 4px);
+            z-index: 1;
             pointer-events: none;
-            z-index: 9999;
-            animation: matrixRain 20s linear infinite;
-        }
-        @keyframes matrixRain {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(100%); }
         }
 
-        body.matrix-mode .highlight,
-        body.matrix-mode h1,
-        body.matrix-mode h2,
-        body.matrix-mode h3,
-        body.matrix-mode .accent-orange {
-            color: #0f0 !important;
+        /* Garantir que o conteúdo do card-back fique acima do canvas */
+        .card-back > * {
+            position: relative;
+            z-index: 2;
         }
 
         /* Navigation */
@@ -595,24 +586,20 @@
         }
 
         .skill-item:hover .icon.diamond {
-            opacity: 0;
+            display: none;
         }
+
+        .skill-item .icon.diamond::after {
+            content: '';
+            display: none;
+        }
+
         .skill-item:hover .icon.diamond::after {
             content: '🗄️';
-            position: absolute;
+            display: inline;
+            position: static;
             opacity: 1;
-            transition: opacity 0.3s;
-            font-size: 1.2rem;
-        }
-        
-        .matrixRainCard {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            font-size: inherit;
         }
 
         .skill-item:hover .icon.circle-inner {
@@ -620,10 +607,27 @@
             filter: drop-shadow(0 0 10px #ff4444);
         }
 
+        /* Languages Card Flip */
+        .skill-item.languages-card {
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .skill-item.languages-card .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s;
+            transform-style: preserve-3d;
+        }
+
+        .skill-item.languages-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
         /* Learning Card Flip */
         .skill-item.learning-card {
-            perspective: 1000px;
-            
+            perspective: 1000px;  
         }
 
         .skill-item.learning-card .card-inner {
@@ -799,6 +803,148 @@
             overflow: hidden;
             
         }
+        
+        /* Code Snippets Section */
+        .snippets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .snippet-card {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(232, 168, 124, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .snippet-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-orange);
+            box-shadow: 0 10px 30px rgba(232, 168, 124, 0.3);
+        }
+
+        .snippet-card h3 {
+            color: var(--accent-orange);
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+
+        .snippet-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            display: block;
+        }
+
+        /* Code Modal */
+        .code-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .code-modal.active {
+            display: flex;
+        }
+
+        .code-modal-content {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 2px solid var(--accent-orange);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .code-modal-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid rgba(232, 168, 124, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-secondary);
+            z-index: 1;
+        }
+
+        .code-modal-header h3 {
+            margin: 0;
+            color: var(--accent-orange);
+        }
+
+        .code-modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .code-modal-actions button {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-copy {
+            background: var(--accent-orange);
+            color: var(--bg-dark);
+        }
+
+        .btn-link {
+            background: transparent;
+            color: var(--accent-orange);
+            border: 1px solid var(--accent-orange);
+        }
+
+        .btn-close-modal {
+            background: #ff5f57;
+            color: white;
+        }
+
+        .code-modal-body {
+            padding: 2rem;
+        }
+
+        .code-modal-body pre {
+            background: #0a0a0a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        .code-modal-body code {
+            font-family: 'Courier New', monospace;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
 
         /* Video Modal */
         .video-modal {
@@ -807,12 +953,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(10px);
             z-index: 10000;
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 2rem;
         }
 
         .video-modal.active {
@@ -822,8 +969,21 @@
         .video-modal video {
             max-width: 90%;
             max-height: 90%;
+            width: auto;
+            height: auto;
             border-radius: 10px;
             box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .video-modal {
+                padding: 1rem;
+            }
+            
+            .video-modal video {
+                max-width: 95%;
+                max-height: 95%;
+            }
         }
 
         .project-content {
@@ -968,6 +1128,16 @@
         }
 
         /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                gap: 3rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .mobile-menu {
                 display: flex;
@@ -1011,18 +1181,85 @@
                 margin-bottom: 2rem;
             }
 
-            .hero-content,
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text {
+                order: 1;
+            }
+
+            .skills-grid {
+                order: 2;
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            /* Cards flip - ajustes mobile */
+            .skill-item {
+                min-height: 160px;
+                padding: 1rem;
+            }
+
+            .skill-item.learning-card,
+            .skill-item.languages-card {
+                min-height: 160px;
+            }
+
+            .skill-item.learning-card .card-inner,
+            .skill-item.languages-card .card-inner {
+                min-height: 160px;
+            }
+
+            .card-front, .card-back {
+                min-height: 160px;
+                padding: 0.8rem;
+            }
+
+            .skill-item h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .skill-item p {
+                font-size: 0.85rem;
+                line-height: 1.4;
+            }
+
+            .card-back h3 {
+                font-size: 1rem !important;
+            }
+
+            .card-back p {
+                font-size: 0.8rem !important;
+            }
+
             .contact-content {
                 grid-template-columns: 1fr;
                 gap: 2rem;
             }
 
-            .skills-grid {
+            .projects-grid {
                 grid-template-columns: 1fr;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .snippets-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .snippet-card {
+                padding: 1rem;
+            }
+
+            .snippet-card .icon {
+                font-size: 2rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .snippet-card h3 {
+                font-size: 0.85rem;
             }
 
             .theme-toggle,
@@ -1040,6 +1277,124 @@
             .cv-download {
                 right: 1rem;
                 padding: 0.8rem 1.5rem;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                padding: 0.8rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .hero-text p {
+                font-size: 0.95rem;
+            }
+
+            .skills-grid {
+                gap: 0.8rem;
+            }
+
+            .skill-item {
+                min-height: 150px;
+                padding: 0.8rem;
+            }
+
+            .skill-item.learning-card,
+            .skill-item.languages-card {
+                min-height: 150px;
+            }
+
+            .skill-item.learning-card .card-inner,
+            .skill-item.languages-card .card-inner {
+                min-height: 150px;
+            }
+
+            .card-front, .card-back {
+                min-height: 150px;
+                padding: 0.8rem;
+            }
+
+            .skill-item h3 {
+                font-size: 1rem;
+            }
+
+            .skill-item p {
+                font-size: 0.8rem;
+            }
+
+            .snippets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-step {
+                padding: 1rem;
+            }
+
+            .process-number {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+            }
+
+            .contact-item {
+                font-size: 0.9rem;
+            }
+
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .skill-item {
+                min-height: 140px;
+            }
+
+            .skill-item.learning-card,
+            .skill-item.languages-card {
+                min-height: 140px;
+            }
+
+            .skill-item.learning-card .card-inner,
+            .skill-item.languages-card .card-inner {
+                min-height: 140px;
+            }
+
+            .card-front, .card-back {
+                min-height: 140px;
+            }
+
+            .skill-item h3 {
+                font-size: 0.95rem;
+            }
+
+            .skill-item p {
+                font-size: 0.75rem;
+                line-height: 1.3;
             }
         }
 
@@ -1305,7 +1660,7 @@
                         </div>
                     </div>
                     <!-- Languages -->
-                    <div class="skill-item fade-in-up stagger-6" style="--progress: 100%">
+                    <div class="skill-item languages-card fade-in-up stagger-6" onclick="flipLanguagesCard()" style="--progress: 100%">
                         <h3><span class="icon globe">🌍</span> Languages</h3>
                         <p>Portuguese (Native)<br>French (Fluent) | English (Fluent)<br>Spanish (Intermediate)</p>
                         <div class="skill-progress"><div class="skill-progress-bar"></div></div>
@@ -1340,7 +1695,7 @@
                             </div>
                             <div class="card-back">
                                 <h3>Secret Setup</h3>
-                                <p><a href="C:\Users\mpcrc\OneDrive\Documents\EngInformatica\DevelopementsPerso\Automatise\portfolio\home.html" style="color: #0a0a0a;text-decoration: none;">Go Home!</a></p>
+                                <p><a href="./home.html" style="color: #0a0a0a;text-decoration: none;">Go Home!</a></p>
                                 <!--p style="font-size: 0.85rem;"><a href="https://cloud.marioc.com" target="_blank" style="color: #000000;text-decoration: none;transition: color 0.3s ease;" onmouseover="this.style.color='#e8a87c'"onmouseout="this.style.color='#000000'">Cloud</p>
                                 <p style="font-size: 0.85rem;"><a href="https://home.marioc.com" target="_blank" style="color: #000000;text-decoration: none;transition: color 0.3s ease;" onmouseover="this.style.color='#e8a87c'"onmouseout="this.style.color='#000000'">Home</p-->
                             </div>
@@ -1371,7 +1726,7 @@
         </div>
 
         <!-- Invisible bottom -->
-        </div>
+
         
         <div class="container">
             <h2 class="fade-in-up">Work Process</h2>
@@ -1499,18 +1854,23 @@
             <p class="fade-in-up stagger-1" style="text-align: center; margin-bottom: 3rem; color: var(--text-muted);">Additional projects showcasing versatility and innovation</p>
             
             <div class="projects-grid">
-                <div class="project-card fade-in-up stagger-2" onmouseenter="playVideo('video1')" onmouseleave="pauseVideo('video1')">
-                    <div class="project-image" onclick="openVideoModal('video1')">
-                        <video id="video1" muted loop>
-                            <source src="your-video1.mp4" type="video/mp4">
+                <!-- Primeiro card de vídeo -->
+                <div class="project-card fade-in-up stagger-2">
+                    <div class="project-image" style="cursor: pointer; position: relative; background: #000;" 
+                        onmouseenter="playVideo('video1')" 
+                        onmouseleave="pauseVideo('video1')" 
+                        onclick="openVideoModal('video1')">
+                        <video id="video1" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="project-content">
-                        <h3>Project Video Demo</h3>
-                        <p>Hover to play, click to view fullscreen. This project showcases advanced video integration and modal functionality.</p>
+                        <h3>Automatic reorganisation files</h3>
+                        <p>Hover to play, click to view fullscreen. Cickable button, that operates in real-time and visual files re-organisation. And it is done every single day.</p>
                         <div class="project-tags">
-                            <span class="tag">Video</span>
-                            <span class="tag">Interactive</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Time Consuming</span>
+                            <span class="tag">Clickable automation</span>
                         </div>
                     </div>
                 </div>
@@ -1542,24 +1902,72 @@
                     </div>
                 </div>
 
-                <div class="project-card fade-in-up stagger-4" onmouseenter="playVideo('video3')" onmouseleave="pauseVideo('video3')">
-                    <div class="project-image" onclick="openVideoModal('video3')">
-                        <video id="video3" muted loop>
-                            <source src="your-video3.mp4" type="video/mp4">
+                <!-- Terceiro card de vídeo -->
+                <div class="project-card fade-in-up stagger-4">
+                    <div class="project-image" style="cursor: pointer; position: relative; background: #000;" 
+                        onmouseenter="playVideo('video3')" 
+                        onmouseleave="pauseVideo('video3')" 
+                        onclick="openVideoModal('video3')">
+                        <video id="video3" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="project-content">
-                        <h3>Another Video Project</h3>
-                        <p>Hover to preview, click for fullscreen experience. Demonstrates multimedia integration capabilities.</p>
+                        <h3>Start the day faster</h3>
+                        <p>Hover to preview, click for full screen. This shows that with only one click, I can launche the startup script to jumpstart my day faster.</p>
                         <div class="project-tags">
-                            <span class="tag">Video</span>
-                            <span class="tag">Demo</span>
+                            <span class="tag">Bach</span>
+                            <span class="tag">Automation</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Code Snippets Section -->
+    <section id="snippets" style="background: var(--bg-secondary);">
+        <div class="container">
+            <h2 class="fade-in-up">Code Snippets</h2>
+            <p class="fade-in-up stagger-1" style="text-align: center; margin-bottom: 3rem; color: var(--text-muted);">Useful code examples and resources</p>
+            
+            <div class="snippets-grid">
+                <!-- Os 6 cards serão adicionados aqui -->
+                <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet1')">
+                    <span class="icon">☕</span>
+                    <h3>Star Day</h3>
+                </div>
+
+                <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet2')">
+                    <span class="icon">🎉</span>
+                    <h3>Microservice Template</h3>
+                </div>
+
+                <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet3')">
+                    <span class="icon">⚙️</span>
+                    <h3>The easiest way to prank your coworkers with a 'hacker' console at the office.</h3>
+                </div>         
+            </div>
+        </div>
+        <!-- Code Modal -->
+        <div class="code-modal" id="codeModal" onclick="closeCodeModal(event)">
+            <div class="code-modal-content" onclick="event.stopPropagation()">
+                <div class="code-modal-header">
+                    <h3 id="modalCodeTitle"></h3>
+                    <div class="code-modal-actions">
+                        <button class="btn-copy" onclick="copyCode()">📋 Copy</button>
+                        <button class="btn-link" id="modalCodeLink" style="display: none;">🔗 View Source</button>
+                        <button class="btn-close-modal" onclick="closeCodeModal()">✕</button>
+                    </div>
+                </div>
+                <div class="code-modal-body">
+                    <pre><code id="modalCodeContent"></code></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
 
     <!-- Contact Section -->
     <section id="contact">
@@ -1829,6 +2237,7 @@
         function flipFrontendCard() { event.currentTarget.classList.toggle('flipped'); }
         function flipLearningCard() { event.currentTarget.classList.toggle('flipped'); }
         function flipHomeLabCard() { event.currentTarget.classList.toggle('flipped'); }
+        function flipLanguagesCard() { event.currentTarget.classList.toggle('flipped'); }
 
         // ===== MATRIX RAIN INSIDE DEVOPS CARD =====
         let matrixInterval = null;
@@ -1938,14 +2347,21 @@
         }
 
         // ===== VIDEO CONTROLS =====
-        function playVideo(videoId) {
+                function playVideo(videoId) {
             const video = document.getElementById(videoId);
-            if (video) video.play();
+            if (video && video.paused) {
+                video.play().catch(err => {
+                    console.log('Autoplay prevented:', err);
+                });
+            }
         }
 
         function pauseVideo(videoId) {
             const video = document.getElementById(videoId);
-            if (video) video.pause();
+            if (video && !video.paused) {
+                video.pause();
+                video.currentTime = 0;
+            }
         }
 
         function openVideoModal(videoId) {
@@ -1953,22 +2369,27 @@
             const modalVideo = document.getElementById('modalVideo');
             const sourceVideo = document.getElementById(videoId);
             
-            if (sourceVideo && sourceVideo.src) {
-                modalVideo.src = sourceVideo.src;
+            if (sourceVideo && sourceVideo.querySelector('source')) {
+                const videoSrc = sourceVideo.querySelector('source').src;
+                modalVideo.src = videoSrc;
                 modal.classList.add('active');
-                modalVideo.play();
+                modalVideo.play().catch(err => {
+                    console.log('Video play prevented:', err);
+                });
             }
         }
 
-        function closeVideoModal() {
-            const modal = document.getElementById('videoModal');
-            const modalVideo = document.getElementById('modalVideo');
-            
-            modal.classList.remove('active');
-            modalVideo.pause();
-            modalVideo.currentTime = 0;
+        function closeVideoModal(event) {
+            if (!event || event.target.id === 'videoModal') {
+                const modal = document.getElementById('videoModal');
+                const modalVideo = document.getElementById('modalVideo');
+                
+                modal.classList.remove('active');
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+                modalVideo.src = '';
+            }
         }
-
         // ===== CV DOWNLOAD =====
         function downloadCV() {
             const link = document.createElement('a');
@@ -2232,6 +2653,243 @@
             }
         });
 
+        // ===== CODE SNIPPETS =====
+        const codeSnippets = {
+            snippet1: {
+                title: "Kick to Start day",
+                icon: "☕",
+                code: `// clickable
+                #!-----------------------------------------------------------------------!#
+                #!workListPrograms                                                       !#
+                #!-----------------------------------------------------------------------!#
+
+                echo 'hello Mário. Its working as F***s, whats your problem, dude?'
+                #!Google Chrome\\Application\\chrome
+                cd 'C:\\Program Files\\Google\\Chrome\\Application\\'
+                start chrome.exe --profile-directory="Default"
+
+                #!XML
+                cd 'C:\\Program Files\\Altova\\XMLSpy2021\\'
+                start XMLSpy.exe
+
+                #!Downloads
+                cd 'C:\\Users\\capelam\\Downloads'
+                start .
+
+                #!FireFox
+                cd 'C:\\Program Files\\Mozilla Firefox\\'
+                start firefox.exe
+
+                #!DeskAlerts
+                cd 'C:\\Program Files (x86)\\DeskAlerts\\'
+                start deskalerts.exe
+
+                #!OneNote2016
+                cd 'C:\\Program Files\\Microsoft Office\\Office16'
+                start ONENOTE.exe
+
+                #!taskManager
+                cd 'C:\\WINDOWS\\system32\\'
+                start taskmgr.exe
+
+                #!/bin/sh
+                start msgCheckVerification.txt
+                "$@"
+                exec "$SHELL"
+
+                exit
+
+                #!-----------------------------------------------------------------------!#
+                #!homeWorkPrograms                                                       !#
+                #!C:\\Users\\capelam\\GitCustomCommands                                   !#
+                #!-----------------------------------------------------------------------!#
+
+                echo "hello Mário. Let's push it harder"
+                #!Google Chrome\\Application\\chrome
+                cd 'C:\\Program Files\\Google\\Chrome\\Application\\'
+                start chrome.exe --profile-directory="Profile 1"
+
+                #!Downloads
+                cd 'C:\\Users\\user\\Downloads'
+                start .
+
+                #!OneNote2016
+                cd 'C:\\Program Files\\Microsoft Office\\Office16'
+                start ONENOTE.exe
+
+                #!/bin/sh
+                start msgCheckVerification.txt
+
+                exit                `,
+                link: "https://gist.github.com/MP-C/42b52d1e373e5bc68aea83fd8a10a67e"
+            },snippet2:{
+                title: "JS fun in Console",
+                icon: "🎉",
+                code: `// Copy-paste in console (F12)
+                /*Juste to make fun wiht a collegue when he leaves the pc's on*/
+                /*After F12                                                   */
+                /*Copy-Paste in  in console                                   */
+                /*to turn the WebWindow around                                */
+
+                (function(){
+                document.documentElement.style.transitionDuration='30s';
+                document.documentElement.style.transistionTimingFunction="ease-in";
+                document.documentElement.style.transform="rotate(360deg)";
+                }());
+
+
+                /*Juste to make fun wiht a collegue when he leaves the pc's on*/
+                /*After F12                                                   */
+                /*Copy-Paste in  in console                                   */
+                /*to edit text on Web                                         */
+
+                javascript:document.body.contentEditable = true; void 0;
+                `,
+                link: "https://gist.github.com/MP-C/ec5a500366b94db2447ebafc879ddb6f"
+            },snippet3:{
+                title: "Reorganise end of day faster",
+                icon: "🎉",
+                code: `// bach program
+                    #!-----------------------------------------------------------------------!#
+                    #!workListPrograms                                                       !#
+                    #!C:\\Users\\Downloads\\ - where-I-WANT                                     !#
+                    #!-----------------------------------------------------------------------!#
+
+                    import shutil
+                    import glob
+                    import os
+                    import pathlib
+
+                    print("PROGRAM: Reading folder, Create Extension's Folder and Start Distribution ")
+                    # Getting the current work directory (cwd)
+                    path = os.getcwd() #/Home/Desktop/some_file.csv
+                    dir, folder = os.path.splitext(path) #spread the path into directory
+                    print("DIRECTORY : ", dir)
+
+                    listFilesPathAndFiles = []
+
+                    # construct path object
+                    d = pathlib.Path(path)
+
+                    # iterate in directory
+                    for entry in d.iterdir():
+                        # check if it a file
+                        if entry.is_file():
+                            listFilesPathAndFiles.append(entry)
+                    print(listFilesPathAndFiles)
+
+                    transferedFiles = 0
+                    noTransferedFiles = 0
+                    quantityFolders = 0
+                    readFolders = 0
+
+
+                    if listFilesPathAndFiles != '' :
+                        for r, d, f in os.walk(dir): # r=root, d=directories, f = files
+                            print("ORIGIN FOLDER : ", os.path.basename(path))
+                            print("\\t HAD READ : ", readFolders+1, "FOLDERS")
+                            print("\\t\\t*** Transfered FILES :  %d ***" % (transferedFiles))
+                            print("\\t\\t*** NOTransfered File:  %d ***" % (noTransferedFiles))
+                            print("\\t\\t*** Folders  Created :  %d ***" % (quantityFolders))
+                            if r == dir:
+                                for file in f:
+                                    #get the matching file in the folder
+                                    srcPath = (os.path.join(r, file))
+                                    print("\\t\\t\\t\\t Origin Path : ", srcPath)
+                                    #get the extension of the folder
+                                    print("\\t\\t  File and Extension : ", os.path.splitext(file))
+                                    #for not be read inside all sub-folders
+                                    extension = os.path.splitext(file)[1]
+                                    #print("\\t\\t\\t\\t   Extension : ", extension)
+                                    if extension != '' and (dir != d) :
+                                        if (extension == ".xml") or (extension == ".xsl"):
+                                            #move files into folders
+                                            #shutil.move(srcPath, "C:/Users/capelam/Documents/MPC/Automatise/moveFiles/DayToDay/")
+                                            shutil.move(srcPath, "C:/Users/capelam/Downloads/dayTOday/XSL-testPreVisualization/")
+                                            transferedFiles += 1
+                                            print("\\tFile moved into DayToDay : ", file)
+                                        elif (extension == ".gitconfig") or (extension == ".sh") or (extension == ".py") or (file == "Formulaire_Squelette-13-PDF") or (extension == ".iml"):
+                                            #this are all excptions
+                                            noTransferedFiles+=1
+                                            print("NOTHING HAVE BEEN DONE IT'S A: ", extension, "!!!")
+                                        elif os.path.isdir(extension):
+                                            newFolder = os.path.join(path, extension)
+                                            print("\\t ---> New Folder Created : ", newFolder, "<---")
+                                            shutil.move(srcPath, newFolder)
+                                            transferedFiles += 1
+                                        else:
+                                            #create new folder
+                                            os.mkdir(extension)
+                                            newFolder = os.path.join(path, extension)
+                                            shutil.move(srcPath, newFolder)
+                                            quantityFolders += 1
+                                print("\\t********** FINISH FOLDER : ", os.path.basename(path), "*****\\n")
+
+                    #os.rename("C:\\Users\\user\\Downloads", "path/to/new/destination/for/file.foo")
+                    #os.replace("path/to/current/file.foo", "path/to/new/destination/for/file.foo")
+
+                    #!-----------------------------------------------------------------------!#
+                    #!the bash file                                                          !#
+                    #!moveFilesIntoFolders                                                   !#
+                    #!C:\\Users\\user\\GitCustomCommands                                     !#
+                    #!-----------------------------------------------------------------------!#
+
+                    #!/usr/bin/env python
+
+                    echo 'Starting files moves'
+
+                    Python 'C:\\Users\\user\\GitCustomCommands\\moveFilesIntoFolders.py'
+
+                    #!/bin/sh
+                    cd 'C:\\Users\\user\\GitCustomCommands'
+                    start msgCheckVerification.txt
+
+                    echo 'FINISHING files moves'
+                `,
+                link: "https://gist.github.com/MP-C/91e76f9ee3888067e0f3207630fd40f5"
+            }
+            // Adicione os outros snippets aqui
+        };
+
+        function openCodeModal(snippetId) {
+            const snippet = codeSnippets[snippetId];
+            if (!snippet) return;
+            
+            const modal = document.getElementById('codeModal');
+            const title = document.getElementById('modalCodeTitle');
+            const content = document.getElementById('modalCodeContent');
+            const linkBtn = document.getElementById('modalCodeLink');
+            
+            title.textContent = snippet.title;
+            content.textContent = snippet.code;
+            
+            if (snippet.link) {
+                linkBtn.style.display = 'block';
+                linkBtn.onclick = () => window.open(snippet.link, '_blank');
+            } else {
+                linkBtn.style.display = 'none';
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function closeCodeModal(event) {
+            if (!event || event.target.id === 'codeModal') {
+                document.getElementById('codeModal').classList.remove('active');
+            }
+        }
+
+        function copyCode() {
+            const code = document.getElementById('modalCodeContent').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
         //Activation Invisible button
         document.getElementById("openTerminalBtn").addEventListener("click", openTerminal);
         
