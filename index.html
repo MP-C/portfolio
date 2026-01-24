@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Mário Carvalho - Software Developer specialized in .NET, React and healthcare solutions. Professional portfolio and experience.">
     <meta name="keywords" content="Software Developer, .NET, React, C#, Java, JavaScript, HTML, CSS, IT, Software Engineer">
-    <title>Mário Carvalho | Software Developer</title>
+    <title>💻MárioC🧔🏻 | FullStack Developer</title>
     <style>
         * {
             margin: 0;
@@ -807,14 +807,14 @@
         /* Code Snippets Section */
         .snippets-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
             gap: 1.5rem;
-            max-width: 1000px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
         .snippet-card {
-            background: var(--bg-dark);
+            background: var(--bg-dark), blur(10px);
             border-radius: 10px;
             padding: 1.5rem;
             border: 1px solid rgba(232, 168, 124, 0.2);
@@ -913,12 +913,6 @@
         .btn-copy {
             background: var(--accent-orange);
             color: var(--bg-dark);
-        }
-
-        .btn-link {
-            background: transparent;
-            color: var(--accent-orange);
-            border: 1px solid var(--accent-orange);
         }
 
         .btn-close-modal {
@@ -1259,7 +1253,7 @@
             }
 
             .snippet-card h3 {
-                font-size: 0.85rem;
+                font-size: 1rem;
             }
 
             .theme-toggle,
@@ -1402,11 +1396,11 @@
         .terminal-window {
             position: fixed;
             top: 20%;
-            left: 10%;
-            width: 80%;
-            max-width: 900px;
+            left: 20%;
+            width: 70%;
+            max-width: 700px;
             height: 70vh;
-            background: var(--bg-secondary);
+            background:var(--bg-secondary);/* blur(100px) color(srgb rgb(56, 55, 55)); */
             border: 1px solid rgba(232, 168, 124, 0.3);
             border-radius: 10px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
@@ -1538,7 +1532,7 @@
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loader"></div>
-        <div class="loading-text">Loading Portfolio...</div>
+        <div class="loading-text">Loading the IT profile you want on your team...</div>
     </div>
 
     <!-- Custom Cursor -->
@@ -1557,7 +1551,7 @@
     <div class="screenshot-message" id="screenshotMessage">
         <h3>📸 Nice Screenshot!</h3>
         <p>Feel free to share, but hiring me would be even better! 😊</p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--accent-orange);">mp.crcarvalho@gmail.com</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--accent-orange);">hello@marioc.eu</p>
     </div>
 
     <!-- Navigation -->
@@ -1654,7 +1648,7 @@
                             </div>
                             <div class="card-back">
                                 <h3 style="font-size: 1.2rem;">Secret Terminal</h3>
-                                <p style="font-size: 0.9rem; line-height: 1.4;">Access granted.<br>Type: <code>sudo hack --reality</code></p>
+                                <p style="font-size: 0.9rem; line-height: 1.4;">Access granted.<br>Type: <code>sudo--reality</code></p>
                                 <canvas id="matrixRainCard" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: 1010;pointer-events: none;"></canvas>
                             </div>
                         </div>
@@ -1940,12 +1934,12 @@
 
                 <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet2')">
                     <span class="icon">🎉</span>
-                    <h3>Microservice Template</h3>
+                    <h3>Fun with co-workers</h3>
                 </div>
 
                 <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet3')">
                     <span class="icon">⚙️</span>
-                    <h3>The easiest way to prank your coworkers with a 'hacker' console at the office.</h3>
+                    <h3>A way to end the day</h3>
                 </div>         
             </div>
         </div>
@@ -1956,7 +1950,7 @@
                     <h3 id="modalCodeTitle"></h3>
                     <div class="code-modal-actions">
                         <button class="btn-copy" onclick="copyCode()">📋 Copy</button>
-                        <button class="btn-link" id="modalCodeLink" style="display: none;">🔗 View Source</button>
+                        <button class="btn-copy" id="modalCodeLink" style="display: none;">🔗 View Source</button>
                         <button class="btn-close-modal" onclick="closeCodeModal()">✕</button>
                     </div>
                 </div>
@@ -1996,11 +1990,11 @@
                             </div>
                         </a>
 
-                        <a href="mailto:mp.crcarvalho@gmail.com" class="contact-item" style="text-decoration: none; color: inherit; transition: transform 0.3s;" onmouseover="this.style.transform='translateX(10px)'" onmouseout="this.style.transform='translateX(0)'" data-tooltip="Send me an email">
+                        <a href="mailto:hello@marioc.eu" class="contact-item" style="text-decoration: none; color: inherit; transition: transform 0.3s;" onmouseover="this.style.transform='translateX(10px)'" onmouseout="this.style.transform='translateX(0)'" data-tooltip="Send me an email">
                             <div class="contact-icon">✉️</div>
                             <div>
                                 <strong>Email</strong><br>
-                                <span style="color: var(--accent-orange);">marioc@marioc.eu</span>
+                                <span style="color: var(--accent-orange);">hello@marioc.eu</span>
                             </div>
                         </a>
                     </div>
@@ -2014,6 +2008,7 @@
                     <textarea name="message" placeholder="Message" required></textarea>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
+                <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
             </div>
         </div>
     </section>
@@ -2153,6 +2148,21 @@
                 }
             } else {
                 konamiIndex = 0;
+            }
+        });
+
+        // ===== TERMINAL CODE EASTER EGG =====
+        const terminalCode = ['s','u','d','o','-','-','r','e','a','l','i','t','y'];
+        let terminalIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === terminalCode[terminalIndex]) {
+                terminalIndex++;
+                if (terminalIndex === terminalCode.length) {
+                    openTerminal();
+                }
+            } else {
+                terminalIndex = 0;
             }
         });
 
@@ -2400,13 +2410,6 @@
             document.body.removeChild(link);
         }
 
-        // ===== FORM SUBMISSION =====
-        function handleSubmit(e) {
-            e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            e.target.reset();
-        }
-
         // ===== ANIMATE NUMBERS =====
         function animateNumber(element, target, duration = 2000) {
             const start = 0;
@@ -2561,7 +2564,6 @@
                 win.style.left = "2.5%";
             }
         }
-
         function appendToTerminal(text) {
             const output = document.getElementById("terminalOutput");
             const p = document.createElement("p");
@@ -2569,7 +2571,6 @@
             output.appendChild(p);
             output.scrollTop = output.scrollHeight;
         }
-
         function appendToTerminalOrange(text) {
             const output = document.getElementById("terminalOutput");
             const p = document.createElement("p");
@@ -2579,7 +2580,6 @@
             output.appendChild(p);
             output.scrollTop = output.scrollHeight;
         }
-
         function executeCommand(cmd) {
             const command = cmd.trim().toLowerCase();
             terminalHistory.push(command);
@@ -2591,21 +2591,21 @@
                 appendToTerminal("  skills     - My technical stack");
                 appendToTerminal("  projects   - Featured work");
                 appendToTerminal("  version    - Portfolio version");
-                appendToTerminal("  ping       - Test connection");
-                appendToTerminal("  shutdown   - Close terminal");
+                appendToTerminal("  ping       - Test our connection");
+                appendToTerminal("  exit   - Close terminal");
                 appendToTerminal("\n");
                 break;
 
                 case 'whoami':
-                appendToTerminal("I'm Mário Carvalho, a Full Stack Engineer with over 10 years in healthcare and 5+ in software development.");
-                appendToTerminal("Specialized in .NET, React, microservices, and CI/CD pipelines.");
+                appendToTerminal("I'm Mário Carvalho, a Software Engineer and developper with over 10 years in healthcare and 5+ in software development.");
+                appendToTerminal("Specialized in .NET, React, microservices, and CI/CD pipelines, and now in a Python expert and Cloud Automation");
                 appendToTerminal("\n");
                 break;
 
                 case 'skills':
                 appendToTerminal("• Backend: C#, .NET Core, Microservices, DDD");
                 appendToTerminal("• Frontend: React, Blazor, JavaScript");
-                appendToTerminal("• DevOps: Docker, TDD, CI/CD, Python/Bash");
+                appendToTerminal("• DevOps: Docker, TDD, Python/Bash");
                 appendToTerminal("• Data: SQL Server, Oracle, NoSQL");
                 appendToTerminal("\n");
                 break;
@@ -2628,7 +2628,7 @@
                 appendToTerminal("\n");
                 break;
 
-                case 'shutdown':
+                case 'exit':
                 appendToTerminal("Shutting down...");
                 appendToTerminal("\n");
                 setTimeout(closeTerminal, 1000);
@@ -2673,7 +2673,7 @@
                 start XMLSpy.exe
 
                 #!Downloads
-                cd 'C:\\Users\\capelam\\Downloads'
+                cd 'C:\\Users\\user\\Downloads'
                 start .
 
                 #!FireFox
@@ -2701,7 +2701,7 @@
 
                 #!-----------------------------------------------------------------------!#
                 #!homeWorkPrograms                                                       !#
-                #!C:\\Users\\capelam\\GitCustomCommands                                   !#
+                #!C:\\Users\\user\\GitCustomCommands                                   !#
                 #!-----------------------------------------------------------------------!#
 
                 echo "hello Mário. Let's push it harder"
@@ -2804,8 +2804,8 @@
                                     if extension != '' and (dir != d) :
                                         if (extension == ".xml") or (extension == ".xsl"):
                                             #move files into folders
-                                            #shutil.move(srcPath, "C:/Users/capelam/Documents/MPC/Automatise/moveFiles/DayToDay/")
-                                            shutil.move(srcPath, "C:/Users/capelam/Downloads/dayTOday/XSL-testPreVisualization/")
+                                            #shutil.move(srcPath, "C:/Users/user/Documents/MPC/Automatise/moveFiles/DayToDay/")
+                                            shutil.move(srcPath, "C:/Users/user/Downloads/dayTOday/XSL-testPreVisualization/")
                                             transferedFiles += 1
                                             print("\\tFile moved into DayToDay : ", file)
                                         elif (extension == ".gitconfig") or (extension == ".sh") or (extension == ".py") or (file == "Formulaire_Squelette-13-PDF") or (extension == ".iml"):
@@ -2850,7 +2850,6 @@
             }
             // Adicione os outros snippets aqui
         };
-
         function openCodeModal(snippetId) {
             const snippet = codeSnippets[snippetId];
             if (!snippet) return;
@@ -2872,13 +2871,11 @@
             
             modal.classList.add('active');
         }
-
         function closeCodeModal(event) {
             if (!event || event.target.id === 'codeModal') {
                 document.getElementById('codeModal').classList.remove('active');
             }
         }
-
         function copyCode() {
             const code = document.getElementById('modalCodeContent').textContent;
             navigator.clipboard.writeText(code).then(() => {
@@ -2890,7 +2887,7 @@
                 }, 2000);
             });
         }
-        //Activation Invisible button
+        // Activation Invisible button
         document.getElementById("openTerminalBtn").addEventListener("click", openTerminal);
         
 
@@ -2906,7 +2903,7 @@
                 "SELECT * FROM skills WHERE lang IN ('C#', 'JS', 'SQL');",
                 "docker build -t mario/portfolio .",
                 "{\"tech\": [\"Python\",\"React\", \"Linux\", \"Docker\"]}",
-                "// Full Stack Engineer"
+                "// Software Engineer"
             ];
 
             let currentLines = [...baseLines];
@@ -2947,10 +2944,35 @@
                 animate(); // Inicia a animação contínua
             }
 
-            // Inicializa quando o DOM estiver pronto
-            document.addEventListener('DOMContentLoaded', () => {
+        // Inicializa quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', () => {
             initMatrixCodeCard();
         });
+        
+        //  ======== SEND EMAIL =========
+        // FORM SUBMISSION
+        function handleSubmit(e) {
+            e.preventDefault();
+            //(function() {
+                alert("OK");
+                document.getElementById("contact-form").addEventListener("submit", function(e) {
+                    emailjs.init("NqfTQIFWC0aJaiYIV"); /* Public Key */ })();
+                e.preventDefault();
+
+                emailjs.sendForm(
+                    "service_rjyhq7f",    // "SERVICE_ID"
+                    "template_xmyzq0g",   // "TEMPLATE_ID",
+                this
+            ).then(
+                () => alert("Message was sent it!"),
+                (error) => alert("Error: " + error.text)
+            );
+    
+            // ===== END and CLEAN =====
+            alert('Thank you for your message! I will get back to you soon.');
+            e.target.reset();
+        };//);
+        //}
     </script>
 </body>
 </html>
