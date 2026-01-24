@@ -2953,8 +2953,7 @@
         // FORM SUBMISSION
         function handleSubmit(e) {
             e.preventDefault();
-            //(function() {
-                alert("OK");
+            (function() {
                 document.getElementById("contact-form").addEventListener("submit", function(e) {
                     emailjs.init("NqfTQIFWC0aJaiYIV"); /* Public Key */ })();
                 e.preventDefault();
@@ -2971,8 +2970,9 @@
             // ===== END and CLEAN =====
             alert('Thank you for your message! I will get back to you soon.');
             e.target.reset();
-        };//);
-        //}
+            }
+        );
+    }
     </script>
 </body>
 </html>
