@@ -1919,10 +1919,10 @@
                 <div class="project-card fade-in-up stagger-4">
                     <div class="project-image" style="cursor: pointer; position: relative; background: #000;" 
                         onmouseenter="playVideo('video3')" 
-                        onmouseleave="pauseVideo('video3')" 
+                        onmouseleave="pauseVideo('video3')"
                         onclick="openVideoModal('video3')">
                         <video id="video3" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                            <source src="https://youtu.be/Tq14isQ7imA" type="video/mp4">
+                            <source src="../portfolio/startDayFaster.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="project-content">
@@ -2101,6 +2101,48 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        // ===== LOGO TOGGLE WITH AUTO-RESET =====
+        function startRandomLogoToggle(minMs = 5000, maxMs = 20000) {
+            const scheduleNextToggle = () => {
+                // Calculate a random delay between min and max
+                const randomDelay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+                setTimeout(() => {
+                        // Call your existing function
+                        toggleLogo();
+                    // Recursively call to keep the loop going with a new random time
+                    scheduleNextToggle();
+                }, randomDelay);
+            };
+            // Start the cycle
+            scheduleNextToggle();
+        }
+        startRandomLogoToggle(2000, 50000);
+        
+        let logoState = false;
+        let logoTimer = null;
+        
+        function toggleLogo() {
+            const logoText = document.getElementById('logoText');
+            const logoPhoto = document.getElementById('logoPhoto');
+            logoState = !logoState;
+            
+            if (logoTimer) clearTimeout(logoTimer);
+            
+            if (logoState) {
+                logoText.style.display = 'none';
+                logoPhoto.style.display = 'block';
+                
+                logoTimer = setTimeout(() => {
+                    logoText.style.display = 'block';
+                    logoPhoto.style.display = 'none';
+                    logoState = false;
+                }, 7000);
+            } else {
+                logoText.style.display = 'block';
+                logoPhoto.style.display = 'none';
+            }
+        }
+
         // ===== TYPING EFFECT =====
         const typingText = "Full Stack | Engineering Leader | Strategic Problem Solver | Cloud Automation";
         let typingIndex = 0;
@@ -2208,48 +2250,6 @@
             setTimeout(() => {
                 msg.classList.remove('active');
             }, 3000);
-        }
-
-        // ===== LOGO TOGGLE WITH AUTO-RESET =====
-        function startRandomLogoToggle(minMs = 5000, maxMs = 20000) {
-            const scheduleNextToggle = () => {
-                // Calculate a random delay between min and max
-                const randomDelay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
-                setTimeout(() => {
-                        // Call your existing function
-                        toggleLogo();
-                    // Recursively call to keep the loop going with a new random time
-                    scheduleNextToggle();
-                }, randomDelay);
-            };
-            // Start the cycle
-            scheduleNextToggle();
-        }
-        startRandomLogoToggle(2000, 50000);
-        
-        let logoState = false;
-        let logoTimer = null;
-        
-        function toggleLogo() {
-            const logoText = document.getElementById('logoText');
-            const logoPhoto = document.getElementById('logoPhoto');
-            logoState = !logoState;
-            
-            if (logoTimer) clearTimeout(logoTimer);
-            
-            if (logoState) {
-                logoText.style.display = 'none';
-                logoPhoto.style.display = 'block';
-                
-                logoTimer = setTimeout(() => {
-                    logoText.style.display = 'block';
-                    logoPhoto.style.display = 'none';
-                    logoState = false;
-                }, 10000);
-            } else {
-                logoText.style.display = 'block';
-                logoPhoto.style.display = 'none';
-            }
         }
 
         // ===== QR CODE MODAL =====
