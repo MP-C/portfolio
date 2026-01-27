@@ -434,7 +434,7 @@
 
         /* Sections */
         section {
-            min-height: 100vh;
+            min-height: 80vh;
             padding: 8rem 2rem 4rem;
             display: flex;
             align-items: center;
@@ -469,7 +469,7 @@
 
         h2 {
             font-size: 2.5rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
             color: var(--accent-orange);
             text-align: center;
         }
@@ -1587,7 +1587,7 @@
                 <li><a href="#about" onclick="closeMenu()">About</a></li>
                 <li><a href="#work-process" onclick="closeMenu()">Work Process</a></li>
                 <li><a href="#portfolio" onclick="closeMenu()">Portfolio</a></li>
-                <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+                <li><a href="#contact" onclick="closeMenu(),showQRCode()">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -1874,7 +1874,7 @@
                         onmouseleave="pauseVideo('video1')" 
                         onclick="openVideoModal('video1')">
                         <video id="video1" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                            <source src="../portfolio/automaticReorganisationFiles.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="project-content">
@@ -1922,7 +1922,7 @@
                         onmouseleave="pauseVideo('video3')" 
                         onclick="openVideoModal('video3')">
                         <video id="video3" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                            <source src="../portfolio/startDayFaster.mp4" type="video/mp4">
+                            <source src="https://youtu.be/Tq14isQ7imA" type="video/mp4">
                         </video>
                     </div>
                     <div class="project-content">
@@ -2009,11 +2009,11 @@
                             </div>
                         </a>
 
-                        <a href="mailto:hello@marioc.eu" class="contact-item" style="text-decoration: none; color: inherit; transition: transform 0.3s;" onmouseover="this.style.transform='translateX(10px)'" onmouseout="this.style.transform='translateX(0)'" data-tooltip="Send me an email">
+                        <a href="mailto:marioc@marioc.eu" class="contact-item" style="text-decoration: none; color: inherit; transition: transform 0.3s;" onmouseover="this.style.transform='translateX(10px)'" onmouseout="this.style.transform='translateX(0)'" data-tooltip="Send me an email">
                             <div class="contact-icon">✉️</div>
                             <div>
                                 <strong>Email</strong><br>
-                                <span style="color: var(--accent-orange);">hello@marioc.eu</span>
+                                <span style="color: var(--accent-orange);">marioc@marioc.eu</span>
                             </div>
                         </a>
                     </div>
@@ -2211,6 +2211,22 @@
         }
 
         // ===== LOGO TOGGLE WITH AUTO-RESET =====
+        function startRandomLogoToggle(minMs = 5000, maxMs = 20000) {
+            const scheduleNextToggle = () => {
+                // Calculate a random delay between min and max
+                const randomDelay = Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs;
+                setTimeout(() => {
+                        // Call your existing function
+                        toggleLogo();
+                    // Recursively call to keep the loop going with a new random time
+                    scheduleNextToggle();
+                }, randomDelay);
+            };
+            // Start the cycle
+            scheduleNextToggle();
+        }
+        startRandomLogoToggle(2000, 50000);
+        
         let logoState = false;
         let logoTimer = null;
         
