@@ -585,22 +585,11 @@
             }
         }
 
-        .skill-item:hover .icon.diamond {
-            display: none;
-        }
+        .skill-item .icon.datacenter { display: none; }
+        .skill-item .icon.diamond { display: inline; }
 
-        .skill-item .icon.diamond::after {
-            content: '';
-            display: none;
-        }
-
-        .skill-item:hover .icon.diamond::after {
-            content: '🗄️';
-            display: inline;
-            position: static;
-            opacity: 1;
-            font-size: inherit;
-        }
+        .skill-item:hover .icon.datacenter { display: inline; }
+        .skill-item:hover .icon.diamond { display: none; }
 
         .skill-item:hover .icon.circle-inner {
             color: #ff4444;
@@ -1653,7 +1642,7 @@
                     </div>
                     <!-- Data -->
                     <div class="skill-item fade-in-up stagger-4" style="--progress: 92%">
-                        <h3><span class="icon diamond">◆</span> Data</h3>
+                        <h3><span class="icon diamond">◆</span><span class="icon datacenter">🗄️</span></span>Data</h3>
                         <p>SQL Server | Oracle<br>NoSQL | Database Architecture</p>
                         <div class="skill-progress"><div class="skill-progress-bar"></div></div>
                     </div>
@@ -1874,7 +1863,7 @@
                         onmouseleave="pauseVideo('video1')" 
                         onclick="openVideoModal('video1')">
                         <video id="video1" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                            <source src="portfolio/automaticReorganisationFiles.mp4" type="video/mp4">
+                            <source src="./automaticReorganisationFiles.mp4" type="video/mp4">
                         </video>
                     </div>
                     <div class="project-content">
@@ -1917,20 +1906,52 @@
 
                 <!-- Terceiro card de vídeo -->
                 <div class="project-card fade-in-up stagger-4">
-                    <div class="project-image" style="cursor: pointer; position: relative; background: #000;" 
-                        onmouseenter="playVideo('video3')" 
-                        onmouseleave="pauseVideo('video3')"
-                        onclick="openVideoModal('video3')">
-                        <video id="video3" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                            <source src="./portfolio/startDayFaster.mp4" type="video/mp4">
-                        </video>
+                    <div class="project-image" style="cursor: pointer; position: relative; background: #000; aspect-ratio: 16/9; overflow: hidden;" 
+                        onmouseenter="playYT('player3')" 
+                        onmouseleave="pauseYT('player3')"
+                        onclick="window.open('https://www.youtube.com/watch?v=Tq14isQ7imA', '_blank')">
+                        <img src="./photo_startDayFaster.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
+                        <div id="player3" style="pointer-events: none; width: 100%; height: 100%;"></div>
                     </div>
+                    
                     <div class="project-content">
                         <h3>Start the day faster</h3>
-                        <p>Hover to preview, click for full screen. This shows that with only one click, I can launche the startup script to jumpstart my day faster.</p>
+                        <p>Hover to preview, click to watch full video. Automating my morning routine with a single Bash script, to open several windows and applications across the monitors. How a single action can trigger a series of automated tasks to prepare a workspace for the day..</p>
                         <div class="project-tags">
-                            <span class="tag">Bach</span>
+                            <span class="tag">Bash</span>
                             <span class="tag">Automation</span>
+                        </div>
+                    </div>
+</div>
+                <!-- Quarto card -->
+                <div class="project-card fade-in-up stagger-4">
+                    <div class="project-image VisitBrussels" onclick="window.open('https://mp-c.github.io/mp-c.visitBrussels/home.html', '_blank')" style="cursor: pointer; position: relative;">
+                        <img src="./VisitBrussels.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
+                    </div>
+                    <div class="project-content">
+                        <h3>Brussels Trip Planner</h3>
+                        <p>My first hands-on project, focused on learning by doing, back to 2020.</p>
+                        <div class="project-tags">
+                            <span class="tag">JS</span>
+                            <span class="tag">HTML</span>
+                            <span class="tag">CSS</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quinto card -->
+                <div class="project-card fade-in-up stagger-4">
+                    <div class="project-image writer-vibes" 
+                        onclick="window.open('https://mp-crcarvalho.medium.com/', '_blank')" 
+                        style="cursor: pointer; position: relative; height: 200px; overflow: hidden; background-color: #1a1a1a;">
+                        <img src="./Medium.jpg" style="width: 100%; height: 100%; object-fit: contain;"/>
+                    </div>
+                    <div class="project-content">
+                        <h3>Knowledge Sharing</h3>
+                        <p>I believe learning is a collective journey. Sharing my technical insights is my way of giving back to the community and reinforcing my own growth.</p>
+                        <div class="project-tags">
+                            <span class="tag">Medium</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Documentation</span>
                         </div>
                     </div>
                 </div>
@@ -1948,7 +1969,7 @@
                 <!-- Os 6 cards serão adicionados aqui -->
                 <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet1')">
                     <span class="icon">☕</span>
-                    <h3>Star Day</h3>
+                    <h3>Start Day</h3>
                 </div>
 
                 <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet2')">
@@ -1959,6 +1980,11 @@
                 <div class="snippet-card fade-in-up stagger-2" onclick="openCodeModal('snippet3')">
                     <span class="icon">⚙️</span>
                     <h3>A way to end the day</h3>
+                </div>
+
+                <div class="snippet-card fade-in-up stagger-2" onclick="burguerPrank()">
+                    <span class="icon">🍔</span>
+                    <h3>The classic Burguer Prank</h3>
                 </div>         
             </div>
         </div>
@@ -2349,25 +2375,42 @@
             card.classList.toggle('flipped');
         }
 
-        
-        // ===== HOME LAB ICON TOGGLE =====
-        const homeLabCard = document.querySelector('.skill-item:nth-last-child(1) .icon.computer');
-        if (homeLabCard) {
-            const defaultIcon = homeLabCard.querySelector('.default');
-            const dockerIcon = homeLabCard.querySelector('.docker');
-            dockerIcon.style.display = 'none';
+        // ===== HOME DIAMOND / LAB ICON TOGGLE =====
+        /**
+         * Alterna ícones dentro de um componente de skill
+         * @param {string} containerSelector - O seletor do item (ex: '.skill-item')
+         * @param {string} defaultClass - Classe do ícone visível por padrão
+         * @param {string} activeClass - Classe do ícone que aparece no hover
+         */
+        function setupIconToggle(containerSelector, defaultClass, activeClass) {
+            const parent = document.querySelector(containerSelector);
             
-            const parent = homeLabCard.closest('.skill-item');
-            parent.addEventListener('mouseenter', () => {
-                defaultIcon.style.display = 'none';
-                dockerIcon.style.display = 'inline';
-            });
+            if (parent) {
+                const defaultIcon = parent.querySelector(`.${defaultClass}`);
+                const activeIcon = parent.querySelector(`.${activeClass}`);
 
-            parent.addEventListener('mouseleave', () => {
-                defaultIcon.style.display = 'inline';
-                dockerIcon.style.display = 'none';
-            });
+                if (defaultIcon && activeIcon) {
+                    // Estado inicial
+                    activeIcon.style.display = 'none';
+                    
+                    parent.addEventListener('mouseenter', () => {
+                        defaultIcon.style.display = 'none';
+                        activeIcon.style.display = 'inline';
+                    });
+
+                    parent.addEventListener('mouseleave', () => {
+                        defaultIcon.style.display = 'inline';
+                        activeIcon.style.display = 'none';
+                    });
+                }
+            }
         }
+        // ===== INICIALIZAÇÃO =====
+        // Para o Home Lab (ajuste o seletor conforme seu HTML real)
+        setupIconToggle('.skill-item:nth-last-child(1)', 'default', 'docker');
+        // Para o card de Data
+        setupIconToggle('.data-skill', 'diamond', 'datacenter');
+
 
         // ===== THEME TOGGLE =====
         function toggleTheme() {
@@ -2986,6 +3029,87 @@
             initMatrixCodeCard();
         });
         
+        // ===================== HAMBURGUER PRANK
+        // Estado da intensidade
+        // Estado da chuva de hambúrgueres
+        let hamburguerAtivo = false;
+        let intervalId = null;
+
+        // Função para criar hambúrgueres aleatórios
+        function criarHamburguer() {
+            const hamburguer = document.createElement('div');
+            hamburguer.textContent = '🍔';
+            hamburguer.style.position = 'fixed';
+            hamburguer.style.fontSize = Math.random() * 3 + 'em';
+            hamburguer.style.left = Math.random() * window.innerWidth + 'px';
+            hamburguer.style.top = Math.random() * window.innerHeight + 'px';
+            hamburguer.style.zIndex = '9999';
+            hamburguer.style.transform = 'translate(-50%, -50%)';
+            hamburguer.style.filter = 'drop-shadow(2px 2px 4px rgba(0,0,0,0.5))';
+            hamburguer.style.animation = `cair ${Math.random() * 3 + 2}s linear forwards`;
+            
+            document.body.appendChild(hamburguer);
+            
+            setTimeout(() => {
+                hamburguer.remove();
+            }, 5000);
+        }
+
+        // Criar animação CSS
+        if (!document.getElementById('hamburguer-style')) {
+            const style = document.createElement('style');
+            style.id = 'hamburguer-style';
+            style.textContent = `
+                @keyframes cair {
+                    0% {
+                        transform: translate(-50%, -50%) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translate(-50%, ${window.innerHeight}px) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Função principal
+        function burguerPrank() {
+            if (hamburguerAtivo) {
+                // PARAR
+                hamburguerAtivo = false;
+                
+                if (intervalId) clearInterval(intervalId);
+                
+                // Remover hambúrgueres
+                document.querySelectorAll('div').forEach(el => {
+                    if (el.textContent === '🍔' && el.style.position === 'fixed') {
+                        el.remove();
+                    }
+                });
+                
+                console.log('🍔 Prank desativado!');
+            } else {
+                // INICIAR
+                hamburguerAtivo = true;
+                
+                intervalId = setInterval(() => {
+                    if (!hamburguerAtivo) {
+                        clearInterval(intervalId);
+                        return;
+                    }
+                    
+                    for (let i = 0; i < Math.random() * 5 + 1; i++) {
+                        setTimeout(() => {
+                            if (hamburguerAtivo) criarHamburguer();
+                        }, i * 200);
+                    }
+                }, 500);
+                
+                console.log('🍔 Prank ativado! Clique novamente para desativar.');
+            }
+        }
         //  ======== SEND EMAIL =========
         // FORM SUBMISSION
         (function () {emailjs.init("NqfTQIFWC0aJaiYIV"); /* Public Key*/ }) ();
