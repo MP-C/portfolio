@@ -1858,13 +1858,12 @@
             <div class="projects-grid">
                 <!-- Primeiro card de vídeo -->
                 <div class="project-card fade-in-up stagger-2">
-                    <div class="project-image" style="cursor: pointer; position: relative; background: #000;" 
-                        onmouseenter="playVideo('video1')" 
-                        onmouseleave="pauseVideo('video1')" 
-                        onclick="openVideoModal('video1')">
-                        <video id="video1" muted loop playsinline style="width: 100%; height: 100%; object-fit: cover; display: block;">
-                            <source src="./automaticReorganisationFiles.mp4" type="video/mp4">
-                        </video>
+                    <div class="project-image" style="cursor: pointer; position: relative; background: #000; aspect-ratio: 16/9; overflow: hidden;" 
+                        onmouseenter="playYT('player3')" 
+                        onmouseleave="pauseYT('player3')"
+                        onclick="window.open('https://www.youtube.com/watch?v=9br0gvtRuX4', '_blank')">
+                        <img src="./photo_automaticFiles.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
+                        <div id="player3" style="pointer-events: none; width: 100%; height: 100%;"></div>
                     </div>
                     <div class="project-content">
                         <h3>Automatic reorganisation files</h3>
