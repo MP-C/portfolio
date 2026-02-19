@@ -1566,7 +1566,7 @@
     <nav>
         <div class="container">
             <div class="logo" id="logoText" onclick="toggleLogo()">MC.</div>
-            <img src="profile-photo.jpg" alt="Profile Photo" class="logo-photo" id="logoPhoto" onclick="toggleLogo()">
+            <img src="photos/profile-photo.jpg" alt="Profile Photo" class="logo-photo" id="logoPhoto" onclick="toggleLogo()">
             <div class="mobile-menu" onclick="toggleMenu()">
                 <span></span>
                 <span></span>
@@ -1575,7 +1575,7 @@
             <ul id="navMenu">
                 <li><a href="#about" onclick="closeMenu()">About</a></li>
                 <li><a href="#work-process" onclick="closeMenu()">Work Process</a></li>
-                <li><a href="#portfolio" onclick="closeMenu()">Portfolio</a></li>
+                <li><a href="#portfolio" onclick="closeMenu()">Me & Projects</a></li>
                 <li><a href="#contact" onclick="closeMenu(),showQRCode()">Contact</a></li>
             </ul>
         </div>
@@ -1593,7 +1593,7 @@
 
     <!-- QR Code Modal -->
     <div class="qr-modal" id="qrModal" onclick="closeQRCode(event)">
-        <img src="qr-code.png" alt="QR Code">
+        <img src="./photos/qr-code.png" alt="QR Code">
         <p>Scan to connect with me!</p>
     </div>
 
@@ -1697,7 +1697,8 @@
                             </div>
                             <div class="card-back">
                                 <h3>Secret Setup</h3>
-                                <p><a href="./home.html" style="color: #0a0a0a;text-decoration: none;">Go Home!</a></p>
+                                <p><a href="./pages/retrogamespage.html" style="color: #0a0a0a;text-decoration: none;">Go Home!</a></p>
+                                <p><a href="./pages/dashboard/homedashboard.html" style="color: #0a0a0a;text-decoration: none;">Go Home!</a></p>
                                 <!--p style="font-size: 0.85rem;"><a href="https://cloud.marioc.com" target="_blank" style="color: #000000;text-decoration: none;transition: color 0.3s ease;" onmouseover="this.style.color='#e8a87c'"onmouseout="this.style.color='#000000'">Cloud</p>
                                 <p style="font-size: 0.85rem;"><a href="https://home.marioc.com" target="_blank" style="color: #000000;text-decoration: none;transition: color 0.3s ease;" onmouseover="this.style.color='#e8a87c'"onmouseout="this.style.color='#000000'">Home</p-->
                             </div>
@@ -1852,7 +1853,7 @@
     <!-- Portfolio Section -->
     <section id="portfolio">
         <div class="container">
-            <h2 class="fade-in-up">Portfolio</h2>
+            <h2 class="fade-in-up">Me & Projects</h2>
             <p class="fade-in-up stagger-1" style="text-align: center; margin-bottom: 3rem; color: var(--text-muted);">Additional projects showcasing versatility and innovation</p>
             
             <div class="projects-grid">
@@ -1862,7 +1863,7 @@
                         onmouseenter="playYT('player3')" 
                         onmouseleave="pauseYT('player3')"
                         onclick="window.open('https://www.youtube.com/watch?v=9br0gvtRuX4', '_blank')">
-                        <img src="./photo_automaticFiles.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
+                        <img src="./photos/photo_automaticFiles.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
                         <div id="player3" style="pointer-events: none; width: 100%; height: 100%;"></div>
                     </div>
                     <div class="project-content">
@@ -1909,7 +1910,7 @@
                         onmouseenter="playYT('player3')" 
                         onmouseleave="pauseYT('player3')"
                         onclick="window.open('https://www.youtube.com/watch?v=Tq14isQ7imA', '_blank')">
-                        <img src="./photo_startDayFaster.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
+                        <img src="./photos/photo_startDayFaster.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
                         <div id="player3" style="pointer-events: none; width: 100%; height: 100%;"></div>
                     </div>
                     
@@ -1925,7 +1926,7 @@
                 <!-- Quarto card -->
                 <div class="project-card fade-in-up stagger-4">
                     <div class="project-image VisitBrussels" onclick="window.open('https://mp-c.github.io/mp-c.visitBrussels/home.html', '_blank')" style="cursor: pointer; position: relative;">
-                        <img src="./VisitBrussels.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
+                        <img src="./photos/VisitBrussels.jpg" style="width: 100%; height: 100%; object-fit: contain; "/>
                     </div>
                     <div class="project-content">
                         <h3>Brussels Trip Planner</h3>
@@ -1942,7 +1943,7 @@
                     <div class="project-image writer-vibes" 
                         onclick="window.open('https://mp-crcarvalho.medium.com/', '_blank')" 
                         style="cursor: pointer; position: relative; height: 200px; overflow: hidden; background-color: #1a1a1a;">
-                        <img src="./Medium.jpg" style="width: 100%; height: 100%; object-fit: contain;"/>
+                        <img src="./photos/Medium.jpg" style="width: 100%; height: 100%; object-fit: contain;"/>
                     </div>
                     <div class="project-content">
                         <h3>Knowledge Sharing</h3>
@@ -1951,6 +1952,38 @@
                             <span class="tag">Medium</span>
                             <span class="tag">MySQL</span>
                             <span class="tag">Documentation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card fade-in-up stagger-4">
+                    <div class="project-image writer-vibes" 
+                        onclick="window.open('https://open.spotify.com/user/mariopcarvalho/playlists/', '_blank')" 
+                        style="cursor: pointer; position: relative; height: 200px; overflow: hidden; background-color: #1a1a1a;">
+                        <img src="./photos/spotifyme.jpg" style="width: 100%; height: 100%; object-fit: contain;"/>
+                    </div>
+                    <div class="project-content">
+                        <h3>Life vibes</h3>
+                        <p>Live with music. Follow and share.</p>
+                        <div class="project-tags">
+                            <span class="tag">Style</span>
+                            <span class="tag">Lifelong learner</span>
+                            <span class="tag">Music</span>
+                        </div>
+                    </div>
+                </div> 
+                <div class="project-card fade-in-up stagger-4">
+                    <div class="project-image writer-vibes" 
+                        onclick="window.open('https://www.marioc.eu/pages/retrogamespage.html', '_blank')" 
+                        style="cursor: pointer; position: relative; height: 200px; overflow: hidden; background-color: #1a1a1a;">
+                        <img src="./photos/retroWindows.jpg" style="width: 100%; height: 100%; object-fit: contain;"/>
+                    </div>
+                    <div class="project-content">
+                        <h3>Retro Games on Raspberry Pi</h3>
+                        <p>All Games at Home.</p>
+                        <div class="project-tags">
+                            <span class="tag">Games</span>
+                            <span class="tag">Raspberry Pi</span>
+                            <span class="tag">First Project</span>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,7 @@
+services:
+  mario-hub:
+    build: .
+    container_name: mario_cloud_hub
+    ports:
+      - "80:80"
+    restart: always
