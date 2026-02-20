@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
     <title>Operação Regresso 🏠</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body { background: #f0f4f8; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         .hero { background: linear-gradient(135deg, #003366, #00509d); color: white; padding: 50px 0; text-align: center; border-bottom: 5px solid #ffca28; }
@@ -14,30 +16,36 @@
         .card-pessoa:hover { transform: translateY(-5px); }
         .voto-item { background: white; margin-bottom: 5px; padding: 10px; border-radius: 10px; border-left: 5px solid #00509d; }
         .bubble { background: #e9ecef; padding: 10px; border-radius: 15px; min-height: 60px; display: flex; align-items: center; justify-content: center; font-style: italic; }
+        
+        /* Estilo Contagem Decrescente */
+        .countdown-section { background: #fff; border-radius: 20px; padding: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 2px solid #00509d; }
+        #timer { font-size: 2rem; font-weight: bold; color: #00509d; }
+        .winner-box { display: none; background: #ffca28; color: #003366; padding: 20px; border-radius: 15px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
 
 <div class="hero mb-5">
     <h1>📍 Operação Regresso 2026</h1>
-    <p class="lead">Clica nas nossas caras! Quem acertar o dia ganha um jantar!</p>
+    <p class="lead">Clica nas nossas caras para veres o nosso estado de espirito!</p>
 </div>
 
 <div class="container">
     <div class="row text-center mb-5">
         <div class="col-md-4 mb-3">
             <div class="card card-pessoa p-4 h-100">
-                <span class="avatar-3d" onclick="mudarFrase('mario')">🧔‍♂️</span>
+                <span class="avatar-3d" onclick="mudarFrase('mario')">🧔🏻‍♂️</span>
                 <h3 class="mt-3">Mário</h3>
                 <div class="bubble mb-3">
                     <p id="frase-mario" class="small m-0">"Já estou a embalar a cave."</p>
                 </div>
-                <div class="badge bg-primary">50% Pronto</div>
+                <div class="badge bg-primary">0.05% Pronto</div>
             </div>
         </div>
         <div class="col-md-4 mb-3">
             <div class="card card-pessoa p-4 h-100">
-                <span class="avatar-3d" onclick="mudarFrase('joana')">👩‍🦰</span>
+                <span class="avatar-3d" onclick="mudarFrase('joana')">👩🏻</span>
                 <h3 class="mt-3">Joana</h3>
                 <div class="bubble mb-3">
                     <p id="frase-joana" class="small m-0">"A controlar a logística e a ansiedade."</p>
@@ -47,7 +55,7 @@
         </div>
         <div class="col-md-4 mb-3">
             <div class="card card-pessoa p-4 h-100">
-                <span class="avatar-3d" onclick="mudarFrase('lourenco')">👶</span>
+                <span class="avatar-3d" onclick="mudarFrase('lourenco')">👶🏻</span>
                 <h3 class="mt-3">Lourenço</h3>
                 <div class="bubble mb-3">
                     <p id="frase-lourenco" class="small m-0">"Só quero saber se há espaço para os brinquedos."</p>
@@ -57,9 +65,13 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row mb-5">
         <div class="col-md-6 mb-4">
             <div class="p-4 bg-white shadow rounded-4">
+                <div class="alert alert-warning text-center fw-bold mb-4" style="border-radius: 15px; border: 2px dashed #ffca28;">
+                    🎁🍾🍽️ Quem acertar no dia ganha um jantar de luxo! 🍕🥣🍹
+                </div>
+                
                 <h4>📅 Quando é que chegamos?</h4>
                 <p class="small text-muted">Vota no dia de 2026 que achas que vamos aterrar.</p>
                 <input type="text" id="nome" class="form-control mb-2" placeholder="Teu Nome">
@@ -77,15 +89,34 @@
             </div>
         </div>
     </div>
+
+    <div class="row mb-5 justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="countdown-section">
+                <h4 id="countdown-title">⏳ Tempo restante até saber dos resultados:</h4>
+                <div id="timer" class="my-3"></div>
+                
+                <div id="winner-zone" class="winner-box">
+                    <h3>🏆 VENCEDOR(A) DO JANTAR 🏆</h3>
+                    <h2 id="winner-name" class="fw-bold">...</h2>
+                    <p class="m-0">Parabéns! Acertaste na mosca!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center pb-5 opacity-50">
+        <p>© 2026 Operação Regresso | Desenvolvido com ❤️</p>
+    </footer>
 </div>
 
 <script>
-    // COLOCA AQUI O TEU URL (Ex: https://script.google.com/macros/s/XXXXX/exec)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySlgE7eXhIUYaLHXYzcmmE9Bddg7h-VAjCMOwUJqWrqXAVg7V6zPFZJVDXbksNko0lAw/exec";
+    
     const frases = {
-        mario: ["Já estou a embalar a cave.", "Vai ser difícil dizer 'Até já!'", "Vou precisar de uma carrinha só para os gadgets.", "Quem me ajuda com os servidores?", "Saudades de um pastel de nata!", "Docker pronto para a migração física."],
-        joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Quantas malas é que o bebé precisa?!", "Só de pensar na viagem já estou cansada.", "Vou chegar e ir direta para a praia!", "Faltam X mil abraços."],
-        lourenco: ["Só quero saber dos brinquedos!", "Já chegamos?", "O avião tem Wi-Fi para o Panda?", "Vou andar no colo de muita gente!", "Gugu dada?", "Preparem as bochechas! Vou com tudo e 6 dentes"]
+        mario: ["Já vou ter de embalar a cave..psss", "Vai ser difícil dizer 'Até já!'", "O que fazmos a isto", "Vou precisar de uma carrinha só para os gadgets.", "Quem me ajuda com os servidores?", "Saudades de um pastel de nata!", "Docker pronto para a migração física."],
+        joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Se não usas há mais de um ano, dá!", "Quantas malas é que o bebé precisa?!", "Só de pensar na viagem já estou cansada.", "Vou chegar e ir direta para a praia!", "Faltam 3 mil abraços de despedida."],
+        lourenco: ["Só quero saber dos brinquedos!", "Já chegámos?", "O avião tem Wi-Fi para o Panda?", "Vou andar no colo de muita gente!", "Gugu dada?", "Preparem as bochechas! Vou com tudo e 6 dentes"]
     };
 
     let indices = { mario: 0, joana: 0, lourenco: 0 };
@@ -100,33 +131,43 @@
         const data = document.getElementById('data').value;
 
         if(!nome || !data) return alert("Preenche tudo!");
+        if(localStorage.getItem('ja_votei')) return alert("Já votaste! 😉");
+
+        const btn = document.getElementById("btnVotar");
+        btn.disabled = true;
+        btn.innerText = "A enviar...";
 
         const urlFinal = SCRIPT_URL + "?nome=" + encodeURIComponent(nome) + "&data=" + encodeURIComponent(data);
 
         try {
-            // Usamos mode: 'no-cors' para evitar bloqueios de segurança do navegador
             await fetch(urlFinal, { method: 'GET', mode: 'no-cors' });
-            
-            alert("✅ Aposta enviada! Verifica a lista.");
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#003366', '#ffca28', '#ffffff'] });
+
             localStorage.setItem('ja_votei', 'true');
-            location.reload();
+            setTimeout(() => {
+                alert("🎉 REGISTADO! Boa sorte!");
+                location.reload();
+            }, 1000);
         } catch (e) {
-            alert("Erro ao ligar ao Google.");
+            alert("Erro ao enviar.");
+            btn.disabled = false;
         }
     }
 
     async function renderizarVotos() {
-        if(!SCRIPT_URL || SCRIPT_URL.includes("COLA_AQUI")) return;
-        
         const lista = document.getElementById('lista-votos');
         try {
-            const res = await fetch(SCRIPT_URL);
+            const res = await fetch(SCRIPT_URL, { redirect: 'follow' });
             const dados = await res.json();
             
             if(!dados || dados.length === 0) {
                 lista.innerHTML = '<p class="text-muted small">Ainda ninguém arriscou!</p>';
                 return;
             }
+
+            // Identificar vencedores (quem votou 2026-05-01)
+            const vencedores = dados.filter(v => v[1] === "2026-05-01").map(v => v[0]);
+            if (vencedores.length > 0) window.vencedoresData = vencedores;
 
             dados.sort((a,b) => new Date(a[1]) - new Date(b[1]));
 
@@ -139,12 +180,38 @@
                 </div>
             `).join('');
         } catch (e) {
-            lista.innerHTML = '<p class="text-danger small">Clica no botão para votar!</p>';
+            lista.innerHTML = '<p class="text-danger small">Erro ao carregar votos.</p>';
         }
     }
 
-    window.onload = renderizarVotos;
+    // Lógica da Contagem Decrescente
+    function updateCountdown() {
+        const targetDate = new Date("May 1, 2026 00:00:00").getTime();
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+
+        if (distance < 0) {
+            document.getElementById("countdown-title").innerHTML = "✈️ JÁ CHEGÁMOS!";
+            document.getElementById("timer").style.display = "none";
+            const zone = document.getElementById("winner-zone");
+            zone.style.display = "block";
+            document.getElementById("winner-name").innerText = window.vencedoresData ? window.vencedoresData.join(", ") : "Ninguém acertou :(";
+            return;
+        }
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    window.onload = () => {
+        renderizarVotos();
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    };
 </script>
 </body>
 </html>
-    
