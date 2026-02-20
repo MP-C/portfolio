@@ -81,7 +81,7 @@
 
 <script>
     // COLOCA AQUI O TEU URL (Ex: https://script.google.com/macros/s/XXXXX/exec)
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVtXQxkYVbyP-y8yGu0paJ_QX7A2oMIw0M4SlkEwhmTOQ7RFp-EUB5GIUoxdYXa-kicA/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySlgE7eXhIUYaLHXYzcmmE9Bddg7h-VAjCMOwUJqWrqXAVg7V6zPFZJVDXbksNko0lAw/exec";
     const frases = {
         mario: ["Já estou a embalar a cave.", "Vai ser difícil dizer 'Até já!'", "Vou precisar de uma carrinha só para os gadgets.", "Quem me ajuda com os servidores?", "Saudades de um pastel de nata!", "Docker pronto para a migração física."],
         joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Quantas malas é que o bebé precisa?!", "Só de pensar na viagem já estou cansada.", "Vou chegar e ir direta para a praia!", "Faltam X mil abraços."],
@@ -100,31 +100,18 @@
         const data = document.getElementById('data').value;
 
         if(!nome || !data) return alert("Preenche tudo!");
-        if(localStorage.getItem('ja_votei')) return alert("Já votaste! 😉");
 
-        const btn = document.getElementById("btnVotar");
-        btn.disabled = true;
-        btn.innerText = "A enviar...";
-
-        // Enviar via formulário oculto (mais fiável para o Google sem erros de CORS)
-        const formData = new FormData();
-        formData.append('nome', nome);
-        formData.append('data', data);
+        const urlFinal = SCRIPT_URL + "?nome=" + encodeURIComponent(nome) + "&data=" + encodeURIComponent(data);
 
         try {
-            await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: new URLSearchParams(formData)
-            });
-
-            // Como o no-cors não permite ler a resposta, assumimos sucesso após o envio
+            // Usamos mode: 'no-cors' para evitar bloqueios de segurança do navegador
+            await fetch(urlFinal, { method: 'GET', mode: 'no-cors' });
+            
+            alert("✅ Aposta enviada! Verifica a lista.");
             localStorage.setItem('ja_votei', 'true');
-            alert("✅ Aposta enviada! Se não aparecer na lista, refresca a página em 10 segundos.");
-            setTimeout(() => location.reload(), 1500);
+            location.reload();
         } catch (e) {
-            alert("Erro na ligação. Tenta de novo.");
-            btn.disabled = false;
+            alert("Erro ao ligar ao Google.");
         }
     }
 
