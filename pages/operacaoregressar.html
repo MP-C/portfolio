@@ -111,7 +111,7 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbySlgE7eXhIUYaLHXYzcmmE9Bddg7h-VAjCMOwUJqWrqXAVg7V6zPFZJVDXbksNko0lAw/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx-mjpw6I9FWw9qQYv5ltd6E6RgYAfbvqTimMuI-YhtKmP0Q0JQK05u2Ak3sCYVAHlP2g/exec";
     
     const frases = {
         mario: ["Já vou ter de embalar a cave..psss", "Vai ser difícil dizer 'Até já!'", "O que fazmos a isto", "Vou precisar de uma carrinha só para os gadgets.", "Quem me ajuda com os servidores?", "Saudades de um pastel de nata!", "Docker pronto para a migração física."],
@@ -157,18 +157,23 @@
     async function renderizarVotos() {
         const lista = document.getElementById('lista-votos');
         try {
-            const res = await fetch(SCRIPT_URL, { redirect: 'follow' });
-            const dados = await res.json();
+            // Adicionamos um timestamp para evitar que o browser use cache antigo
+            const res = await fetch(SCRIPT_URL + "?cacheburst=" + new Date().getTime());
+            
+            // O Google Apps Script às vezes retorna HTML em vez de JSON se houver erro
+            const texto = await res.text();
+            const dados = JSON.parse(texto);
             
             if(!dados || dados.length === 0) {
                 lista.innerHTML = '<p class="text-muted small">Ainda ninguém arriscou!</p>';
                 return;
             }
 
-            // Identificar vencedores (quem votou 2026-05-01)
-            const vencedores = dados.filter(v => v[1] === "2026-05-01").map(v => v[0]);
+            // Lógica dos vencedores
+            const vencedores = dados.filter(v => v[1].includes("2026-05-01")).map(v => v[0]);
             if (vencedores.length > 0) window.vencedoresData = vencedores;
 
+            // Ordenar e Renderizar
             dados.sort((a,b) => new Date(a[1]) - new Date(b[1]));
 
             lista.innerHTML = dados.map(v => `
@@ -180,7 +185,8 @@
                 </div>
             `).join('');
         } catch (e) {
-            lista.innerHTML = '<p class="text-danger small">Erro ao carregar votos.</p>';
+            console.error("Erro detalhado:", e);
+            lista.innerHTML = '<p class="text-danger small">A carregar apostas (tenta refrescar)...</p>';
         }
     }
 
