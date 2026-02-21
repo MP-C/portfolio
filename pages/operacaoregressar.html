@@ -111,7 +111,7 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjm7Qd210XZiX0y1FLIDqbzCNQ9x2yQb-w_UfucbepeuXr-cyG9nFY8vhZC8dpnNPm/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-sVOkhaqV7rZL-bbOFjedwXXhtu4WreeNTEoX5pwpB9M9QMBCaZt5yekLr7vTyePnuw/exec";
     
     const frases = {
         mario: ["Já vou ter de embalar a cave..psss", "Vai ser difícil dizer 'Até já!'", "O que fazmos a isto? Guarda-se?", "Vou precisar de uma carrinha só para os gadgets.", "Quem me ajuda com os servidores?", "Saudades de um pastel de nata!", "Docker pronto para a migração física."],
@@ -154,72 +154,46 @@
         }
     }
 
-async function renderizarVotos() {
-    const lista = document.getElementById('lista-votos');
-    
-    // Mostra um estado de carregamento
-    lista.innerHTML = '<p class="text-muted small">A ligar ao Google Sheets...</p>';
+    function renderizarVotos() {
+        const lista = document.getElementById('lista-votos');
+        lista.innerHTML = '<p class="text-muted small">A carregar apostas...</p>';
 
-    try {
-        // O truque: Adicionamos o parâmetro de redirecionamento manual
-        const response = await fetch(SCRIPT_URL, {
-            method: 'GET',
-            headers: { 'Content-Type': 'text/plain' },
-        });
+        // Criamos um pedido "JSONP" que o Google não bloqueia
+        const script = document.createElement('script');
+        // Chamamos o URL com ?callback=processarDados
+        script.src = SCRIPT_URL + "?callback=processarDados&t=" + new Date().getTime();
+        document.body.appendChild(script);
+    }
 
-        // Se o fetch falhar por CORS, o Google Script precisa de uma pequena alteração
-        // Mas vamos tentar processar a resposta primeiro
-        const dados = await response.json();
-
+    // Esta função é chamada automaticamente quando o Google responde
+    window.processarDados = function(dados) {
+        const lista = document.getElementById('lista-votos');
+        
         if (!dados || dados.length === 0) {
             lista.innerHTML = '<p class="text-muted small">Ainda ninguém arriscou!</p>';
             return;
         }
 
-        // Lógica dos vencedores (com proteção para datas inválidas)
+        // Lógica dos vencedores para o dia 1 de Maio
         const vencedores = dados.filter(v => v[1] && v[1].toString().includes("2026-05-01")).map(v => v[0]);
         window.vencedoresData = vencedores;
 
-        // Ordenar: as datas vêm do Sheets, garantimos que são tratadas como datas
+        // Ordenar por data
         dados.sort((a, b) => new Date(a[1]) - new Date(b[1]));
 
         lista.innerHTML = dados.map(v => {
-            const dataObj = new Date(v[1]);
-            const dataValida = !isNaN(dataObj.getTime()) ? dataObj.toLocaleDateString('pt-PT') : v[1];
-            
+            const d = new Date(v[1]);
+            const dataFormatada = !isNaN(d.getTime()) ? d.toLocaleDateString('pt-PT') : v[1];
             return `
                 <div class="voto-item">
                     <div class="d-flex justify-content-between align-items-center">
                         <strong>${v[0]}</strong>
-                        <span class="badge bg-dark">${dataValida}</span>
+                        <span class="badge bg-dark">${dataFormatada}</span>
                     </div>
                 </div>
             `;
         }).join('');
-
-    } catch (e) {
-        console.error("Erro no Fetch:", e);
-        // Se der erro de CORS, tentamos uma alternativa simples:
-        lista.innerHTML = '<p class="text-muted small">A carregar dados de forma segura...</p>';
-        tentarCarregarViaScript(); 
-    }
-}
-
-// Alternativa caso o Fetch falhe (JSONP Style)
-function tentarCarregarViaScript() {
-    // Esta função é um plano B caso o navegador bloqueie o Fetch
-    // Mas requer que o Google Script esteja configurado para responder JSON
-    const script = document.createElement('script');
-    script.src = SCRIPT_URL + "?callback=processarDados";
-    document.body.appendChild(script);
-}
-
-// Esta função será chamada pelo plano B
-window.processarDados = function(dados) {
-    // Re-utiliza a lógica de renderização
-    // (Podes copiar a lógica do map acima para aqui se o fetch falhar sempre)
-    console.log("Dados recebidos via JSONP:", dados);
-};
+    };
 
 
     // Lógica da Contagem Decrescente
@@ -246,9 +220,9 @@ window.processarDados = function(dados) {
     }
 
     window.onload = () => {
-        renderizarVotos();
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
+        renderizarVotos(); // Carrega a lista
+        setInterval(updateCountdown, 1000); // Inicia o relógio
+        updateCountdown(); 
     };
 </script>
 </body>
