@@ -69,11 +69,11 @@
         <div class="col-md-6 mb-4">
             <div class="p-4 bg-white shadow rounded-4">
                 <div class="alert alert-warning text-center fw-bold mb-4" style="border-radius: 15px; border: 2px dashed #ffca28;">
-                    🎁🍾🍽️ Quem acertar no dia da nossa volta ganha um jantar de luxo! 🍕🥣🍹
+                    🎁🍾🍽️ Quem acertar no dia da nossa volta ganha o primiero jantar de luxo em nossa casa! 🍕🥣🍹
                 </div>
                 
                 <h4>📅 Quando é que chegamos?</h4>
-                <p class="small text-muted">Vota no dia de 2026 que achas que vamos aterrar.</p>
+                <p class="small text-muted">Aposta num dia de 2026, que achas que vamos aterrar na terrinha.</p>
                 <input type="text" id="nome" class="form-control mb-2" placeholder="Teu Nome">
                 <input type="date" id="data" class="form-control mb-3" min="2026-01-01" max="2026-12-31">
                 <button id="btnVotar" onclick="votar()" class="btn btn-primary w-100 fw-bold">Submeter Aposta!</button>
@@ -114,115 +114,89 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-sVOkhaqV7rZL-bbOFjedwXXhtu4WreeNTEoX5pwpB9M9QMBCaZt5yekLr7vTyePnuw/exec";
     
     const frases = {
-        mario: ["Já vou ter de embalar a cave..psss", "Vai ser difícil dizer 'Até já!'", "O que fazmos a isto? Guarda-se?", "Vou precisar de uma carrinha só para os gadgets.", "Quem me ajuda com os servidores?", "Saudades de um pastel de nata!", "Docker pronto para a migração física."],
-        joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Se não usas há mais de um ano, dá!", "Quantas malas é que o bebé precisa?!", "Só de pensar na viagem já estou cansada.", "Vou chegar e ir direta para a praia!", "Faltam 3 mil abraços de despedida."],
-        lourenco: ["Só quero saber dos brinquedos!", "Já chegámos?", "O avião tem Wi-Fi para o Panda?", "Vou andar no colo de muita gente!", "Gugu dada?", "Preparem as bochechas! Vou com tudo e 6 dentes"]
+        mario: ["Já vou ter de embalar a cave..psss", "Vai ser difícil dizer 'Até já!'", "Docker pronto para a migração física."],
+        joana: ["A controlar a logística e a ansiedade.", "Vou chegar e ir direta para a praia!", "Faltam 3 mil abraços de despedida."],
+        lourenco: ["Só quero saber dos brinquedos!", "Gugu dada?", "Preparem as bochechas!"]
     };
 
     let indices = { mario: 0, joana: 0, lourenco: 0 };
-
-    function mudarFrase(pessoa) {
-        indices[pessoa] = (indices[pessoa] + 1) % frases[pessoa].length;
-        document.getElementById(`frase-${pessoa}`).innerText = `"${frases[pessoa][indices[pessoa]]}"`;
+    function mudarFrase(p) { 
+        indices[p] = (indices[p] + 1) % frases[p].length; 
+        document.getElementById(`frase-${p}`).innerText = `"${frases[p][indices[p]]}"`; 
     }
 
-    async function votar() {
+    // Usar um formulário invisível ou Image ping para enviar sem CORS
+    function votar() {
         const nome = document.getElementById('nome').value.trim();
         const data = document.getElementById('data').value;
-
         if(!nome || !data) return alert("Preenche tudo!");
-        if(localStorage.getItem('ja_votei')) return alert("Já votaste! 😉");
-
+        
         const btn = document.getElementById("btnVotar");
         btn.disabled = true;
         btn.innerText = "A enviar...";
 
-        const urlFinal = SCRIPT_URL + "?nome=" + encodeURIComponent(nome) + "&data=" + encodeURIComponent(data);
-
-        try {
-            await fetch(urlFinal, { method: 'GET', mode: 'no-cors' });
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 }, colors: ['#003366', '#ffca28', '#ffffff'] });
-
+        // Técnica de Image Ping para enviar dados sem bloqueio de CORS
+        const img = new Image();
+        img.src = SCRIPT_URL + "?nome=" + encodeURIComponent(nome) + "&data=" + encodeURIComponent(data) + "&t=" + new Date().getTime();
+        
+        // Como o Google não devolve uma imagem real, ele vai dar "erro", mas o dado chega lá!
+        setTimeout(() => {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             localStorage.setItem('ja_votei', 'true');
-            setTimeout(() => {
-                alert("🎉 REGISTADO! Boa sorte!");
-                location.reload();
-            }, 1000);
-        } catch (e) {
-            alert("Erro ao enviar.");
-            btn.disabled = false;
-        }
+            alert("✅ Aposta registada com sucesso!");
+            location.reload();
+        }, 1500);
     }
 
+    // JSONP para receber dados
     function renderizarVotos() {
-        const lista = document.getElementById('lista-votos');
-        lista.innerHTML = '<p class="text-muted small">A carregar apostas...</p>';
-
-        // Criamos um pedido "JSONP" que o Google não bloqueia
         const script = document.createElement('script');
-        // Chamamos o URL com ?callback=processarDados
         script.src = SCRIPT_URL + "?callback=processarDados&t=" + new Date().getTime();
         document.body.appendChild(script);
     }
 
-    // Esta função é chamada automaticamente quando o Google responde
     window.processarDados = function(dados) {
         const lista = document.getElementById('lista-votos');
-        
         if (!dados || dados.length === 0) {
             lista.innerHTML = '<p class="text-muted small">Ainda ninguém arriscou!</p>';
             return;
         }
 
-        // Lógica dos vencedores para o dia 1 de Maio
-        const vencedores = dados.filter(v => v[1] && v[1].toString().includes("2026-05-01")).map(v => v[0]);
+        // Lógica do Vencedor (ajustar para o dia real da chegada se souberes)
+        const diaCerto = "2026-05-01";
+        const vencedores = dados.filter(v => v[1] && v[1].toString().includes(diaCerto)).map(v => v[0]);
         window.vencedoresData = vencedores;
 
-        // Ordenar por data
         dados.sort((a, b) => new Date(a[1]) - new Date(b[1]));
-
-        lista.innerHTML = dados.map(v => {
-            const d = new Date(v[1]);
-            const dataFormatada = !isNaN(d.getTime()) ? d.toLocaleDateString('pt-PT') : v[1];
-            return `
-                <div class="voto-item">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <strong>${v[0]}</strong>
-                        <span class="badge bg-dark">${dataFormatada}</span>
-                    </div>
-                </div>
-            `;
-        }).join('');
+        lista.innerHTML = dados.map(v => `
+            <div class="voto-item d-flex justify-content-between">
+                <strong>${v[0]}</strong>
+                <span class="badge bg-dark">${new Date(v[1]).toLocaleDateString('pt-PT')}</span>
+            </div>
+        `).join('');
     };
 
-
-    // Lógica da Contagem Decrescente
     function updateCountdown() {
-        const targetDate = new Date("June 23, 2026 00:00:00").getTime();
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+        const target = new Date("May 31, 2026 00:00:00").getTime();
+        const diff = target - new Date().getTime();
 
-        if (distance < 0) {
-            document.getElementById("countdown-title").innerHTML = "✈️ JÁ CHEGÁMOS!";
+        if (diff < 0) {
             document.getElementById("timer").style.display = "none";
-            const zone = document.getElementById("winner-zone");
-            zone.style.display = "block";
-            document.getElementById("winner-name").innerText = window.vencedoresData ? window.vencedoresData.join(", ") : "Ninguém acertou :(";
+            document.getElementById("winner-zone").style.display = "block";
+            document.getElementById("winner-name").innerText = window.vencedoresData?.length ? window.vencedoresData.join(", ") : "Ninguém acertou :(";
             return;
         }
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("timer").innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        document.getElementById("timer").innerHTML = `${d}d ${h}h ${m}m`;
     }
 
     window.onload = () => {
-        renderizarVotos(); // Carrega a lista
-        setInterval(updateCountdown, 1000); // Inicia o relógio
-        updateCountdown(); 
+        renderizarVotos();
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
     };
 </script>
 </body>
