@@ -111,52 +111,75 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw-sVOkhaqV7rZL-bbOFjedwXXhtu4WreeNTEoX5pwpB9M9QMBCaZt5yekLr7vTyePnuw/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbztWLncZOkem6610hSLSvTQp_omyslJLMPpCcNNjcKA-_xkkDR9qDq6AJiDAT87cEuKmA/exec";
     const diaChegada = "2026-05-31"; 
-    
+
     // --- FRASES ---
     const frases = {
         mario: ["Já vou ter de embalar a cave..psss", "Vou precisar de uma carrinha só para os gadgets.", "Docker pronto para a migração física."],
         joana: ["A controlar a logística e a ansiedade.", "Só de pensar na viagem já estou cansada.", "Vou chegar e ir direta para a praia!"],
         lourenco: ["Só quero saber dos brinquedos!", "O avião tem Wi-Fi para o Panda?", "Preparem as bochechas!"]
     };
+    
     let indices = { mario: 0, joana: 0, lourenco: 0 };
     function mudarFrase(p) {
         indices[p] = (indices[p] + 1) % frases[p].length;
         document.getElementById(`frase-${p}`).innerText = `"${frases[p][indices[p]]}"`;
     }
 
-    // --- ENVIO (VOTAR) ---
+    // --- FUNÇÃO PARA VOTAR ---
     function votar() {
         const nome = document.getElementById('nome').value.trim();
         const data = document.getElementById('data').value;
-        if(!nome || !data) return alert("Preenche tudo!");
-        if(localStorage.getItem('ja_votei')) return alert("Já votaste!");
+        if(!nome || !data) return alert("Preenche os campos!");
 
         const btn = document.getElementById("btnVotar");
         btn.disabled = true;
         btn.innerText = "A guardar...";
 
-        // TRUQUE: Enviar via injeção de script para evitar bloqueios CORS
         const script = document.createElement('script');
-        script.src = `${SCRIPT_URL}?nome=${encodeURIComponent(nome)}&data=${encodeURIComponent(data)}&callback=confirmarVoto`;
+        // Usamos o callback 'confirmarVoto'
+        script.src = SCRIPT_URL + "?nome=" + encodeURIComponent(nome) + 
+                    "&data=" + encodeURIComponent(data) + 
+                    "&callback=confirmarVoto";
         document.body.appendChild(script);
     }
 
-    window.confirmarVoto = function(res) {
+    window.confirmarVoto = function(resposta) {
         confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         localStorage.setItem('ja_votei', 'true');
-        alert("🎉 Aposta registada!");
+        alert("✅ Aposta enviada com sucesso!");
         location.reload();
     };
 
-    // --- LEITURA (RESULTADOS) ---
+    // --- FUNÇÃO PARA LER ---
     function renderizarVotos() {
         const script = document.createElement('script');
-        script.src = `${SCRIPT_URL}?callback=processarDados&t=${new Date().getTime()}`;
+        // Usamos o callback 'processarDados'
+        script.src = SCRIPT_URL + "?callback=processarDados&t=" + new Date().getTime();
         document.body.appendChild(script);
     }
 
+    window.processarDados = function(dados) {
+        const lista = document.getElementById('lista-votos');
+        if (!dados || dados.length === 0) {
+            lista.innerHTML = '<p class="text-muted small">Sem apostas ainda.</p>';
+            return;
+        }
+
+        // Configuração do Vencedor (Troca pela data que quiseres)
+        const diaVitoria = "2026-05-31"; 
+        window.vencedoresData = dados.filter(v => v[1] && v[1].toString().includes(diaVitoria)).map(v => v[0]);
+
+        dados.sort((a, b) => new Date(a[1]) - new Date(b[1]));
+
+        lista.innerHTML = dados.map(v => `
+            <div class="voto-item d-flex justify-content-between align-items-center">
+                <strong>${v[0]}</strong>
+                <span class="badge bg-dark">${v[1]}</span>
+            </div>
+        `).join('');
+    };
     window.processarDados = function(dados) {
         const lista = document.getElementById('lista-votos');
         if (!dados || dados.length === 0) {
