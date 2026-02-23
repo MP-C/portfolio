@@ -1,23 +1,53 @@
 :root {
     --glass: rgba(255, 255, 255, 0.07);
     --glass-hover: rgba(255, 255, 255, 0.15);
-    --accent: #3892f8;
+    --accent: #1258a7;
 }
 
-        
 body {
-    /* Substitui 'fundo.jpg' pelo nome da tua imagem ou um URL */
-    background: url('./background.jpeg') no-repeat center center fixed;
-    background-size: cover;
     color: #f1f5f9;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
     margin: 0;
+    position: relative;
+    background: #0f172a; /* Cor de segurança caso a imagem falhe */
 }
 
-/* Ajuste na stats-bar para garantir que ela desliza sobre o fundo fixo */
+/* TÉCNICA PARA O FUNDO FIXO EM MOBILE */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Substitui pelo teu URL */
+    background: url('./background.jpeg') no-repeat center center;
+    background-size: cover;
+    z-index: -1; /* Fica atrás de tudo */
+    will-change: transform; /* Melhora a performance em telemóveis */
+}
+
+/* Ajustes para Mobile */
+@media (max-width: 768px) {
+    body::before {
+        /* No telemóvel, centralizamos a parte mais importante da imagem */
+        background-position: center center;
+    }
+    
+    .icon-wrapper {
+        font-size: 2.5rem; /* Reduz um pouco os emojis em ecrãs pequenos */
+    }
+    
+    .glass-card {
+        padding: 15px; /* Menos padding para ganhar espaço */
+    }
+}
+
+/* O resto do teu código continua igual daqui para baixo... */
+
 .stats-bar {
-    background: rgba(15, 23, 42, 0.8); /* Cor sólida com transparência para ler melhor sobre o fundo fixo */
+    background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -30,6 +60,7 @@ body {
 .glass-card {
     background: var(--glass);
     backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px); /* Adicionado para Safari */
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 25px;
@@ -40,6 +71,7 @@ body {
     flex-direction: column;
     height: 100%;
 }
+/* ... resto dos estilos ... */
 
 .glass-card:hover {
     transform: translateY(-8px);
