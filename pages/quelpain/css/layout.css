@@ -1,0 +1,334 @@
+/*
+ * layout.css — Quel Pain
+ * Global layout: body, nav, hero, sections, grid containers
+ */
+
+/* ── Body ── */
+body {
+  background-color: var(--ivory);
+  color: var(--dark);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;  /* nunca aparece barra de scroll horizontal */
+}
+
+/* ── Skip link (accessibility) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  background: var(--gold);
+  color: var(--dark);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-decoration: none;
+  z-index: calc(var(--z-nav) + 10);
+  border-radius: var(--radius-md);
+  transition: top var(--transition-fast);
+}
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ── Container ── */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: var(--space-16);
+}
+
+/* ── Navigation ── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  padding: var(--space-6) var(--space-16);
+  background: rgba(250, 247, 242, 0.90);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  transition: padding var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.nav.nav--scrolled {
+  padding-block: var(--space-4);
+  box-shadow: var(--shadow-md);
+}
+
+.nav__logo {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: .15em;
+  color: var(--olive);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  list-style: none;
+}
+
+.nav__link {
+  font-size: var(--text-xs);
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--warm-gray);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+.nav__link:hover,
+.nav__link:focus-visible { color: var(--gold); }
+
+.nav__burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  margin-left: auto;
+}
+.nav__burger-bar {
+  display: block;
+  width: 24px; height: 1.5px;
+  background: var(--olive);
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+/* Burger open state */
+.nav__burger[aria-expanded="true"] .nav__burger-bar:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.nav__burger[aria-expanded="true"] .nav__burger-bar:nth-child(2) {
+  opacity: 0;
+}
+.nav__burger[aria-expanded="true"] .nav__burger-bar:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Sections ── */
+.section {
+  padding-block: var(--space-28);
+}
+.section--cream   { background-color: var(--cream); }
+.section--ivory   { background-color: var(--ivory); }
+.section--dark    { background-color: var(--dark); }
+.section--olive   { background-color: var(--olive); }
+.section--no-pad-top { padding-top: 0; }
+
+.section__header {
+  margin-bottom: var(--space-16);
+}
+
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-2xl), 4vw, var(--text-4xl));
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--olive);
+  margin-bottom: var(--space-6);
+}
+.section__title--light { color: var(--cream); }
+
+.section__body {
+  font-size: var(--text-base);
+  line-height: 1.9;
+  color: var(--warm-gray);
+  max-width: 560px;
+}
+.section__body--light { color: rgba(200, 212, 188, 0.75); }
+
+/* ── Hero ── */
+.hero {
+  height: 100vh;          /* altura exacta do ecrã — não cresce mais */
+  max-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 80px;      /* nav height */
+  overflow: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.hero__content {
+  background-color: var(--olive);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-28) var(--space-20);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__content::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border: 1px solid rgba(184, 151, 90, 0.22);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero__content::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 200px; height: 200px;
+  border: 1px solid rgba(184, 151, 90, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 6vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--cream);
+  margin-bottom: var(--space-8);
+}
+.hero__title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero__slogan {
+  font-size: var(--text-base);
+  letter-spacing: .05em;
+  line-height: 1.85;
+  color: var(--light-sage);
+  max-width: 400px;
+  margin-bottom: var(--space-12);
+}
+
+.hero__gallery {
+  background-color: var(--cream);
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+}
+.hero__gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* Linha de cima (foto wide): 60% da altura, linha de baixo: 40% */
+  grid-template-rows: 60% 40%;
+  height: 100%;   /* preenche toda a coluna direita do hero */
+  gap: 3px;
+}
+.hero__img {
+  overflow: hidden;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  /* A figure por si só não tem altura — define-se aqui */
+  display: block;
+}
+.hero__img--wide {
+  grid-column: 1 / 3;
+}
+
+/* ── Imagens reais no hero ── */
+.hero__img img {
+  width: 100%;
+  height: 100%;         /* preenche toda a célula do grid */
+  object-fit: cover;    /* recorta sem deformar */
+  object-position: center;
+  display: block;
+  /* Remove qualquer espaço branco abaixo da imagem (inline baseline) */
+  vertical-align: bottom;
+  transition: transform var(--transition-slow);
+}
+.hero__img:hover img { transform: scale(1.03); }
+
+/* ── Petit-déjeuner — imagem real dentro do contentor ── */
+.pdj-image .img-ph {
+  /* Quando há uma <img> real, o div placeholder passa a ser apenas contentor */
+  display: block;         /* remove o flex que era para os ícones SVG */
+  height: 100%;
+  overflow: hidden;
+}
+.pdj-image .img-ph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* ── Galeria — imagem real dentro de .img-ph ── */
+.gallery__img-wrap.img-ph {
+  /* Era display:flex para centrar o SVG placeholder — passa a block com imagem real */
+  display: block;
+  overflow: hidden;
+}
+.gallery__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform var(--transition-slow);
+}
+.gallery__item:hover .gallery__img-wrap img { transform: scale(1.04); }
+
+/* ── Valeurs grid ── */
+.valeurs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-12);
+}
+
+/* ── Petit déjeuner ── */
+.pdj-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-24);
+  align-items: center;
+}
+
+/* ── Localisation ── */
+.loc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: var(--space-20);
+  align-items: start;
+  margin-top: var(--space-16);
+}
+
+/* ── Commandes ── */
+.cmd-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-24);
+  align-items: center;
+}
+
+/* ── Gallery strip ── */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  list-style: none;
+}
+
+/* ── Footer grid ── */
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}

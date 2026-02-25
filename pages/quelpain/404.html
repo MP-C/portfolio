@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             style-src 'self' https://fonts.googleapis.com;
+             font-src 'self' https://fonts.gstatic.com;
+             script-src 'self';
+             img-src 'self';
+             connect-src 'none'; frame-src 'none'; object-src 'none';
+             base-uri 'self'; form-action 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Page introuvable — Quel Pain</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <style>
+    body {
+      background-color: var(--ivory);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: var(--space-8);
+    }
+
+    .error-page {
+      text-align: center;
+      max-width: 560px;
+    }
+
+    .error-code {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 18vw, 12rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1;
+      position: relative;
+      display: inline-block;
+      margin-bottom: -1rem;
+    }
+
+    /* Bread slice illustration using CSS */
+    .error-code::before {
+      content: '';
+      position: absolute;
+      bottom: 12px; left: 50%;
+      transform: translateX(-50%);
+      width: 80%; height: 4px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+      display: block;
+      opacity: .45;
+    }
+
+    .error-label {
+      font-size: .62rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: var(--space-4);
+    }
+
+    .error-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 300;
+      color: var(--olive);
+      line-height: 1.15;
+      margin-bottom: var(--space-6);
+    }
+    .error-title em { font-style: italic; color: var(--gold); }
+
+    .error-body {
+      font-size: .9rem;
+      line-height: 1.85;
+      color: var(--warm-gray);
+      margin-bottom: var(--space-12);
+    }
+
+    .error-actions {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-body);
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .75rem 1.8rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background .25s, color .25s, border-color .25s;
+    }
+    .btn:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+    .btn--primary { background: var(--olive); color: var(--cream); }
+    .btn--primary:hover { background: var(--gold); color: var(--dark); }
+    .btn--outline { border-color: var(--olive); color: var(--olive); }
+    .btn--outline:hover { background: var(--olive); color: var(--cream); }
+
+    .error-divider {
+      width: 48px; height: 1px;
+      background: var(--gold);
+      margin: var(--space-8) auto;
+    }
+
+    .error-contact {
+      font-size: .8rem;
+      color: var(--warm-gray);
+    }
+    .error-contact a {
+      color: var(--olive);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color .2s;
+    }
+    .error-contact a:hover { border-bottom-color: var(--gold); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .error-code { animation: fadeDown .6s ease both; }
+      .error-label { animation: fadeUp .6s .1s ease both; }
+      .error-title { animation: fadeUp .6s .2s ease both; }
+      .error-body  { animation: fadeUp .6s .3s ease both; }
+      .error-actions { animation: fadeUp .6s .4s ease both; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <main id="main-content" role="main">
+    <article class="error-page" aria-labelledby="error-title">
+
+      <span class="error-code" aria-hidden="true">404</span>
+      <span class="error-icon" aria-hidden="true">🍞</span>
+
+      <span class="error-label">Page introuvable</span>
+
+      <h1 class="error-title" id="error-title">
+        Cette page s'est<br><em>évaporée comme la vapeur</em><br>d'un pain frais
+      </h1>
+
+      <p class="error-body">
+        La page que vous cherchez n'existe pas ou a été déplacée.<br>
+        Pas d'inquiétude — notre menu, lui, est bien là.
+      </p>
+
+      <div class="error-actions">
+        <a href="/" class="btn btn--primary" aria-label="Retour à l'accueil de Quel Pain">
+          <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9,22 9,12 15,12 15,22"/>
+          </svg>
+          Retour à l'accueil
+        </a>
+        <a href="/#menu" class="btn btn--outline">Voir le menu</a>
+      </div>
+
+      <div class="error-divider" aria-hidden="true"></div>
+
+      <p class="error-contact">
+        Un problème persistant ?
+        <a href="tel:+3225223689" aria-label="Appeler Quel Pain">02 522 36 89</a>
+        ou
+        <a href="mailto:contact@quelpain.be">contact@quelpain.be</a>
+      </p>
+
+    </article>
+  </main>
+
+</body>
+</html>

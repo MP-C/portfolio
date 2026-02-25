@@ -1,0 +1,385 @@
+{
+  "categories": [
+    { "id": "foccacia",  "label": "Foccacia & Baguette" },
+    { "id": "classique", "label": "Sandwich Classique"  },
+    { "id": "ciabatta",  "label": "Ciabatta Chaude"     },
+    { "id": "salades",   "label": "Salades & Soupe"     },
+    { "id": "breakfast", "label": "Breakfast"           }
+  ],
+  "items": [
+
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Pistachio",
+      "description": "Mortadelle italienne, crème de pistache, crème de gorgonzola, granulés de pistache et roquette",
+      "prix":        "12,00 €",
+      "badge":       "Bestseller",
+      "badge_type":  "gold"
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Tartufata",
+      "description": "Pancetta italienne, tartufata, provolone, tomates confites et roquette",
+      "prix":        "12,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Burratina",
+      "description": "Jambon de Parme, burratina, miel à la truffe, tomates confites et roquette",
+      "prix":        "12,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Porchetta",
+      "description": "Crème de gorgonzola, Porchetta italienne, crème de pistache, roquette et granulés de pistache",
+      "prix":        "12,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Mamma",
+      "description": "Stracciatela, mortadelle, olives vertes farcies au poivron et roquette",
+      "prix":        "12,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Straccia",
+      "description": "Tapenade de tomates séchées, stracciatela, aubergines et courgettes grillées, roquette",
+      "prix":        "12,00 €",
+      "badge":       "Végétarien",
+      "badge_type":  "green"
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Le Spécial",
+      "description": "Crème d'oignon rouge, pain de viande maison, crème de gorgonzola",
+      "prix":        "12,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "foccacia",
+      "nom":         "Disponible en baguette à l'ancienne",
+      "description": "Tous les sandwichs ci-dessus sont également disponibles en baguette à l'ancienne",
+      "prix":        "10,00 €",
+      "badge":       "Option baguette",
+      "badge_type":  "gold"
+    },
+
+    {
+      "categorie":   "classique",
+      "nom":         "Le Club",
+      "description": "Jambon cuit, fromage, mayonnaise, concombres, tomates, œuf et salade",
+      "prix":        "6,50 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "classique",
+      "nom":         "Le Thon mayonnaise ou piquant",
+      "description": "Thon, mayonnaise ou sauce piquante au choix",
+      "prix":        "5,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "classique",
+      "nom":         "L'Américain",
+      "description": "Américain, cornichons, oignons, tomates, moutarde et ketchup",
+      "prix":        "5,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "classique",
+      "nom":         "Le Martino",
+      "description": "Américain, cornichons, oignons, tomates, moutarde et ketchup",
+      "prix":        "6,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Fort",
+      "description": "Coppa, prosciutto, brie, noix, roquette",
+      "prix":        "6,20 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Carpaccio",
+      "description": "Carpaccio, rucola, parmesan, pesto",
+      "prix":        "6,20 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Quel Pain",
+      "description": "Sauce au choix, sauce curry, sésame et oignons frits",
+      "prix":        "6,00 €",
+      "badge":       "Signature",
+      "badge_type":  "gold"
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Bighetti",
+      "description": "Filet de dinde, jambon de parme, tomates confites, roquette",
+      "prix":        "6,20 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le London",
+      "description": "Jambon à l'os, cheddar, bacon, oignons frits",
+      "prix":        "6,20 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Coppa",
+      "description": "Coppa, épinards, olive, chèvre, ail grillé, tomates séchées",
+      "prix":        "6,20 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Piquant",
+      "description": "Salami piquant, camembert, roquette, tomates séchées",
+      "prix":        "6,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Doux",
+      "description": "Brie, noix, épinards rouges",
+      "prix":        "5,50 €",
+      "badge":       "Végétarien",
+      "badge_type":  "green"
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Végétarien",
+      "description": "Aubergines, courgettes, mozzarella, tomates confites",
+      "prix":        "5,50 €",
+      "badge":       "Végétarien",
+      "badge_type":  "green"
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Poulet",
+      "description": "Filet de poulet, provolone, tomates fraîches, roquette",
+      "prix":        "5,90 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "L'Italien",
+      "description": "Jambon de parme, mozzarella, tomates fraîches, roquette",
+      "prix":        "6,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "La Tradition",
+      "description": "Jambon de parme, mozzarella, tomates confites",
+      "prix":        "6,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "ciabatta",
+      "nom":         "Le Saumon",
+      "description": "Saumon, fromage frais, tomates confites, roquette",
+      "prix":        "6,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+
+    {
+      "categorie":   "salades",
+      "nom":         "Soupe de la semaine",
+      "description": "Soupe du jour servie avec pain et beurre",
+      "prix":        "4,00 €",
+      "badge":       "Soupe",
+      "badge_type":  "gold"
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La César « QP »",
+      "description": "Blanc de poulet, parmesan, oignons frits, œufs, sauce curry, miel, tomates confites — pain et beurre inclus",
+      "prix":        "11,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La Campagnarde",
+      "description": "Brie, jambon de parme, parmesan, pesto vert, aubergines, tomates confites — pain et beurre inclus",
+      "prix":        "11,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La Norvégienne",
+      "description": "Saumon, bûche de chèvre, oignons verts, tomates confites",
+      "prix":        "11,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La Chevrette",
+      "description": "Crottin de Chavignol, noix, balsamique, raisins secs, miel, tomates séchées",
+      "prix":        "12,00 €",
+      "badge":       "Végétarien",
+      "badge_type":  "green"
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La Grecque",
+      "description": "Feta, tapenade d'olive, aubergine, courgette, oignons rouges, tomates fraîches, concombre",
+      "prix":        "11,00 €",
+      "badge":       "Végétarien",
+      "badge_type":  "green"
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La Beef",
+      "description": "Rosbœuf, parmesan, pesto, roquette",
+      "prix":        "11,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "L'Italienne",
+      "description": "Mozzarella, jambon de parme, pesto vert, tomates confites",
+      "prix":        "11,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "salades",
+      "nom":         "La Libanaise",
+      "description": "Falafels, houmous, oignons rouges, tomates cerises, concombre",
+      "prix":        "11,50 €",
+      "badge":       "Vegan",
+      "badge_type":  "green"
+    },
+
+    {
+      "categorie":   "breakfast",
+      "nom":         "Boissons chaudes",
+      "description": "Café, macchiato, double espresso, cappuccino à l'italienne ou chantilly, chocolat chaud — Grand: 3,00 €",
+      "prix":        "2,50 €",
+      "badge":       "Jusqu'à 11h",
+      "badge_type":  "gold"
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Thé, infusion ou café froid",
+      "description": "Thé Earl Grey Royal, Darjeeling Bio, Vert Sencha Bio, tisane de fruits rouges — à emporter aussi",
+      "prix":        "2,80 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Viennoiseries artisanales",
+      "description": "Pain au chocolat, croissant au beurre, couronne du boulanger, croissant aux amandes, nuit à la crème",
+      "prix":        "2,50 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Tartine baguette à l'ancienne",
+      "description": "Tartine grillée avec garniture au choix",
+      "prix":        "3,50 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Assiette de fromage",
+      "description": "Sélection de fromages du jour",
+      "prix":        "5,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Assiette de jambon",
+      "description": "Jambon artisanal tranché",
+      "prix":        "5,50 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Assiette jambon et fromage",
+      "description": "Jambon et sélection de fromages du jour",
+      "prix":        "3,50 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Croissant jambon/fromage",
+      "description": "Croissant artisanal garni jambon et fromage",
+      "prix":        "3,50 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Croissant tomate/mozzarella",
+      "description": "Croissant artisanal garni tomate et mozzarella",
+      "prix":        "5,00 €",
+      "badge":       "Végétarien",
+      "badge_type":  "green"
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Œuf sur le plat (x2)",
+      "description": "Deux œufs sur le plat",
+      "prix":        "5,00 €",
+      "badge":       null,
+      "badge_type":  null
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Jus d'orange frais pressé",
+      "description": "Pressé à la commande — Grand: 4,50 € — À emporter: 3,50 €",
+      "prix":        "3,50 €",
+      "badge":       "Jus frais",
+      "badge_type":  "gold"
+    },
+    {
+      "categorie":   "breakfast",
+      "nom":         "Formule Quel Pain",
+      "description": "Boisson chaude + 1 viennoiserie + 1 jus pressé — ou — boisson chaude + 1/2 baguette + 1 jus pressé",
+      "prix":        "8,00 €",
+      "badge":       "Formule",
+      "badge_type":  "gold"
+    }
+
+  ]
+}

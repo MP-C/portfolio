@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Security: Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             style-src 'self' https://fonts.googleapis.com;
+             font-src 'self' https://fonts.gstatic.com;
+             script-src 'self';
+             img-src 'self' data:;
+             connect-src 'none';
+             frame-src 'none';
+             object-src 'none';
+             base-uri 'self';
+             form-action 'self';">
+
+  <!-- Security headers via meta (complementary to server headers) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
+
+  <!-- SEO & Social -->
+  <title>Quel Pain — Sandwicherie & Épicerie Fine · Bruxelles</title>
+  <meta name="description" content="Quel Pain, votre sandwicherie artisanale à Bruxelles. Sandwichs froids et chauds, salades, petit-déjeuner et espace de travail. Bd du Jardin Botanique 37, 1000 Bruxelles.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Quel Pain">
+  <link rel="canonical" href="https://quelpain.be/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="restaurant">
+  <meta property="og:title" content="Quel Pain — Sandwicherie Artisanale à Bruxelles">
+  <meta property="og:description" content="L'art du bien manger au quotidien. Sandwichs, salades, petit-déjeuner. Bd du Jardin Botanique 37, Bruxelles.">
+  <meta property="og:url" content="https://quelpain.be/">
+  <meta property="og:locale" content="fr_BE">
+
+  <!-- Structured Data (Schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Quel Pain",
+    "description": "Sandwicherie artisanale et épicerie fine à Bruxelles",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Bd du Jardin Botanique 37",
+      "addressLocality": "Bruxelles",
+      "postalCode": "1000",
+      "addressCountry": "BE"
+    },
+    "telephone": "+3225223689",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "08:00",
+        "closes": "15:00"
+      }
+    ],
+    "servesCuisine": ["Sandwichs","Salades","Épicerie fine"],
+    "priceRange": "€€",
+    "url": "https://quelpain.be/"
+  }
+  </script>
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+  <!-- Skip to main content (accessibility) -->
+  <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+  <!-- ── NAVIGATION ── -->
+  <header role="banner">
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#hero" class="nav__logo" aria-label="Quel Pain — Retour à l'accueil">
+        <span aria-hidden="true">QUEL PAIN</span>
+      </a>
+
+      <!-- Mobile burger button -->
+      <button
+        class="nav__burger"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+        aria-label="Ouvrir le menu de navigation"
+        type="button">
+        <span class="nav__burger-bar" aria-hidden="true"></span>
+        <span class="nav__burger-bar" aria-hidden="true"></span>
+        <span class="nav__burger-bar" aria-hidden="true"></span>
+      </button>
+
+      <ul class="nav__links" id="nav-menu" role="list">
+        <li><a class="nav__link" href="#valeurs">Nos valeurs</a></li>
+        <li><a class="nav__link" href="#menu">Menu</a></li>
+        <li><a class="nav__link" href="#petit-dejeuner">Petit-déjeuner</a></li>
+        <li><a class="nav__link" href="#localisation">Localisation</a></li>
+        <li><a class="nav__link" href="#photos">Galerie</a></li>
+      </ul>
+
+      <a href="#commandes" class="btn btn--primary btn--sm nav__cta">Commander</a>
+    </nav>
+  </header>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main id="main-content">
+
+    <!-- ── HERO ── -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="label label--gold animate-fade-up">Sandwicherie Artisanale · Bruxelles</p>
+        <h1 class="hero__title animate-fade-up delay-1" id="hero-title">
+          L'art du<br><em>bien manger</em><br>au quotidien
+        </h1>
+        <p class="hero__slogan animate-fade-up delay-2">
+          Des sandwichs d'exception, des produits frais sélectionnés avec soin.
+          Quel Pain réinvente la pause déjeuner pour ceux qui refusent de choisir entre plaisir et exigence.
+        </p>
+        <a href="#menu" class="btn btn--outline animate-fade-up delay-3">Découvrir la carte</a>
+      </div>
+
+      <div class="hero__gallery" aria-hidden="true">
+        <div class="hero__gallery-grid">
+          <figure class="hero__img hero__img--wide">
+            <img
+              src="assets/images/img-1.jpg"
+              alt="Interior Quel Pain"
+              width="1400"
+              height="700"
+              loading="eager"
+              decoding="async">
+          </figure>
+          <figure class="hero__img">
+            <img
+              src="assets/images/img-2.jpg"
+              alt="Exterieur Quel Pain"
+              width="900"
+              height="700"
+              loading="eager"
+              decoding="async">
+          </figure>
+          <figure class="hero__img">
+            <img
+              src="assets/images/img-3.jpg"
+              alt="Quel Pain"
+              width="900"
+              height="700"
+              loading="eager"
+              decoding="async">
+        </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VALEURS ── -->
+    <section class="section section--cream" id="valeurs" aria-labelledby="valeurs-title">
+      <div class="container">
+        <div class="section__header">
+          <span class="label label--gold">Notre ADN</span>
+          <h2 class="section__title" id="valeurs-title">Valeurs &amp;<br>Engagements</h2>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="section__body">Chaque détail compte. De la sélection de nos producteurs à la présentation dans l'assiette, nous cultivons une exigence qui se ressent à chaque bouchée.</p>
+        </div>
+
+        <ul class="valeurs-grid" role="list">
+          <li class="valeur-card">
+            <div class="valeur-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true" focusable="false" width="44" height="44">
+                <path d="M12 2L9 9H2L7.5 13.5L5.5 21L12 16.5L18.5 21L16.5 13.5L22 9H15L12 2Z"/>
+              </svg>
+            </div>
+            <h3 class="valeur-card__title">Excellence locale</h3>
+            <p class="valeur-card__text">Nous travaillons avec des producteurs régionaux sélectionnés. Nos ingrédients frais sont approvisionnés quotidiennement pour garantir une qualité irréprochable.</p>
+          </li>
+          <li class="valeur-card">
+            <div class="valeur-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true" focusable="false" width="44" height="44">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <h3 class="valeur-card__title">Sans compromis</h3>
+            <p class="valeur-card__text">Zéro conservateur, zéro additif. Nos pains sont livrés chaque matin, nos garnitures préparées à l'heure. La fraîcheur n'est pas une option, c'est une promesse.</p>
+          </li>
+          <li class="valeur-card">
+            <div class="valeur-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true" focusable="false" width="44" height="44">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                <line x1="15" y1="9" x2="15.01" y2="9"/>
+              </svg>
+            </div>
+            <h3 class="valeur-card__title">Expérience avant tout</h3>
+            <p class="valeur-card__text">Un espace pensé pour vous ressourcer. Que vous veniez seul, en équipe ou pour emporter, chaque visite doit laisser une impression durable.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ── MENU ── -->
+    <section class="section section--dark" id="menu" aria-labelledby="menu-title">
+      <div class="container menu-container">
+        <div class="section__header">
+          <span class="label label--gold">La Carte</span>
+          <h2 class="section__title section__title--light" id="menu-title">Notre Menu</h2>
+          <div class="divider" aria-hidden="true"></div>
+          <p class="section__body section__body--light">Une offre pensée pour chaque moment de la journée, avec des créations qui changent au fil des saisons.</p>
+        </div>
+
+        <!-- Tab navigation -->
+        <div class="tabs" role="tablist" aria-label="Catégories du menu">
+          <button class="tab-btn tab-btn--active" role="tab" aria-selected="true" aria-controls="panel-froids" id="tab-froids" type="button">Sandwichs Froids</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-chauds" id="tab-chauds" type="button" tabindex="-1">Sandwichs Chauds</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-salades" id="tab-salades" type="button" tabindex="-1">Salades</button>
+          <button class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-boissons" id="tab-boissons" type="button" tabindex="-1">Boissons</button>
+        </div>
+
+        <!-- Panels -->
+        <div class="tab-panel tab-panel--active" role="tabpanel" id="panel-froids" aria-labelledby="tab-froids">
+          <ul class="menu-grid" role="list">
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Le Classique Quel Pain</h3>
+                <p class="menu-item__desc">Jambon fumé artisanal, beurre de baratte, cornichons maison, baguette tradition</p>
+                <span class="badge">Signature</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 9 euros 50">9,50 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Saumon &amp; Avocat</h3>
+                <p class="menu-item__desc">Saumon gravlax, avocat, cream cheese citronné, aneth, pain de seigle</p>
+                <span class="badge">Coup de cœur</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 12 euros">12,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Végétarien Printanier</h3>
+                <p class="menu-item__desc">Houmous artisanal, légumes grillés, feta AOC, herbes fraîches, ciabatta</p>
+                <span class="badge badge--green">Végétarien</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 10 euros">10,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Poulet Rôti Maison</h3>
+                <p class="menu-item__desc">Blanc de poulet fermier, mayonnaise au basilic, tomates séchées, roquette</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 11 euros 50">11,50 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Le Caprese Élégant</h3>
+                <p class="menu-item__desc">Burrata crémeuse, tomates cœur de bœuf, basilic génois, huile d'olive vierge, focaccia</p>
+                <span class="badge">Bestseller</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 11 euros">11,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Club Gourmet</h3>
+                <p class="menu-item__desc">Dinde rôtie, bacon fumé, œuf dur, avocat, pain brioché grillé</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 13 euros 50">13,50 €</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-panel" role="tabpanel" id="panel-chauds" aria-labelledby="tab-chauds" hidden>
+          <ul class="menu-grid" role="list">
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Croque Quel Pain</h3>
+                <p class="menu-item__desc">Jambon fermier, Comté 18 mois, béchamel maison, pain de mie brioché</p>
+                <span class="badge">Signature</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 11 euros">11,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Panini Méditerranéen</h3>
+                <p class="menu-item__desc">Chorizo ibérique, poivrons confits, chèvre frais, tapenade d'olive noire</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 10 euros 50">10,50 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Burger Bœuf Artisanal</h3>
+                <p class="menu-item__desc">Steak haché 180g, cheddar affiné, oignons caramélisés, sauce maison, brioche artisanale</p>
+                <span class="badge">Incontournable</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 15 euros">15,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Wrap Falafel</h3>
+                <p class="menu-item__desc">Falafels maison, tzatziki, taboulé, pickles de légumes, galette de blé complet</p>
+                <span class="badge badge--green">Végétarien</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 10 euros">10,00 €</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-panel" role="tabpanel" id="panel-salades" aria-labelledby="tab-salades" hidden>
+          <ul class="menu-grid" role="list">
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Salade César Revisitée</h3>
+                <p class="menu-item__desc">Romaine croquante, parmesan en copeaux, croûtons maison, vinaigrette césar artisanale</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 10 euros 50">10,50 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Bowl Quinoa &amp; Légumes</h3>
+                <p class="menu-item__desc">Quinoa tricolore, légumes de saison rôtis, tahini citronné, graines de courge</p>
+                <span class="badge badge--green">Vegan</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 12 euros">12,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Salade Niçoise Gastronomique</h3>
+                <p class="menu-item__desc">Thon albacore, œufs de caille, haricots verts extra-fins, olives, vinaigrette maison</p>
+                <span class="badge">Bestseller</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 13 euros">13,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Burrata &amp; Figues</h3>
+                <p class="menu-item__desc">Burrata fraîche, figues de saison, miel artisanal, roquette, noix torréfiées</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 14 euros">14,00 €</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tab-panel" role="tabpanel" id="panel-boissons" aria-labelledby="tab-boissons" hidden>
+          <ul class="menu-grid" role="list">
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Eaux Pétillantes / Plates</h3>
+                <p class="menu-item__desc">Sélection de grandes marques belges et européennes</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 2 euros 50">2,50 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Jus pressés du jour</h3>
+                <p class="menu-item__desc">Orange, citron-gingembre, carotte-betterave — pressés à la commande</p>
+                <span class="badge">Frais du jour</span>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 4 euros 50">4,50 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Café de spécialité</h3>
+                <p class="menu-item__desc">Espresso, americano, latte, cappuccino — grain sélectionné</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 3 euros">3,00 €</span>
+            </li>
+            <li class="menu-item">
+              <div class="menu-item__info">
+                <h3 class="menu-item__name">Thés &amp; Infusions</h3>
+                <p class="menu-item__desc">Sélection premium — Darjeeling, Earl Grey, Menthe, Rooibos Vanille</p>
+              </div>
+              <span class="menu-item__price" aria-label="Prix : 3 euros 50">3,50 €</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="menu-download">
+          <button class="btn btn--outline-gold" id="download-btn" type="button" aria-label="Télécharger la carte complète au format texte">
+            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7,10 12,15 17,10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Télécharger la carte complète
+          </button>
+          <p class="menu-download__note">Carte mise à jour chaque saison</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PETIT DÉJEUNER ── -->
+    <section class="section section--ivory" id="petit-dejeuner" aria-labelledby="pdj-title">
+      <div class="container">
+        <div class="pdj-grid">
+          <div class="pdj-image" aria-hidden="true">
+            <div class="img-ph img-pdj">
+              <img
+                src="assets/images/Petit-déjeuner.jpg"
+                alt="petit-dej Quel Pain"
+                width="800"
+                height="1000"
+                loading="eager"
+                decoding="async">
+            </div>
+            <div class="pdj-badge" aria-hidden="true">
+              <time class="pdj-badge__time">8h00</time>
+              <span class="pdj-badge__label">Ouverture chaque matin</span>
+            </div>
+          </div>
+          <div class="pdj-content">
+            <span class="label label--gold">Chaque matin</span>
+            <h2 class="section__title" id="pdj-title">Petit-déjeuner<br>au bureau ou chez nous</h2>
+            <div class="divider" aria-hidden="true"></div>
+            <p class="section__body">Commencez votre journée du bon pied. Quel Pain accueille les professionnels dès 7h30 avec un espace calme et équipé, idéal pour démarrer la journée en douceur ou tenir une première réunion informelle.</p>
+            <ul class="pdj-features" role="list">
+              <li class="pdj-feature">
+                <span class="pdj-feature__dot" aria-hidden="true"></span>
+                <p class="pdj-feature__text"><strong>Espace de travail</strong> — Wifi haut débit, prises électriques, ambiance feutrée propice à la concentration</p>
+              </li>
+              <li class="pdj-feature">
+                <span class="pdj-feature__dot" aria-hidden="true"></span>
+                <p class="pdj-feature__text"><strong>Formule professionnelle</strong> — Viennoiserie, café de spécialité, jus pressé et pains aux chocolat</p>
+              </li>
+              <li class="pdj-feature">
+                <span class="pdj-feature__dot" aria-hidden="true"></span>
+                <p class="pdj-feature__text"><strong>Livraison plateau</strong> — Commandez avant 9h pour une livraison</p>
+              </li>
+              <li class="pdj-feature">
+                <span class="pdj-feature__dot" aria-hidden="true"></span>
+                <p class="pdj-feature__text"><strong>Réservation groupe</strong> — Privatisation possible pour nomades digital ou petites réunions matinales jusqu'à 10 personnes</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── LOCALISATION ── -->
+    <section class="section section--cream" id="localisation" aria-labelledby="loc-title">
+      <div class="container">
+        <div class="section__header">
+          <span class="label label--gold">Nous trouver</span>
+          <h2 class="section__title" id="loc-title">Notre adresse</h2>
+          <div class="divider" aria-hidden="true"></div>
+        </div>
+        <div class="loc-grid">
+          <!-- Map placeholder with accessible link -->
+          <div class="loc-map" role="img" aria-label="Carte de localisation — Bd du Jardin Botanique 37, 1000 Bruxelles">
+            <div class="map-pin" aria-hidden="true"></div>
+            <a
+              href="https://maps.google.com/?q=Bd+du+Jardin+Botanique+37,+1000+Bruxelles"
+              class="map-link"
+              target="_blank"
+              aria-label="Voir sur Google Maps (ouvre dans un nouvel onglet)">
+              Voir sur Google Maps
+            </a>
+          </div>
+
+          <div class="loc-info">
+            <div class="loc-block">
+              <p class="loc-block__label">Adresse</p>
+              <a href="https://maps.google.com/?q=Bd+du+Jardin+Botanique+37,+1000+Bruxelles" style="text-decoration: none;" target="_blank">
+                <address class="loc-block__content" >
+                  Bd du Jardin Botanique 37<br>
+                  1000 Bruxelles, Belgique
+                </address>
+              </a>
+              <p class="loc-block__sub">Métro : Botanique (lignes 2 &amp; 6) · Tramway 92, 93, 97</p>
+            </div>
+
+            <div class="loc-block">
+              <p class="loc-block__label">Horaires d'ouverture</p>
+              <table class="horaires" aria-label="Horaires d'ouverture de Quel Pain">
+                <tbody>
+                  <tr><th scope="row">Lundi</th><td><time>08:00</time> – <time>15:00</time></td></tr>
+                  <tr><th scope="row">Mardi</th><td><time>08:00</time> – <time>15:00</time></td></tr>
+                  <tr><th scope="row">Mercredi</th><td><time>08:00</time> – <time>15:00</time></td></tr>
+                  <tr><th scope="row">Jeudi</th><td><time>08:00</time> – <time>15:00</time></td></tr>
+                  <tr><th scope="row">Vendredi</th><td><time>08:00</time> – <time>15:00</time></td></tr>
+                  <tr class="horaires--closed"><th scope="row">Samedi</th><td>Fermé</td></tr>
+                  <tr class="horaires--closed"><th scope="row">Dimanche</th><td>Fermé</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="loc-block">
+              <p class="loc-block__label">Contact</p>
+              <p class="loc-block__content">
+                <a href="tel:+3225223689" class="loc-link" aria-label="Appeler Quel Pain au 02 522 36 89">02 522 36 89</a>
+              </p>
+              <p class="loc-block__sub">
+                <a href="mailto:quelpainbotanique@hotmail.com" class="loc-link">quelpainbotanique@hotmail.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COMMANDES ── -->
+    <section class="section section--olive" id="commandes" aria-labelledby="commandes-title">
+      <div class="container">
+        <div class="cmd-grid">
+          <div class="cmd-content">
+            <span class="label label--gold">Click &amp; Collect · Livraison</span>
+            <h2 class="section__title section__title--light" id="commandes-title">Commandez<br>à l'avance</h2>
+            <div class="divider" aria-hidden="true"></div>
+            <p class="section__body section__body--light">Pour garantir la fraîcheur et la disponibilité de votre commande, nous demandons que toutes les commandes soient passées avant l'heure limite. Cela nous permet de préparer chaque sandwich à la commande, sans jamais compromettre la qualité.</p>
+          </div>
+
+          <div class="cmd-deadline" aria-label="Informations de commande">
+            <div class="cmd-deadline__time" aria-label="Heure limite de commande pour le déjeuner : 11 heures">
+              <time class="cmd-time">11h00</time>
+              <p class="cmd-time__label">Heure limite — déjeuner</p>
+            </div>
+            <p class="cmd-note">Les commandes reçues après 11h seront traitées pour le lendemain. Pour le petit-déjeuner, commandez avant 9h00 la veille.</p>
+            <div class="cmd-separator" aria-hidden="true"></div>
+            <div class="cmd-contact">
+              <p class="cmd-contact__label">Par téléphone</p>
+              <a href="tel:+3225223689" class="cmd-phone" aria-label="Commander par téléphone au 02 522 36 89">02 522 36 89</a>
+            </div>
+            <div class="cmd-separator" aria-hidden="true"></div>
+            <div class="cmd-contact">
+              <p class="cmd-contact__label">Par e-mail</p>
+              <a href="mailto:commandes@quelpain.be" class="cmd-phone cmd-phone--sm" aria-label="Commander par e-mail">commandes@quelpain.be</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── GALERIE PHOTOS ── -->
+    <section class="section section--dark section--no-pad-top" id="photos" aria-labelledby="photos-title">
+      <div class="container">
+        <div class="section__header">
+          <span class="label label--gold">Galerie</span>
+          <h2 class="section__title section__title--light" id="photos-title">Notre univers<br>en images</h2>
+        </div>
+      </div>
+
+      <ul class="gallery" role="list" aria-label="Galerie photos de Quel Pain">
+        <li class="gallery__item">
+          <figure class="gallery__fig">
+            <div class="gallery__img-wrap img-ph g1" role="img" aria-label="Salle principale de Quel Pain">
+              <img
+                src="assets/images/salle1.jpg"
+                alt="Salle1 Quel Pain"
+                width="600"
+                height="800"
+                loading="eager"
+                decoding="async">
+              </div>
+            <figcaption class="gallery__caption">Salle principale</figcaption>
+          </figure>
+        </li>
+        <li class="gallery__item">
+          <figure class="gallery__fig">
+            <div class="gallery__img-wrap img-ph g2" role="img" aria-label="Nos créations du jour">
+              <img
+                src="assets/images/salle2.jpg"
+                alt="Salle1 Quel Pain"
+                width="600"
+                height="800"
+                loading="eager"
+                decoding="async">
+              </div>
+            <figcaption class="gallery__caption">Créations du jour</figcaption>
+          </figure>
+        </li>
+        <li class="gallery__item">
+          <figure class="gallery__fig">
+            <div class="gallery__img-wrap img-ph g3" role="img" aria-label="Terrasse et espace lounge">
+              <img
+                src="assets/images/salle3.jpg"
+                alt="Salle1 Quel Pain"
+                width="600"
+                height="800"
+                loading="eager"
+                decoding="async">
+              </div>
+            <figcaption class="gallery__caption">Terrasse &amp; lounge</figcaption>
+          </figure>
+        </li>
+        <li class="gallery__item">
+          <figure class="gallery__fig">
+            <div class="gallery__img-wrap img-ph g4" role="img" aria-label="Espace épicerie fine">
+              <img
+                src="assets/images/salle4.jpg"
+                alt="Salle1 Quel Pain"
+                width="600"
+                height="800"
+                loading="eager"
+                decoding="async">
+            </div>
+            <figcaption class="gallery__caption">Épicerie fine</figcaption>
+          </figure>
+        </li>
+        <li class="gallery__item">
+          <figure class="gallery__fig">
+            <div class="gallery__img-wrap img-ph g5" role="img" aria-label="Ingrédients sélectionnés avec soin">
+              <img
+                src="assets/images/salle5.jpg"
+                alt="Salle1 Quel Pain"
+                width="600"
+                height="800"
+                loading="eager"
+                decoding="async">
+              </div>
+            <figcaption class="gallery__caption">Ingrédients sélectionnés</figcaption>
+          </figure>
+        </li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+
+        <!-- Brand -->
+        <div class="footer__brand">
+          <p class="footer__brand-name" aria-label="Quel Pain">QUEL PAIN</p>
+          <p class="footer__slogan">L'art du bien manger au quotidien. Une adresse d'exception pour les amoureux du goût authentique à Bruxelles.</p>
+          <nav class="footer__socials" aria-label="Réseaux sociaux">
+            <a
+              href="https://www.facebook.com/profile.php?id=100063566380985"
+              target="_blank"
+              class="social-icon"
+              aria-label="Suivez-nous sur Facebook (ouvre dans un nouvel onglet)">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+              </svg>
+            </a>
+            <a
+              href="https://www.instagram.com/quel_pain_bx"
+              target="_blank"
+              class="social-icon"
+              aria-label="Suivez-nous sur Instagram (ouvre dans un nouvel onglet)">
+              <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+              </svg>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Navigation links -->
+        <nav class="footer__nav" aria-label="Navigation rapide">
+          <h3 class="footer__col-title">Navigation</h3>
+          <ul class="footer__links" role="list">
+            <li><a href="#valeurs" class="footer__link">Nos valeurs</a></li>
+            <li><a href="#menu" class="footer__link">La carte</a></li>
+            <li><a href="#petit-dejeuner" class="footer__link">Petit-déjeuner</a></li>
+            <li><a href="#localisation" class="footer__link">Localisation</a></li>
+            <li><a href="#photos" class="footer__link">Galerie photos</a></li>
+          </ul>
+        </nav>
+
+        <!-- Offers -->
+        <nav class="footer__nav" aria-label="Nos offres">
+          <h3 class="footer__col-title">Nos offres</h3>
+          <ul class="footer__links" role="list">
+            <li><a href="#menu" class="footer__link">Sandwichs froids</a></li>
+            <li><a href="#menu" class="footer__link">Sandwichs chauds</a></li>
+            <li><a href="#menu" class="footer__link">Salades &amp; Bowls</a></li>
+            <li><a href="#petit-dejeuner" class="footer__link">Petit-déjeuner</a></li>
+            <li><a href="#menu" class="footer__link">Boissons</a></li>
+            <li><a href="#commandes" class="footer__link">Click &amp; Collect</a></li>
+          </ul>
+        </nav>
+
+        <!-- Contact -->
+        <div class="footer__contact">
+          <h3 class="footer__col-title">Infos pratiques</h3>
+          <address class="footer__address">
+            <p class="footer__contact-item">
+              <strong class="footer__contact-label">Adresse</strong>
+              Bd du Jardin Botanique 37<br>1000 Bruxelles
+            </p>
+            <p class="footer__contact-item">
+              <strong class="footer__contact-label">Téléphone</strong>
+              <a href="tel:+3225223689" class="footer__contact-link">02 522 36 89</a>
+            </p>
+            <p class="footer__contact-item">
+              <strong class="footer__contact-label">Horaires</strong>
+              Lun–Ven : 08h00–15h00<br>Sam &amp; Dim : Fermé
+            </p>
+            <p class="footer__contact-item">
+              <strong class="footer__contact-label">Commandes avant</strong>
+              11h00 (déjeuner) · 9h00 (petit-dej)
+            </p>
+          </address>
+        </div>
+
+      </div><!-- /.footer__grid -->
+
+      <div class="footer__bottom">
+        <p class="footer__copy">
+          <small>&copy; <span id="year"></span> Quel Pain — Tous droits réservés</small>
+        </p>
+        <nav class="footer__legal" aria-label="Liens légaux">
+          <a href="/mentions-legales" class="footer__legal-link">Mentions légales</a>
+          <a href="/confidentialite" class="footer__legal-link">Politique de confidentialité</a>
+          <a href="/cgv" class="footer__legal-link">CGV</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+  <script src="js/tabs.js"></script>
+  <script src="js/nav.js"></script>
+  <script src="js/download.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/wifi-popup.js"></script>
+</body>
+</html>

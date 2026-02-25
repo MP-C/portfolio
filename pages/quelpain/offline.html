@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- No external requests - everything self-contained for offline use -->
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self';
+             style-src 'self' 'unsafe-inline';
+             script-src 'self' 'unsafe-inline';
+             img-src 'self' data:;
+             connect-src 'self';
+             frame-src 'none'; object-src 'none';
+             base-uri 'self'; form-action 'none';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="robots" content="noindex, nofollow">
+
+  <title>Pas de connexion — Quel Pain</title>
+
+  <!-- Fonts inlined as system fallback when offline -->
+  <style>
+    /* ── Tokens (inline car hors ligne — pas de fichiers externes) ── */
+    :root {
+      --cream:      #F5F0E8;
+      --ivory:      #FAF7F2;
+      --dark:       #1A1A14;
+      --olive:      #4A5240;
+      --sage:       #7A8B6F;
+      --gold:       #B8975A;
+      --light-sage: #C8D4BC;
+      --warm-gray:  #8A8478;
+      --font-display: Georgia, 'Times New Roman', serif;
+      --font-body:    system-ui, -apple-system, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--olive);
+      font-family: var(--font-body);
+      font-weight: 300;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+    }
+
+    /* Animated wifi signal */
+    .signal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 2.5rem;
+    }
+    .signal__bar {
+      border-radius: 2px;
+      background: rgba(255,255,255,.15);
+    }
+    .signal__bar:nth-child(1) { width: 40px; height: 4px; }
+    .signal__bar:nth-child(2) { width: 28px; height: 4px; }
+    .signal__bar:nth-child(3) { width: 16px; height: 4px; }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .signal__bar { animation: pulse 1.8s ease-in-out infinite; }
+      .signal__bar:nth-child(2) { animation-delay: .2s; }
+      .signal__bar:nth-child(3) { animation-delay: .4s; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: .2; }
+      50%       { opacity: .8; }
+    }
+
+    .error-page {
+      text-align: center;
+      max-width: 520px;
+    }
+
+    .error-label {
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .error-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .error-title em { font-style: italic; color: var(--gold); }
+
+    .error-body {
+      font-size: .9rem;
+      line-height: 1.85;
+      color: var(--light-sage);
+      opacity: .8;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Offline info box - key info accessible without internet */
+    .info-box {
+      background: rgba(26,26,20,.35);
+      border: 1px solid rgba(184,151,90,.25);
+      padding: 2rem 2.5rem;
+      text-align: left;
+      margin-bottom: 2.5rem;
+    }
+    .info-box__title {
+      font-size: .6rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem;
+      margin-bottom: 1.2rem;
+    }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-row__label {
+      font-size: .62rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .info-row__value {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--cream);
+    }
+    .info-row__value a {
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .info-row__sub {
+      font-size: .78rem;
+      color: rgba(200,212,188,.55);
+      margin-top: .1rem;
+    }
+
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: var(--font-body);
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: .75rem 1.8rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: none;
+      transition: background .25s, color .25s, border-color .25s;
+    }
+    .btn:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    .btn--primary { background: var(--cream); color: var(--dark); border-color: var(--cream); }
+    .btn--primary:hover { background: var(--gold); border-color: var(--gold); }
+    .btn--outline { border-color: rgba(255,255,255,.25); color: rgba(255,255,255,.55); }
+    .btn--outline:hover { border-color: var(--gold); color: var(--gold); }
+
+    .status {
+      margin-top: 2rem;
+      font-size: .75rem;
+      color: rgba(200,212,188,.4);
+    }
+    .status__dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: #e05a5a;
+      border-radius: 50%;
+      margin-right: .4rem;
+      vertical-align: middle;
+    }
+    .status__dot--online { background: #6abf69; }
+  </style>
+</head>
+<body>
+
+  <main id="main-content" role="main">
+    <article class="error-page" aria-labelledby="error-title">
+
+      <!-- Animated signal bars -->
+      <div class="signal" aria-hidden="true">
+        <div class="signal__bar"></div>
+        <div class="signal__bar"></div>
+        <div class="signal__bar"></div>
+      </div>
+
+      <span class="error-label">Connexion internet perdue</span>
+
+      <h1 class="error-title" id="error-title">
+        Votre pain est prêt,<br>mais <em>la connexion ne l'est pas</em>
+      </h1>
+
+      <p class="error-body">
+        Il semble que vous n'ayez pas accès à Internet en ce moment.<br>
+        Pas de souci — voici nos informations essentielles, disponibles hors ligne.
+      </p>
+
+      <!-- Key info available offline -->
+      <div class="info-box" role="complementary" aria-label="Informations de contact Quel Pain">
+        <p class="info-box__title">Quel Pain — Infos essentielles</p>
+
+        <div class="info-row">
+          <span class="info-row__label">Adresse</span>
+          <span class="info-row__value">Bd du Jardin Botanique 37</span>
+          <span class="info-row__sub">1000 Bruxelles, Belgique</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-row__label">Téléphone</span>
+          <span class="info-row__value">
+            <a href="tel:+3225223689" aria-label="Appeler Quel Pain au 02 522 36 89">
+              02 522 36 89
+            </a>
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-row__label">Horaires</span>
+          <span class="info-row__value">Lun – Ven : 08h00 – 15h00</span>
+          <span class="info-row__sub">Samedi &amp; Dimanche : Fermé</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-row__label">Commandes avant</span>
+          <span class="info-row__value">11h00 <span style="font-size:.8rem;color:var(--sage)">(déjeuner)</span></span>
+        </div>
+      </div>
+
+      <div class="error-actions">
+        <button class="btn btn--primary" id="retry-btn" type="button" aria-label="Réessayer de charger la page">
+          <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23,4 23,10 17,10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+          Réessayer
+        </button>
+        <a href="/" class="btn btn--outline">Retour à l'accueil</a>
+      </div>
+
+      <p class="status" role="status" aria-live="polite" id="connection-status">
+        <span class="status__dot" id="status-dot" aria-hidden="true"></span>
+        <span id="status-text">Connexion non disponible</span>
+      </p>
+
+    </article>
+  </main>
+
+  <script>
+    // Retry button
+    document.getElementById('retry-btn').addEventListener('click', function () {
+      window.location.reload();
+    });
+
+    // Watch for reconnection
+    function updateStatus() {
+      var dot  = document.getElementById('status-dot');
+      var text = document.getElementById('status-text');
+      if (navigator.onLine) {
+        dot.className  = 'status__dot status__dot--online';
+        text.textContent = 'Connexion rétablie — rechargement en cours…';
+        setTimeout(function () { window.location.href = '/'; }, 1500);
+      } else {
+        dot.className  = 'status__dot';
+        text.textContent = 'Connexion non disponible';
+      }
+    }
+
+    window.addEventListener('online',  updateStatus);
+    window.addEventListener('offline', updateStatus);
+  </script>
+
+</body>
+</html>
