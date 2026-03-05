@@ -1592,9 +1592,15 @@
     </button>
 
     <!-- QR Code Modal -->
-    <div class="qr-modal" id="qrModal" onclick="closeQRCode(event)">
-        <img src="./photos/qr-code.png" alt="QR Code">
-        <p>Scan to connect with me!</p>
+    <div class="qr-modal" id="qrModal" onclick="closeQRCodeManual()">
+        <div class="qr-modal-content">
+            <img src="./photos/qr-code.png" alt="QR Code">
+            <p>Scan to connect with me!</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">Click in here to close</p>
+            <div class="qr-timer">
+                <div class="qr-timer-bar" id="qrTimerBar"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Video Modal -->
@@ -1728,8 +1734,6 @@
         </div>
 
         <!-- Invisible bottom -->
-
-        
         <div class="container">
             <h2 class="fade-in-up">Work Process</h2>
             
@@ -2311,25 +2315,65 @@
 
         // ===== QR CODE MODAL =====
         let qrTimer = null;
-        
+        let qrTimerAnimation = null;
+
         function showQRCode() {
             const modal = document.getElementById('qrModal');
+            const timerBar = document.getElementById('qrTimerBar');
+            
+            // Limpar timers anteriores
+            if (qrTimer) clearTimeout(qrTimer);
+            if (qrTimerAnimation) clearTimeout(qrTimerAnimation);
+            
+            // Mostrar modal
             modal.classList.add('active');
             
-            if (qrTimer) clearTimeout(qrTimer);
+            // Reset da barra de progresso
+            timerBar.style.transition = 'none';
+            timerBar.style.width = '100%';
             
+            // Iniciar animação da barra após um pequeno delay
+            setTimeout(() => {
+                timerBar.style.transition = 'width 15s linear';
+                timerBar.style.width = '0%';
+            }, 50);
+            
+            // Fechar automaticamente após 15 segundos
             qrTimer = setTimeout(() => {
-                modal.classList.remove('active');
+                closeQRCodeManual();
             }, 15000);
         }
-        
-        function closeQRCode(event) {
-            if (event.target.id === 'qrModal') {
-                const modal = document.getElementById('qrModal');
-                modal.classList.remove('active');
-                if (qrTimer) clearTimeout(qrTimer);
+
+        function closeQRCodeManual() {
+            const modal = document.getElementById('qrModal');
+            const timerBar = document.getElementById('qrTimerBar');
+
+            modal.classList.remove('active');
+            
+            // Limpar timers
+            if (qrTimer) {
+                clearTimeout(qrTimer);
+                qrTimer = null;
             }
+            if (qrTimerAnimation) {
+                clearTimeout(qrTimerAnimation);
+                qrTimerAnimation = null;
+            }
+            
+            // Reset da barra
+            timerBar.style.transition = 'none';
+            timerBar.style.width = '100%';
         }
+
+        // Close with ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('qrModal');
+                if (modal.classList.contains('active')) {
+                    closeQRCodeManual();
+                }
+            }
+        });
 
         // ===== LEARNING CARD FLIP =====
         function flipLearningCard() {
