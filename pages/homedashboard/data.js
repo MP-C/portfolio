@@ -1,4 +1,4 @@
-async function updateWeather() {
+async function updateWeatherBrussels() {
     try {
         // Pedimos temperatura, humidade e vento para as coordenadas de Bruxelas
         const url = 'https://api.open-meteo.com/v1/forecast?latitude=50.8503&longitude=4.3517&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m';
@@ -39,12 +39,38 @@ async function updateWeather() {
     }
 }
 
+
 // Monitorização Dinâmica
-function updateStats() {
-    const cpu = Math.floor(Math.random() * (12 - 4 + 1) + 4);
-    const ram = Math.floor(Math.random() * (55 - 42 + 1) + 42);
-    document.getElementById('cpu-load').innerText = cpu + '%';
-    document.getElementById('ram-load').innerText = ram + '%';
+function updateServerStats() {
+    const cpuElem = document.getElementById('cpu-load');
+    const ramElem = document.getElementById('ram-load');
+    const statusIndicator = document.querySelector('.status-indicator');
+
+    // Simulação de valores (CPU oscila mais, RAM é mais estável)
+    // Para testar o cinzento, podes mudar para 0
+    const cpu = Math.floor(Math.random() * 95); 
+    const ram = Math.floor(Math.random() * 40) + 55; // RAM entre 30% e 95%
+
+    // Atualiza o texto
+    cpuElem.innerText = `${cpu}%`;
+    ramElem.innerText = `${ram}%`;
+
+    // Lógica do Status Indicator
+    // Vermelho se CPU > 80% ou RAM > 85%
+    if (cpu > 80 || ram > 85) {
+        statusIndicator.style.background = '#ef4444';
+        statusIndicator.style.boxShadow = '0 0 14px #ef4444';
+    } 
+    // Cinzento se estiver a 0 (Simulação de idle/offline)
+    else if (cpu === 0) {
+        statusIndicator.style.background = '#94a3b8';
+        statusIndicator.style.boxShadow = '0 0 12px #1d0909';
+    }
+    // Verde (Normal)
+    else {
+        statusIndicator.style.background = '#22c55e';
+        statusIndicator.style.boxShadow = '0 0 10px #22c55e';
+    }
 }
 
 const services = [
@@ -53,14 +79,15 @@ const services = [
     { nome: "Cloud", url: "https://cloud.marioc.eu", icon: "☁️", desc: "Personal Storage & File Sync", category: "Cloud Storage" },
     { nome: "WikiHome", url: "http://wiki.marioc.eu", icon: "📖", desc: "Internal Documentation Hub", category: "Knowledge Management" },
     { nome: "CookBook", url: "http://cookbook.marioc.eu", icon: "🍳", desc: "Digital Recipe Management System", category: "Self-Hosted App" },
-    { nome: "NetFlex Cinema", url: "http://netflix.marioc.eu", icon: "🎬", desc: "Personal Media Streaming", category: "Media Server" }
+    { nome: "NetFlex Cinema", url: "http://netflix.marioc.eu", icon: "🎬", desc: "Personal Media Streaming", category: "Media Server" },
+    { nome: "Go Back To", url: "https://marioc.eu/pages/gobackto.html", icon: "🛩️", desc: "Take a guess win THE dinner", category: "Friends at home" }
 ];
 
 const grid = document.getElementById('services-grid');
 
 services.forEach(s => {
     grid.innerHTML += `
-        <div class="col-12 col-sm-6 col-lg-4">
+        <div class="col-8 col-sm-4 col-lg-2">
             <a href="${s.url}" target="_blank" class="glass-card">
                 <div class="icon-wrapper">${s.icon}</div>
                 <h4>${s.nome}</h4>
@@ -73,5 +100,7 @@ services.forEach(s => {
 
 
 // Inicializa e agenda
-updateWeather();
-setInterval(updateWeather, 900000); // 15 min
+updateWeatherBrussels();
+setInterval(updateWeatherBrussels, 900000); // 15 min
+updateServerStats();
+setInterval(updateServerStats, 3000);
