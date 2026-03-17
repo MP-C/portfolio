@@ -69,7 +69,7 @@
                             🍕🥣🍹
                         </div>
                         <h4>📅 Totoloto da data do nosso regresso?</h4>
-                        <p>(Entre 9/3/2026 e 1/08/2026)</p>
+                        <p>(Entre 1/03/2026 e 1/09/2026)</p>
                         <input type="text" id="nome" class="form-control mb-2" placeholder="Teu Nome">
                         <input type="date" id="data" class="form-control mb-3" min="2026-01-01" max="2026-12-31">
                         <button id="btnVotar" onclick="votar()" class="btn btn-primary w-100 fw-bold">Submeter Aposta!</button>
@@ -90,6 +90,7 @@
                 <div class="col-md-8">
                     <div class="countdown-section">
                         <h4 id="countdown-title">⏳ Tempo restante para o anúncio do vencedor:</h4>
+                        <h4 id="countdown-title-extra-info" style="font-size: 12px;">(tempo restante não está relacionado com a data do regresso)</h4>
                         <div id="timer" class="my-3">00d 00h 00m 00s</div>
                         
                         <div id="winner-zone" class="winner-box">
@@ -102,14 +103,14 @@
             </div>
 
             <footer class="text-center pb-5 opacity-50">
-                <p>© 2026 Operação Regresso | Feito com ❤️</p>
+                <p>© 2026 Operação Regresso | Feito com 🍺 e 🧇</p>
             </footer>
         </div>
 
         <script>
             // URL DEFINITIVO (Certifica-te que termina em /exec)
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAOSRYjlMJKS1HfBOeR0GNjDFNANQlN9f-gh0-7bWkKEmcN_bN7hdu5yTKAXhx9ugyFA/exec";
-            const diaChegada = "2026-02-29"; // DATA ALVO PARA O VENCEDOR
+            const diaChegada = "2026-02-29"; // DATA ALVO PARA O VENCEDOR a mudar quando estiver a terminar
 
             // --- FRASES DIVERTIDAS ---
             const frases = {
@@ -206,7 +207,7 @@
 
             // --- CONTADOR DE TEMPO ---
             function updateCountdown() {
-                const targetDate = new Date("April 27, 2026 00:00:00").getTime();
+                const targetDate = new Date("May 31, 2026 00:00:00").getTime();
                 const now = new Date().getTime();
                 const distance = targetDate - now;
 
