@@ -69,16 +69,16 @@
                             🍕🥣🍹
                         </div>
                         <h4>📅 Totoloto da data do nosso regresso?</h4>
-                        <p>(Entre 01/03/2026 e 01/07/2026)</p>
+                        <p>(Votações decorrem entre 21/03/2026 e 21/04/2026)</p>
                         <input type="text" id="nome" class="form-control mb-2" placeholder="Teu Nome">
-                        <input type="date" id="data" class="form-control mb-3" min="2026-03-01" max="2026-07-01">
+                        <input type="date" id="data" class="form-control mb-3" min="2026-03-21" max="2026-06-01">
                         <button id="btnVotar" onclick="votar()" class="btn btn-primary w-100 fw-bold">Submeter Aposta!</button>
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="p-4 bg-light border rounded-4 h-100">
-                        <h4>📊 Apostas efetuadas:</h4>
+                        <h4>📊 Apostas efetuadas para a data de chegada:</h4>
                         <div id="lista-votos" class="mt-3">
                             <p class="text-muted small">A carregar...</p>
                         </div>
@@ -109,7 +109,9 @@
 
         <script>
             const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCqpE5XT-4htK3WcjJVI4pV08Po4dyKR_T0en6k6j_DJxDopA41pk1zQjlfZ4G-42_ng/exec";
-            const dateToDefined = "May 31, 2026 00:00:00";
+            const dateToDefined = "April 21, 2026 00:00:00";
+            const DATA_REAL_REGRESSO = "07/07/2026"; // <--- ALTERA ISTO PARA A DATA REAL DA CHEGADA
+
             const frases = {
                 mario: ["Lá vou ter de embalar a cave..chiiii", "Vou precisar de uma carrinha só para os gadgets.", "O que fazemos a isto? Guarda-se?", "Saudades de um pastel de nata e batatas fritas!", "Ansiedade nível 90, logística nível 10.", "Docker pronto para a migração física.", "Como assim, pode-se sair da Bélgica de carro?"],
                 joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Se não usas há mais de um ano, dá!", "Vou chegar e ir direta para a praia!", "Faltam 3 mil abraços de despedida.", "É desta que vamos de fazer a viagem de carro?"],
@@ -218,7 +220,34 @@
                     </div>
                 `).join('');
             }
+            
+            function verificarVencedor() {
+                const targetTime = new Date(dateToDefined).getTime();
+                const now = new Date().getTime();
+                
+                // Se já passou o tempo do cronómetro e temos votos carregados
+                if (now >= targetTime && listaGlobalVotos.length > 0) {
+                    const ganhadores = listaGlobalVotos.filter(v => v.dataExibicao === DATA_REAL_REGRESSO);
+                    
+                    const winnerZone = document.getElementById("winner-zone");
+                    const winnerName = document.getElementById("winner-name");
+                    const winnerMsg = document.getElementById("winner-msg");
 
+                    if (ganhadores.length > 0) {
+                        winnerName.innerText = ganhadores.map(g => g.nome).join(", ");
+                        winnerMsg.innerText = "Parabéns! Acertaram na data exata!";
+                        confetti({ particleCount: 200, spread: 90 });
+                    } else {
+                        winnerName.innerText = "Ups! Ninguém acertou.";
+                        winnerMsg.innerText = "A data real foi " + DATA_REAL_REGRESSO + ". Teremos de sortear o jantar!";
+                    }
+                    
+                    winnerZone.style.display = "block";
+                    document.getElementById("timer").style.display = "none";
+                    document.getElementById("countdown-title").innerHTML = "🏆 RESULTADO:";
+                }
+            }
+            
             function updateCountdown() {
                 const targetDate = new Date(dateToDefined).getTime();
                 const now = new Date().getTime();
