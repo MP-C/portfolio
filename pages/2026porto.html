@@ -69,9 +69,9 @@
                             🍕🥣🍹
                         </div>
                         <h4>📅 Totoloto da data do nosso regresso?</h4>
-                        <p>(Entre 1/03/2026 e 1/09/2026)</p>
+                        <p>(Entre 01/03/2026 e 01/07/2026)</p>
                         <input type="text" id="nome" class="form-control mb-2" placeholder="Teu Nome">
-                        <input type="date" id="data" class="form-control mb-3" min="2026-01-01" max="2026-12-31">
+                        <input type="date" id="data" class="form-control mb-3" min="2026-03-01" max="2026-07-01">
                         <button id="btnVotar" onclick="votar()" class="btn btn-primary w-100 fw-bold">Submeter Aposta!</button>
                     </div>
                 </div>
@@ -108,15 +108,12 @@
         </div>
 
         <script>
-            // URL DEFINITIVO (Certifica-te que termina em /exec)
-            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwAOSRYjlMJKS1HfBOeR0GNjDFNANQlN9f-gh0-7bWkKEmcN_bN7hdu5yTKAXhx9ugyFA/exec";
-            const diaChegada = "2026-02-29"; // DATA ALVO PARA O VENCEDOR a mudar quando estiver a terminar
-
-            // --- FRASES DIVERTIDAS ---
+            const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCqpE5XT-4htK3WcjJVI4pV08Po4dyKR_T0en6k6j_DJxDopA41pk1zQjlfZ4G-42_ng/exec";
+            const dateToDefined = "May 31, 2026 00:00:00";
             const frases = {
-                mario: ["Lá vou ter de embalar a cave..chiiii", "Vou precisar de uma carrinha só para os gadgets.", "O que fazemos a isto? Guarda-se?", "Saudades de um pastel de nata!", "Ansiedade nível 90, logística nível 10.", "Docker pronto para a migração física."],
+                mario: ["Lá vou ter de embalar a cave..chiiii", "Vou precisar de uma carrinha só para os gadgets.", "O que fazemos a isto? Guarda-se?", "Saudades de um pastel de nata e batatas fritas!", "Ansiedade nível 90, logística nível 10.", "Docker pronto para a migração física.", "Como assim, pode-se sair da Bélgica de carro?"],
                 joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Se não usas há mais de um ano, dá!", "Vou chegar e ir direta para a praia!", "Faltam 3 mil abraços de despedida.", "É desta que vamos de fazer a viagem de carro?"],
-                lourenco: ["Outra viagem?", "Só quero saber se o 'pain' está embalado!", "Vou andar no colo de muita gente!", "Preparem as bochechas!", "Gugu dada?", "Onde está o meu doudou?"]
+                lourenco: ["Outra viagem?", "Só quero saber se o 'pain' está embalado!", "Vou andar no colo de muita gente!", "Preparem as bochechas!", "pain..pain..pain!!", "Onde está o 'ummmmba'?","👉🏻✋🏻,  👉🏻✋🏻,  👉🏻✋🏻"]
             };
             let indices = { mario: 0, joana: 0, lourenco: 0 };
             function mudarFrase(p) {
@@ -124,7 +121,6 @@
                 document.getElementById(`frase-${p}`).innerText = `"${frases[p][indices[p]]}"`;
             }
 
-            // --- BLOQUEIO DE VOTO DUPLO (INTERFACE) ---
             function bloquearFormulario() {
                 const btn = document.getElementById("btnVotar");
                 const nomeIn = document.getElementById("nome");
@@ -138,20 +134,27 @@
                 if(dataIn) dataIn.disabled = true;
             }
 
-            // --- LOGICA DE VOTAR ---
             function votar() {
                 const nome = document.getElementById('nome').value.trim();
-                const data = document.getElementById('data').value;
+                const dataInput = document.getElementById('data').value; 
 
-                if(!nome || !data) return alert("Por favor, preenche o nome e a data!");
+                if(!nome || !dataInput) return alert("Por favor, preenche o nome e a data!");
                 if(localStorage.getItem('ja_votei')) return alert("Já apostaste! Agora é só esperar.");
 
                 const btn = document.getElementById("btnVotar");
                 btn.disabled = true;
-                btn.innerText = "A enviar para o Google...";
+                btn.innerText = "A enviar...";
+
+                let partes = dataInput.split('-'); 
+                let ano = partes[0];
+                let mes = partes[1];
+                let dia = partes[2];
+                
+                // Formato de envio: DD/MM/YYYY
+                const dataStringFinal = `${dia}/${mes}/${ano}`;
 
                 const script = document.createElement('script');
-                script.src = `${SCRIPT_URL}?nome=${encodeURIComponent(nome)}&data=${encodeURIComponent(data)}&callback=confirmarVoto`;
+                script.src = `${SCRIPT_URL}?nome=${encodeURIComponent(nome)}&data=${encodeURIComponent(dataStringFinal)}&callback=confirmarVoto`;
                 document.body.appendChild(script);
             }
 
@@ -170,56 +173,61 @@
                 }
             };
 
-            // --- LOGICA DE RENDERIZAR VOTOS ---
             function renderizarVotos() {
                 const script = document.createElement('script');
                 script.src = `${SCRIPT_URL}?callback=processarDados&t=${Date.now()}`;
                 document.body.appendChild(script);
             }
 
+            // --- LÓGICA DE EXIBIÇÃO CORRIGIDA ---
             window.processarDados = function(dados) {
                 const lista = document.getElementById('lista-votos');
-                if (!dados || !Array.isArray(dados) || dados.length === 0) {
-                    lista.innerHTML = '<p class="text-muted small">Ainda ninguém apostou. Sê o primeiro!</p>';
+                if (!dados || dados.length === 0) {
+                    lista.innerHTML = '<p class="text-muted">Sem apostas ainda.</p>';
                     return;
                 }
 
-                // Limpar e formatar datas (Google Sheets às vezes envia ISO strings)
+                // Transformamos os dados em objetos manipuláveis
                 const formatados = dados.map(v => {
-                    let dStr = v[1] ? v[1].toString() : "";
-                    if (dStr.includes("T")) dStr = dStr.split("T")[0];
-                    return [v[0], dStr];
+                    const nome = v[0];
+                    const dataStr = String(v[1]); // Vem como "DD/MM/YYYY" do Excel via DisplayValues
+                    
+                    // Criar um objeto Date real para ordenação correta
+                    // Separamos por "/" para montar o objeto
+                    const partes = dataStr.split('/');
+                    let dataObjeto;
+                    
+                    if(partes.length === 3) {
+                        // JavaScript Date usa mes 0-11, por isso partes[1]-1
+                        dataObjeto = new Date(partes[2], partes[1] - 1, partes[0]);
+                    } else {
+                        // Fallback caso venha YYYY-MM-DD
+                        dataObjeto = new Date(dataStr);
+                    }
+                    
+                    return { nome, dataObjeto, dataExibicao: dataStr };
                 });
 
-                // Identificar Vencedores
-                window.vencedoresData = formatados.filter(v => v[1] === diaChegada).map(v => v[0]);
-
-                // Ordenar por data mais próxima
-                formatados.sort((a, b) => new Date(a[1]) - new Date(b[1]));
+                // ORDENAÇÃO: Da data mais antiga para a mais recente
+                formatados.sort((a, b) => a.dataObjeto - b.dataObjeto);
 
                 lista.innerHTML = formatados.map(v => `
                     <div class="voto-item d-flex justify-content-between align-items-center">
-                        <strong>${v[0]}</strong>
-                        <span class="badge bg-dark">${v[1]}</span>
+                        <strong>${v.nome}</strong>
+                        <span class="badge bg-dark">${v.dataExibicao}</span>
                     </div>
                 `).join('');
-            };
+            }
 
-            // --- CONTADOR DE TEMPO ---
             function updateCountdown() {
-                const targetDate = new Date("May 31, 2026 00:00:00").getTime();
+                const targetDate = new Date(dateToDefined).getTime();
                 const now = new Date().getTime();
                 const distance = targetDate - now;
 
                 if (distance < 0) {
                     document.getElementById("countdown-title").innerHTML = "✈️ A OPERAÇÃO REGRESSO FOI UM SUCESSO!";
                     document.getElementById("timer").style.display = "none";
-                    const zone = document.getElementById("winner-zone");
-                    zone.style.display = "block";
-                    document.getElementById("winner-name").innerText = 
-                        (window.vencedoresData && window.vencedoresData.length > 0) 
-                        ? window.vencedoresData.join(", ") 
-                        : "Ninguém acertou no dia!";
+                    document.getElementById("winner-zone").style.display = "block";
                     return;
                 }
 
@@ -231,7 +239,6 @@
                 document.getElementById("timer").innerHTML = `${d}d ${h}h ${m}m ${s}s`;
             }
 
-            // INÍCIO AO CARREGAR
             window.onload = () => {
                 if (localStorage.getItem('ja_votei')) bloquearFormulario();
                 renderizarVotos();
