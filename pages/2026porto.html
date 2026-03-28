@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
     <title>Operação Regresso 🏠</title>
     <!-- Bootstrap para layout responsivo -->
@@ -119,12 +119,13 @@
         // CONFIGURAÇÕES
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCqpE5XT-4htK3WcjJVI4pV08Po4dyKR_T0en6k6j_DJxDopA41pk1zQjlfZ4G-42_ng/exec";
         const REVELATION_DATE = new Date("April 21, 2026 00:00:00").getTime();
-        const DATA_REAL_REGRESSO = "15/05/2026"; // Altera quando souberes a data final
+        const REVELATION_DATE_teste = new Date("2026-03-21T00:00:00").getTime();
+        const DATA_REAL_REGRESSO = "06/05/2026"; // A alterar quando souber a data final
 
         const frases = {
             mario: ["Lá vou ter de embalar a cave..chiiii", "Vou precisar de uma carrinha só para os gadgets.", "O que fazemos a isto? Guarda-se?", "Saudades de um pastel de nata!", "Docker pronto para a migração física.", "A carregar baterias para a viagem."],
             joana: ["A controlar a logística e a ansiedade.", "Estava difícil convencer o Mário!", "Se não usas há mais de um ano, dá!", "Vou chegar e ir direta para a praia!", "Faltam 3 mil abraços de despedida."],
-            lourenco: ["Outra viagem?", "Só quero saber se o 'pain' está embalado!", "Vou andar no colo de muita gente!", "Preparem as bochechas!", "pain..pain..pain!!", "Ummba ummba!"]
+            lourenco: ["Outra viagem?", "Só quero saber se o 'pain' está embalado!", "Vou andar no colo de muita gente!", "Preparem as bochechas!", "pain..pain..pain!!", "Onde está o Ummba ummba!", "👉🏻✋🏻,👉🏻✋🏻,👉🏻✋🏻,"]
         };
         let indices = { mario: 0, joana: 0, lourenco: 0 };
         let listaGlobalVotos = [];
@@ -155,7 +156,7 @@
 
             // Mapear e limpar dados para garantir compatibilidade com iOS
             const formatados = dados.map(v => {
-                const nome = v[0];
+                const nome = v[0];  // Ex: Mário
                 const dataOriginal = v[1]; // Ex: "15/05/2026"
                 
                 // Extrair partes manualmente para evitar erros de parsing em diferentes browsers
@@ -259,24 +260,35 @@
 
         function verificarEstadoVencedor() {
             const now = new Date().getTime();
-            if (now >= REVELATION_DATE && listaGlobalVotos.length > 0) {
-                const ganhadores = listaGlobalVotos.filter(v => v.dataExibicao === DATA_REAL_REGRESSO);
-                
+            
+            // Se a data de revelação chegou ou já passou
+            if (now >= REVELATION_DATE) {
                 const winnerZone = document.getElementById("winner-zone");
                 const timerEl = document.getElementById("timer");
+                const titleEl = document.getElementById("countdown-title");
 
-                if (ganhadores.length > 0) {
-                    document.getElementById("winner-name").innerText = ganhadores.map(g => g.nome).join(", ");
-                    document.getElementById("winner-msg").innerText = "Acertaram na data! Preparem-se para o jantar!";
-                    confetti({ particleCount: 150, spread: 100 });
-                } else {
-                    document.getElementById("winner-name").innerText = "Ninguém acertou na data exata!";
-                    document.getElementById("winner-msg").innerText = `A data de regresso foi ${DATA_REAL_REGRESSO}.`;
+                if (timerEl) timerEl.style.display = "none";
+                if (titleEl) titleEl.innerText = "🏆 RESULTADO:";
+                
+                if (winnerZone) {
+                    winnerZone.style.display = "block";
+                    
+                    // Só calculamos vencedores se já tivermos a lista carregada
+                    if (listaGlobalVotos.length > 0) {
+                        const ganhadores = listaGlobalVotos.filter(v => v.dataExibicao === DATA_REAL_REGRESSO);
+                        const winnerNameEl = document.getElementById("winner-name");
+                        const winnerMsgEl = document.getElementById("winner-msg");
+
+                        if (ganhadores.length > 0) {
+                            if (winnerNameEl) winnerNameEl.innerText = ganhadores.map(g => g.nome).join(", ");
+                            if (winnerMsgEl) winnerMsgEl.innerText = "Acertaram na data! Preparem-se para o jantar!";
+                            if (typeof confetti === 'function') confetti({ particleCount: 150, spread: 100 });
+                        } else {
+                            if (winnerNameEl) winnerNameEl.innerText = "Ninguém acertou na data exata!";
+                            if (winnerMsgEl) winnerMsgEl.innerText = `A data de regresso foi ${DATA_REAL_REGRESSO}.`;
+                        }
+                    }
                 }
-
-                winnerZone.style.display = "block";
-                timerEl.style.display = "none";
-                document.getElementById("countdown-title").innerText = "🏆 RESULTADO:";
             }
         }
 
@@ -284,8 +296,11 @@
             const now = new Date().getTime();
             const distance = REVELATION_DATE - now;
 
-            if (distance < 0) {
+            // Se o tempo acabou ou já passou
+            if (distance <= 0) {
                 verificarEstadoVencedor();
+                // Parar o timer para não gastar recursos
+                if (window.timerInterval) clearInterval(window.timerInterval);
                 return;
             }
 
