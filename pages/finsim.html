@@ -50,6 +50,10 @@
                 <p class="text-xs text-slate-400" id="ui-subtitle">Contabilidade Mensal, Amortizações, Notificações e Comparativo Fiscal PT</p>
             </div>
             <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                <!-- Procure a div com a classe 'flex flex-wrap items-center gap-3' no <header> e adicione este botão: -->
+                <button onclick="toggleSupportModal(true)" class="bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition flex items-center gap-1.5 shadow-lg shadow-rose-900/20">
+                    ❤️ <span id="ui-support-btn">Apoiar</span>
+                </button>
                 <!-- Seletor de Idioma -->
                 <select id="langSelect" onchange="changeLanguage(this.value)" class="input-dark px-3 py-2 rounded-lg text-xs font-bold border-blue-500">
                     <option value="pt" selected>🇵🇹 Português</option>
@@ -383,7 +387,49 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Modal (Popup) de Apoio -->
+<div id="supportModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="card-dark max-w-md w-full rounded-2xl p-6 space-y-4 border border-slate-700 shadow-2xl relative">
+        
+        <!-- Botão Fechar Modal -->
+        <button onclick="toggleSupportModal(false)" class="absolute top-4 right-4 text-slate-400 hover:text-white font-bold text-lg">✕</button>
+        
+        <div>
+            <h3 class="text-lg font-bold text-white flex items-center gap-2" id="ui-support-modal-title">
+                ❤️ Apoiar a Manutenção do Site
+            </h3>
+            <p class="text-xs text-slate-400 mt-1" id="ui-support-modal-desc">
+                Se esta ferramenta te foi útil para simular e organizar a tua atividade, considera apoiar o desenvolvimento contínuo!
+            </p>
+        </div>
 
+        <!-- Opções de Doação Adaptadas ao Tema Escuro -->
+        <div class="space-y-3 pt-2">
+            <!-- Opção PayPal -->
+            <a href="http://paypal.me/mariopcpayme" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700 transition group">
+                <div class="flex items-center space-x-3">
+                    <div class="w-9 h-9 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-lg border border-blue-500/20">P</div>
+                    <div>
+                        <p class="text-sm font-bold text-white">PayPal</p>
+                        <p class="text-xs text-slate-400" id="ui-support-paypal-sub">Doação rápida e segura</p>
+                    </div>
+                </div>
+                <span class="text-slate-400 group-hover:text-blue-400 transition text-sm">↗</span>
+            </a>
+
+            <!-- Opção Buy Me a Ko-Fi -->
+            <a href="https://ko-fi.com/mpcarvalho" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-4 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition group">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">☕</span>
+                    <div>
+                        <p class="text-sm font-bold text-amber-300">Buy Me a Ko-Fi</p>
+                        <p class="text-xs text-amber-200/70" id="ui-support-kofi-sub">Oferecer um café virtual</p>
+                    </div>
+                </div>
+                <span class="text-amber-400 group-hover:text-amber-300 transition text-sm">↗</span>
+            </a>
+        </div>
     </div>
 
     <!-- Script de Lógica Contabilística, Notificações e Dicionário de Idiomas -->
@@ -402,7 +448,12 @@
                 sec3: "3. Conta Bancária Empresa",
                 sec4: "4. Início da Atividade nas Finanças",
                 sec5: "5. Seguros da Empresa",
-                sec6: "6. Sistema informático para faturação"
+                sec6: "6. Sistema informático para faturação",
+                supportBtn: "Apoiar",
+                supportTitle: "❤️ Apoiar a Manutenção do Site",
+                supportDesc: "Se esta ferramenta te foi útil para simular e organizar a tua atividade, considera apoiar o desenvolvimento contínuo!",
+                supportPaypal: "Doação rápida e segura",
+                supportKofi: "Oferecer um café virtual"
             },
             fr: {
                 title: "📊 Registre Comptable & Simulateur Financier",
@@ -416,7 +467,12 @@
                 sec3: "3. Compte Bancaire Professionnel",
                 sec4: "4. Début d'Activité aux Impôts (Finanças)",
                 sec5: "5. Assurances d'Entreprise",
-                sec6: "6. Système Informatique de Facturation"
+                sec6: "6. Système Informatique de Facturation",
+                supportBtn: "Soutenir",
+                supportTitle: "❤️ Soutenir le Développement du Site",
+                supportDesc: "Si cet outil vous a été utile pour vos simulations, pensez à soutenir sa maintenance !",
+                supportPaypal: "Don rapide et sécurisé",
+                supportKofi: "Offrir un café virtuel"
             },
             en: {
                 title: "📊 Accounting Log & Financial Simulator",
@@ -430,7 +486,12 @@
                 sec3: "3. Corporate Bank Account",
                 sec4: "4. Commencement of Activity at Tax Authority (Finanças)",
                 sec5: "5. Corporate Insurance",
-                sec6: "6. Invoicing Software System"
+                sec6: "6. Invoicing Software System",
+                supportBtn: "Support",
+                supportTitle: "❤️ Support Site Maintenance",
+                supportDesc: "If this tool helped you manage and simulate your business taxes, consider supporting its maintenance!",
+                supportPaypal: "Quick and secure donation",
+                supportKofi: "Buy me a virtual coffee"
             }
         };
 
@@ -446,6 +507,11 @@
             document.getElementById('ui-sec3-title').innerText = i18n[lang].sec3;
             document.getElementById('ui-sec4-title').innerText = i18n[lang].sec4;
             document.getElementById('ui-sec5-title').innerText = i18n[lang].sec5;
+            document.getElementById('ui-support-btn').innerText = i18n[lang].supportBtn;
+            document.getElementById('ui-support-modal-title').innerText = i18n[lang].supportTitle;
+            document.getElementById('ui-support-modal-desc').innerText = i18n[lang].supportDesc;
+            document.getElementById('ui-support-paypal-sub').innerText = i18n[lang].supportPaypal;
+            document.getElementById('ui-support-kofi-sub').innerText = i18n[lang].supportKofi;
         }
 
         // Tabela Inicial com TODAS as Despesas Potenciais do Contractor em PT
@@ -475,6 +541,16 @@
             { id: 5, text: "Início de Atividade nas Finanças", date: "2026-10-14T10:00", done: true },
             { id: 6, text: "Criação de Email Profissional & Número Vodafone", date: "2026-10-16T16:00", done: false }
         ];
+
+        // Abrir e Fechar Modal de Apoio
+        function toggleSupportModal(show) {
+            const modal = document.getElementById('supportModal');
+            if (show) {
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
 
         // Pedir permissão para Notificações do Browser
         function requestNotificationPermission() {
