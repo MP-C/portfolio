@@ -1,865 +1,2126 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestor Contabilístico, Simulador & Checklist Lda</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<style>
-body{background:#0d0e12;color:#e2e8f0;font-family:system-ui,-apple-system,sans-serif}
-.card-dark{background:#16181e;border:1px solid #232733}
-.input-dark{background:#0f1117;border:1px solid #2a2f3d;color:#fff}
-.input-dark:focus{border-color:#3b82f6;outline:none}
-input[type=range]{accent-color:#3b82f6}
-details>summary{cursor:pointer;list-style:none}
-details>summary::-webkit-details-marker{display:none}
-</style>
-<style id="utilities">
-*,::before,::after{box-sizing:border-box;border:0 solid #e5e7eb}
-html{-webkit-text-size-adjust:100%;line-height:1.5}
-body{margin:0}
-h1,h2,h3,p,ul,ol{margin:0;padding:0}
-h1,h2,h3{font-size:inherit;font-weight:inherit}
-ul,ol{list-style:none}
-a{color:inherit;text-decoration:inherit}
-button,input,select{font:inherit;color:inherit;margin:0}
-button{background:transparent;cursor:pointer}
-table{border-collapse:collapse}
-input,select{color-scheme:dark}
-input::placeholder{color:#9ca3af}
-[hidden]{display:none}
-.accent-blue-600{accent-color:#2563eb}
-.accent-emerald-500{accent-color:#10b981}
-.bg-amber-500{background-color:#f59e0b}
-.bg-amber-600{background-color:#d97706}
-.bg-blue-500{background-color:#3b82f6}
-.bg-blue-600{background-color:#2563eb}
-.bg-emerald-500{background-color:#10b981}
-.bg-emerald-500\/10{background-color:rgba(16,185,129,0.1)}
-.bg-emerald-600{background-color:#059669}
-.bg-slate-800{background-color:#1e293b}
-.bg-slate-900{background-color:#0f172a}
-.bg-transparent{background-color:transparent}
-.block{display:block}
-.border{border-width:1px}
-.border-b{border-bottom-width:1px}
-.border-blue-500{border-color:#3b82f6}
-.border-collapse{border-collapse:collapse}
-.border-emerald-500\/30{border-color:rgba(16,185,129,0.3)}
-.border-slate-800{border-color:#1e293b}
-.border-slate-800\/60{border-color:rgba(30,41,59,0.6)}
-.cursor-pointer{cursor:pointer}
-.flex{display:flex}
-.flex-col{flex-direction:column}
-.flex-wrap{flex-wrap:wrap}
-.font-bold{font-weight:700}
-.font-extrabold{font-weight:800}
-.font-medium{font-weight:500}
-.font-normal{font-weight:400}
-.font-semibold{font-weight:600}
-.gap-2{gap:0.5rem}
-.gap-3{gap:0.75rem}
-.gap-4{gap:1rem}
-.gap-6{gap:1.5rem}
-.grid{display:grid}
-.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
-.h-3{height:0.75rem}
-.h-4{height:1rem}
-.h-full{height:100%}
-.hidden{display:none}
-.items-center{align-items:center}
-.items-start{align-items:flex-start}
-.justify-between{justify-content:space-between}
-.leading-relaxed{line-height:1.625}
-.line-through{text-decoration-line:line-through}
-.max-w-6xl{max-width:72rem}
-.mb-1{margin-bottom:0.25rem}
-.min-h-screen{min-height:100vh}
-.min-w-\[180px\]{min-width:180px}
-.mt-1{margin-top:0.25rem}
-.mt-3{margin-top:0.75rem}
-.mx-auto{margin-left:auto;margin-right:auto}
-.overflow-hidden{overflow:hidden}
-.overflow-x-auto{overflow-x:auto}
-.p-2{padding:0.5rem}
-.p-2\.5{padding:0.625rem}
-.p-3\.5{padding:0.875rem}
-.p-4{padding:1rem}
-.p-5{padding:1.25rem}
-.p-6{padding:1.5rem}
-.pb-2{padding-bottom:0.5rem}
-.pt-1{padding-top:0.25rem}
-.pt-2{padding-top:0.5rem}
-.pt-4{padding-top:1rem}
-.px-2{padding-left:0.5rem;padding-right:0.5rem}
-.px-3{padding-left:0.75rem;padding-right:0.75rem}
-.px-4{padding-left:1rem;padding-right:1rem}
-.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}
-.py-1{padding-top:0.25rem;padding-bottom:0.25rem}
-.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}
-.py-2{padding-top:0.5rem;padding-bottom:0.5rem}
-.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}
-.rounded{border-radius:.25rem}
-.rounded-2xl{border-radius:1rem}
-.rounded-full{border-radius:9999px}
-.rounded-lg{border-radius:.5rem}
-.rounded-xl{border-radius:.75rem}
-.space-y-1>:not([hidden])~:not([hidden]){margin-top:0.25rem}
-.space-y-2>:not([hidden])~:not([hidden]){margin-top:0.5rem}
-.space-y-3>:not([hidden])~:not([hidden]){margin-top:0.75rem}
-.space-y-4>:not([hidden])~:not([hidden]){margin-top:1rem}
-.space-y-6>:not([hidden])~:not([hidden]){margin-top:1.5rem}
-.text-2xl{font-size:1.5rem;line-height:2rem}
-.text-\[10px\]{font-size:10px}
-.text-\[11px\]{font-size:11px}
-.text-amber-400{color:#fbbf24}
-.text-base{font-size:1rem;line-height:1.5rem}
-.text-blue-400{color:#60a5fa}
-.text-center{text-align:center}
-.text-emerald-400{color:#34d399}
-.text-emerald-500{color:#10b981}
-.text-left{text-align:left}
-.text-lg{font-size:1.125rem;line-height:1.75rem}
-.text-red-400{color:#f87171}
-.text-right{text-align:right}
-.text-slate-200{color:#e2e8f0}
-.text-slate-300{color:#cbd5e1}
-.text-slate-400{color:#94a3b8}
-.text-slate-500{color:#64748b}
-.text-sm{font-size:.875rem;line-height:1.25rem}
-.text-white{color:#fff}
-.text-xl{font-size:1.25rem;line-height:1.75rem}
-.text-xs{font-size:.75rem;line-height:1rem}
-.transition{transition-property:color,background-color,border-color,opacity,box-shadow;transition-duration:.15s;transition-timing-function:cubic-bezier(.4,0,.2,1)}
-.transition-all{transition-property:all;transition-duration:.15s;transition-timing-function:cubic-bezier(.4,0,.2,1)}
-.w-12{width:3rem}
-.w-20{width:5rem}
-.w-24{width:6rem}
-.w-28{width:7rem}
-.w-4{width:1rem}
-.w-44{width:11rem}
-.w-full{width:100%}
-.duration-300{transition-duration:.3s}
-.hover\:bg-amber-500:hover{background-color:#f59e0b}
-.hover\:bg-blue-500:hover{background-color:#3b82f6}
-.hover\:bg-emerald-500:hover{background-color:#10b981}
-.hover\:text-red-300:hover{color:#fca5a5}
-@media(min-width:768px){
-.md\:col-span-2{grid-column:span 2/span 2}
-.md\:flex-row{flex-direction:row}
-.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.md\:grid-cols-6{grid-template-columns:repeat(6,minmax(0,1fr))}
-.md\:items-center{align-items:center}
-.md\:p-8{padding:2rem}
-.md\:w-auto{width:auto}
-}
-.bg-red-500\/10{background-color:rgba(239,68,68,.1)}
-.border-red-500\/30{border-color:rgba(239,68,68,.3)}
-.border-t{border-top-width:1px}
-</style>
-<style id="extras">
-.btn-support{background:#0f1117;border:1px solid rgba(245,158,11,.45);color:#fbbf24;font-size:.75rem;font-weight:600;padding:.625rem 1rem;border-radius:.5rem;transition:background .15s,border-color .15s}
-.btn-support:hover{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.8)}
-.btn-ghost{background:#0f1117;border:1px solid #2a2f3d;color:#cbd5e1;font-size:.75rem;font-weight:600;padding:.625rem 1rem;border-radius:.5rem;transition:border-color .15s,color .15s}
-.btn-ghost:hover{border-color:#3b82f6;color:#fff}
-.modal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.72);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
-.modal.hidden{display:none}
-.modal-box{position:relative;width:100%;max-width:28rem;max-height:92vh;overflow-y:auto;background:#16181e;border:1px solid #2a2f3d;border-radius:1.25rem;padding:1.5rem;box-shadow:0 25px 50px rgba(0,0,0,.6)}
-.modal-x{position:absolute;top:.9rem;right:1rem;color:#94a3b8;font-size:1.1rem;line-height:1}
-.modal-x:hover{color:#fff}
-.modal-title{font-size:1.2rem;font-weight:700;color:#fff;margin-bottom:.5rem;padding-right:2rem}
-.modal-text{font-size:.78rem;color:#94a3b8;margin-bottom:1rem;line-height:1.5}
-.modal-lbl{display:block;font-size:.72rem;color:#94a3b8;margin-bottom:.35rem}
-.opt{display:flex;align-items:center;gap:.9rem;padding:.9rem 1rem;border-radius:1rem;border:1px solid;margin-bottom:.8rem;transition:filter .15s}
-.opt:hover{filter:brightness(1.25)}
-.opt-ico{width:2.4rem;height:2.4rem;border-radius:.7rem;display:grid;place-items:center;font-weight:800;font-size:1.1rem;flex:none}
-.opt-body{flex:1;display:flex;flex-direction:column;min-width:0}
-.opt-body b{font-size:.88rem}
-.opt-body small{font-size:.72rem;opacity:.75}
-.opt i{font-style:normal;opacity:.7}
-.opt-blue{background:#0f1830;border-color:#25365e;color:#fff}
-.opt-blue .opt-ico{color:#60a5fa;background:#16254a}
-.opt-violet{background:#161228;border-color:#3a2f66;color:#fff}
-.opt-violet .opt-ico{color:#a78bfa;background:#231b47}
-.opt-amber{background:#1f1a0e;border-color:#5a4416;color:#fbbf24}
-.opt-amber .opt-ico{background:#33280f}
-.drive-actions{display:flex;gap:.6rem;flex-wrap:wrap;margin:.9rem 0}
-.drive-file{display:flex;justify-content:space-between;align-items:center;gap:.75rem;padding:.6rem .75rem;border:1px solid #2a2f3d;border-radius:.75rem;background:#0f1117;font-size:.75rem;margin-top:.5rem}
-.drive-file small{display:block;color:#64748b;font-size:.65rem}
-.modal-help{font-size:.72rem;color:#94a3b8;margin-top:.6rem}
-.modal-help summary{color:#60a5fa}
-.modal-help ol{padding-left:1.1rem;list-style:decimal;margin:.5rem 0;line-height:1.6}
-.modal-help p{margin-top:.4rem;color:#fbbf24}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor Contabilístico, Simulador & Checklist Lda</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body {
+      background: #0d0e12;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, sans-serif
+    }
 
-@media(max-width:767px){
-  .hdr-actions>*{flex:1 1 auto;text-align:center}
-  .hdr-actions #fileName{width:100%;flex-basis:100%}
-  .p-6,.p-5{padding:1rem}
-  .card-dark h2{font-size:1rem}
-  #invoiceTableBody td,.min-w-table th{white-space:nowrap}
-  table{min-width:720px}
-  #todoList li{flex-wrap:wrap;gap:.4rem}
-  .modal-box{padding:1.1rem}
-}
-</style>
+    .card-dark {
+      background: #16181e;
+      border: 1px solid #232733
+    }
+
+    .input-dark {
+      background: #0f1117;
+      border: 1px solid #2a2f3d;
+      color: #fff
+    }
+
+    .input-dark:focus {
+      border-color: #3b82f6;
+      outline: none
+    }
+
+    input[type=range] {
+      accent-color: #3b82f6
+    }
+
+    details>summary {
+      cursor: pointer;
+      list-style: none
+    }
+
+    details>summary::-webkit-details-marker {
+      display: none
+    }
+  </style>
+  <style id="utilities">
+    *,
+    ::before,
+    ::after {
+      box-sizing: border-box;
+      border: 0 solid #e5e7eb
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      line-height: 1.5
+    }
+
+    body {
+      margin: 0
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    ul,
+    ol {
+      margin: 0;
+      padding: 0
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-size: inherit;
+      font-weight: inherit
+    }
+
+    ul,
+    ol {
+      list-style: none
+    }
+
+    a {
+      color: inherit;
+      text-decoration: inherit
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+      color: inherit;
+      margin: 0
+    }
+
+    button {
+      background: transparent;
+      cursor: pointer
+    }
+
+    table {
+      border-collapse: collapse
+    }
+
+    input,
+    select {
+      color-scheme: dark
+    }
+
+    input::placeholder {
+      color: #9ca3af
+    }
+
+    [hidden] {
+      display: none
+    }
+
+    .accent-blue-600 {
+      accent-color: #2563eb
+    }
+
+    .accent-emerald-500 {
+      accent-color: #10b981
+    }
+
+    .bg-amber-500 {
+      background-color: #f59e0b
+    }
+
+    .bg-amber-600 {
+      background-color: #d97706
+    }
+
+    .bg-blue-500 {
+      background-color: #3b82f6
+    }
+
+    .bg-blue-600 {
+      background-color: #2563eb
+    }
+
+    .bg-emerald-500 {
+      background-color: #10b981
+    }
+
+    .bg-emerald-500\/10 {
+      background-color: rgba(16, 185, 129, 0.1)
+    }
+
+    .bg-emerald-600 {
+      background-color: #059669
+    }
+
+    .bg-slate-800 {
+      background-color: #1e293b
+    }
+
+    .bg-slate-900 {
+      background-color: #0f172a
+    }
+
+    .bg-transparent {
+      background-color: transparent
+    }
+
+    .block {
+      display: block
+    }
+
+    .border {
+      border-width: 1px
+    }
+
+    .border-b {
+      border-bottom-width: 1px
+    }
+
+    .border-blue-500 {
+      border-color: #3b82f6
+    }
+
+    .border-collapse {
+      border-collapse: collapse
+    }
+
+    .border-emerald-500\/30 {
+      border-color: rgba(16, 185, 129, 0.3)
+    }
+
+    .border-slate-800 {
+      border-color: #1e293b
+    }
+
+    .border-slate-800\/60 {
+      border-color: rgba(30, 41, 59, 0.6)
+    }
+
+    .cursor-pointer {
+      cursor: pointer
+    }
+
+    .flex {
+      display: flex
+    }
+
+    .flex-col {
+      flex-direction: column
+    }
+
+    .flex-wrap {
+      flex-wrap: wrap
+    }
+
+    .font-bold {
+      font-weight: 700
+    }
+
+    .font-extrabold {
+      font-weight: 800
+    }
+
+    .font-medium {
+      font-weight: 500
+    }
+
+    .font-normal {
+      font-weight: 400
+    }
+
+    .font-semibold {
+      font-weight: 600
+    }
+
+    .gap-2 {
+      gap: 0.5rem
+    }
+
+    .gap-3 {
+      gap: 0.75rem
+    }
+
+    .gap-4 {
+      gap: 1rem
+    }
+
+    .gap-6 {
+      gap: 1.5rem
+    }
+
+    .grid {
+      display: grid
+    }
+
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr))
+    }
+
+    .h-3 {
+      height: 0.75rem
+    }
+
+    .h-4 {
+      height: 1rem
+    }
+
+    .h-full {
+      height: 100%
+    }
+
+    .hidden {
+      display: none
+    }
+
+    .items-center {
+      align-items: center
+    }
+
+    .items-start {
+      align-items: flex-start
+    }
+
+    .justify-between {
+      justify-content: space-between
+    }
+
+    .leading-relaxed {
+      line-height: 1.625
+    }
+
+    .line-through {
+      text-decoration-line: line-through
+    }
+
+    .max-w-6xl {
+      max-width: 72rem
+    }
+
+    .mb-1 {
+      margin-bottom: 0.25rem
+    }
+
+    .min-h-screen {
+      min-height: 100vh
+    }
+
+    .min-w-\[180px\] {
+      min-width: 180px
+    }
+
+    .mt-1 {
+      margin-top: 0.25rem
+    }
+
+    .mt-3 {
+      margin-top: 0.75rem
+    }
+
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto
+    }
+
+    .overflow-hidden {
+      overflow: hidden
+    }
+
+    .overflow-x-auto {
+      overflow-x: auto
+    }
+
+    .p-2 {
+      padding: 0.5rem
+    }
+
+    .p-2\.5 {
+      padding: 0.625rem
+    }
+
+    .p-3\.5 {
+      padding: 0.875rem
+    }
+
+    .p-4 {
+      padding: 1rem
+    }
+
+    .p-5 {
+      padding: 1.25rem
+    }
+
+    .p-6 {
+      padding: 1.5rem
+    }
+
+    .pb-2 {
+      padding-bottom: 0.5rem
+    }
+
+    .pt-1 {
+      padding-top: 0.25rem
+    }
+
+    .pt-2 {
+      padding-top: 0.5rem
+    }
+
+    .pt-4 {
+      padding-top: 1rem
+    }
+
+    .px-2 {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem
+    }
+
+    .px-3 {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem
+    }
+
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem
+    }
+
+    .py-0\.5 {
+      padding-top: 0.125rem;
+      padding-bottom: 0.125rem
+    }
+
+    .py-1 {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem
+    }
+
+    .py-1\.5 {
+      padding-top: 0.375rem;
+      padding-bottom: 0.375rem
+    }
+
+    .py-2 {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem
+    }
+
+    .py-2\.5 {
+      padding-top: 0.625rem;
+      padding-bottom: 0.625rem
+    }
+
+    .rounded {
+      border-radius: .25rem
+    }
+
+    .rounded-2xl {
+      border-radius: 1rem
+    }
+
+    .rounded-full {
+      border-radius: 9999px
+    }
+
+    .rounded-lg {
+      border-radius: .5rem
+    }
+
+    .rounded-xl {
+      border-radius: .75rem
+    }
+
+    .space-y-1>:not([hidden])~:not([hidden]) {
+      margin-top: 0.25rem
+    }
+
+    .space-y-2>:not([hidden])~:not([hidden]) {
+      margin-top: 0.5rem
+    }
+
+    .space-y-3>:not([hidden])~:not([hidden]) {
+      margin-top: 0.75rem
+    }
+
+    .space-y-4>:not([hidden])~:not([hidden]) {
+      margin-top: 1rem
+    }
+
+    .space-y-6>:not([hidden])~:not([hidden]) {
+      margin-top: 1.5rem
+    }
+
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem
+    }
+
+    .text-\[10px\] {
+      font-size: 10px
+    }
+
+    .text-\[11px\] {
+      font-size: 11px
+    }
+
+    .text-amber-400 {
+      color: #fbbf24
+    }
+
+    .text-base {
+      font-size: 1rem;
+      line-height: 1.5rem
+    }
+
+    .text-blue-400 {
+      color: #60a5fa
+    }
+
+    .text-center {
+      text-align: center
+    }
+
+    .text-emerald-400 {
+      color: #34d399
+    }
+
+    .text-emerald-500 {
+      color: #10b981
+    }
+
+    .text-left {
+      text-align: left
+    }
+
+    .text-lg {
+      font-size: 1.125rem;
+      line-height: 1.75rem
+    }
+
+    .text-red-400 {
+      color: #f87171
+    }
+
+    .text-right {
+      text-align: right
+    }
+
+    .text-slate-200 {
+      color: #e2e8f0
+    }
+
+    .text-slate-300 {
+      color: #cbd5e1
+    }
+
+    .text-slate-400 {
+      color: #94a3b8
+    }
+
+    .text-slate-500 {
+      color: #64748b
+    }
+
+    .text-sm {
+      font-size: .875rem;
+      line-height: 1.25rem
+    }
+
+    .text-white {
+      color: #fff
+    }
+
+    .text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem
+    }
+
+    .text-xs {
+      font-size: .75rem;
+      line-height: 1rem
+    }
+
+    .transition {
+      transition-property: color, background-color, border-color, opacity, box-shadow;
+      transition-duration: .15s;
+      transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .transition-all {
+      transition-property: all;
+      transition-duration: .15s;
+      transition-timing-function: cubic-bezier(.4, 0, .2, 1)
+    }
+
+    .w-12 {
+      width: 3rem
+    }
+
+    .w-20 {
+      width: 5rem
+    }
+
+    .w-24 {
+      width: 6rem
+    }
+
+    .w-28 {
+      width: 7rem
+    }
+
+    .w-4 {
+      width: 1rem
+    }
+
+    .w-44 {
+      width: 11rem
+    }
+
+    .w-full {
+      width: 100%
+    }
+
+    .duration-300 {
+      transition-duration: .3s
+    }
+
+    .hover\:bg-amber-500:hover {
+      background-color: #f59e0b
+    }
+
+    .hover\:bg-blue-500:hover {
+      background-color: #3b82f6
+    }
+
+    .hover\:bg-emerald-500:hover {
+      background-color: #10b981
+    }
+
+    .hover\:text-red-300:hover {
+      color: #fca5a5
+    }
+
+    @media(min-width:768px) {
+      .md\:col-span-2 {
+        grid-column: span 2/span 2
+      }
+
+      .md\:flex-row {
+        flex-direction: row
+      }
+
+      .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+
+      .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr))
+      }
+
+      .md\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr))
+      }
+
+      .md\:grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr))
+      }
+
+      .md\:items-center {
+        align-items: center
+      }
+
+      .md\:p-8 {
+        padding: 2rem
+      }
+
+      .md\:w-auto {
+        width: auto
+      }
+    }
+
+    .bg-red-500\/10 {
+      background-color: rgba(239, 68, 68, .1)
+    }
+
+    .border-red-500\/30 {
+      border-color: rgba(239, 68, 68, .3)
+    }
+
+    .border-t {
+      border-top-width: 1px
+    }
+  </style>
+  <style id="extras">
+    .btn-support {
+      background: #0f1117;
+      border: 1px solid rgba(245, 158, 11, .45);
+      color: #fbbf24;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .625rem 1rem;
+      border-radius: .5rem;
+      transition: background .15s, border-color .15s
+    }
+
+    .btn-support:hover {
+      background: rgba(245, 158, 11, .1);
+      border-color: rgba(245, 158, 11, .8)
+    }
+
+    .btn-ghost {
+      background: #0f1117;
+      border: 1px solid #2a2f3d;
+      color: #cbd5e1;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: .625rem 1rem;
+      border-radius: .5rem;
+      transition: border-color .15s, color .15s
+    }
+
+    .btn-ghost:hover {
+      border-color: #3b82f6;
+      color: #fff
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(0, 0, 0, .72);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      overflow-y: auto
+    }
+
+    .modal.hidden {
+      display: none
+    }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 28rem;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: #16181e;
+      border: 1px solid #2a2f3d;
+      border-radius: 1.25rem;
+      padding: 1.5rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, .6)
+    }
+
+    .modal-x {
+      position: absolute;
+      top: .9rem;
+      right: 1rem;
+      color: #94a3b8;
+      font-size: 1.1rem;
+      line-height: 1
+    }
+
+    .modal-x:hover {
+      color: #fff
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: .5rem;
+      padding-right: 2rem
+    }
+
+    .modal-text {
+      font-size: .78rem;
+      color: #94a3b8;
+      margin-bottom: 1rem;
+      line-height: 1.5
+    }
+
+    .modal-lbl {
+      display: block;
+      font-size: .72rem;
+      color: #94a3b8;
+      margin-bottom: .35rem
+    }
+
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      padding: .9rem 1rem;
+      border-radius: 1rem;
+      border: 1px solid;
+      margin-bottom: .8rem;
+      transition: filter .15s
+    }
+
+    .opt:hover {
+      filter: brightness(1.25)
+    }
+
+    .opt-ico {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: .7rem;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      flex: none
+    }
+
+    .opt-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0
+    }
+
+    .opt-body b {
+      font-size: .88rem
+    }
+
+    .opt-body small {
+      font-size: .72rem;
+      opacity: .75
+    }
+
+    .opt i {
+      font-style: normal;
+      opacity: .7
+    }
+
+    .opt-blue {
+      background: #0f1830;
+      border-color: #25365e;
+      color: #fff
+    }
+
+    .opt-blue .opt-ico {
+      color: #60a5fa;
+      background: #16254a
+    }
+
+    .opt-violet {
+      background: #161228;
+      border-color: #3a2f66;
+      color: #fff
+    }
+
+    .opt-violet .opt-ico {
+      color: #a78bfa;
+      background: #231b47
+    }
+
+    .opt-amber {
+      background: #1f1a0e;
+      border-color: #5a4416;
+      color: #fbbf24
+    }
+
+    .opt-amber .opt-ico {
+      background: #33280f
+    }
+
+    .drive-actions {
+      display: flex;
+      gap: .6rem;
+      flex-wrap: wrap;
+      margin: .9rem 0
+    }
+
+    .drive-file {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .75rem;
+      padding: .6rem .75rem;
+      border: 1px solid #2a2f3d;
+      border-radius: .75rem;
+      background: #0f1117;
+      font-size: .75rem;
+      margin-top: .5rem
+    }
+
+    .drive-file small {
+      display: block;
+      color: #64748b;
+      font-size: .65rem
+    }
+
+    .modal-help {
+      font-size: .72rem;
+      color: #94a3b8;
+      margin-top: .6rem
+    }
+
+    .modal-help summary {
+      color: #60a5fa
+    }
+
+    .modal-help ol {
+      padding-left: 1.1rem;
+      list-style: decimal;
+      margin: .5rem 0;
+      line-height: 1.6
+    }
+
+    .modal-help p {
+      margin-top: .4rem;
+      color: #fbbf24
+    }
+
+    @media(max-width:767px) {
+      .hdr-actions>* {
+        flex: 1 1 auto;
+        text-align: center
+      }
+
+      .hdr-actions #fileName {
+        width: 100%;
+        flex-basis: 100%
+      }
+
+      .p-6,
+      .p-5 {
+        padding: 1rem
+      }
+
+      .card-dark h2 {
+        font-size: 1rem
+      }
+
+      #invoiceTableBody td,
+      .min-w-table th {
+        white-space: nowrap
+      }
+
+      table {
+        min-width: 720px
+      }
+
+      #todoList li {
+        flex-wrap: wrap;
+        gap: .4rem
+      }
+
+      .modal-box {
+        padding: 1.1rem
+      }
+    }
+
+    .hdr {
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem
+    }
+
+    .hdr-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem
+    }
+
+    .hdr-top select {
+      flex: none
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: .75rem 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid #232733
+    }
+
+    .tool-group {
+      display: flex;
+      flex-direction: column;
+      gap: .3rem
+    }
+
+    .tool-group .row {
+      display: flex;
+      gap: .5rem
+    }
+
+    .tg-label {
+      font-size: .62rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #64748b;
+      font-weight: 600
+    }
+
+    .tool-file input {
+      height: 2.25rem;
+      width: 13rem
+    }
+
+    .tool-end {
+      margin-left: auto
+    }
+
+    .tbtn {
+      height: 2.25rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .4rem;
+      padding: 0 .9rem;
+      border-radius: .5rem;
+      font-size: .75rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .15s
+    }
+
+    .tbtn-green {
+      background: #059669
+    }
+
+    .tbtn-green:hover {
+      background: #10b981
+    }
+
+    .tbtn-blue {
+      background: #2563eb
+    }
+
+    .tbtn-blue:hover {
+      background: #3b82f6
+    }
+
+    .toolbar .btn-ghost,
+    .toolbar .btn-support {
+      height: 2.25rem;
+      padding: 0 .9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap
+    }
+
+    .rad {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+      font-size: .72rem;
+      color: #cbd5e1;
+      cursor: pointer;
+      white-space: nowrap
+    }
+
+    .rad input {
+      width: .9rem;
+      height: .9rem
+    }
+
+    #invoiceTable input:disabled {
+      opacity: .35
+    }
+
+    .pl-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1.7fr .8fr;
+      gap: .5rem;
+      padding: .55rem .25rem;
+      border-bottom: 1px solid #1e293b;
+      font-size: .75rem;
+      align-items: center
+    }
+
+    .pl-a {
+      color: #cbd5e1
+    }
+
+    .pl-b {
+      color: #64748b;
+      font-size: .7rem
+    }
+
+    .pl-c {
+      text-align: right;
+      font-weight: 700;
+      color: #e2e8f0;
+      white-space: nowrap
+    }
+
+    .pl-strong .pl-a {
+      font-weight: 700;
+      color: #fff
+    }
+
+    .pl-strong .pl-c {
+      color: #fff
+    }
+
+    .pie-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem 1rem;
+      font-size: .72rem;
+      color: #cbd5e1;
+      margin-bottom: .75rem
+    }
+
+    .leg {
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem
+    }
+
+    .leg i {
+      width: .75rem;
+      height: .75rem;
+      border-radius: 9999px;
+      display: inline-block
+    }
+
+    .pie-wrap {
+      display: flex;
+      justify-content: center
+    }
+
+    .todo-example {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+      border: 1px dashed #2a2f3d;
+      border-radius: .75rem;
+      padding: .65rem .75rem;
+      opacity: .75;
+      font-size: .75rem;
+      color: #94a3b8
+    }
+
+    @media(max-width:767px) {
+      .hdr {
+        padding: 1rem
+      }
+
+      .toolbar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: .75rem
+      }
+
+      .tool-file,
+      .toolbar .tool-group:nth-child(2) {
+        grid-column: 1/-1
+      }
+
+      .tool-file input {
+        width: 100%
+      }
+
+      .tool-group .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr
+      }
+
+      .toolbar .btn-ghost,
+      .toolbar .btn-support,
+      .tbtn {
+        width: 100%
+      }
+
+      .tool-end {
+        margin-left: 0
+      }
+
+      .pl-row {
+        grid-template-columns: 1fr auto
+      }
+
+      .pl-b {
+        grid-column: 1/-1;
+        order: 3
+      }
+
+      #invoiceTable {
+        min-width: 1000px
+      }
+    }
+  </style>
 </head>
+
 <body class="p-4 md:p-8 min-h-screen">
-<div class="max-w-6xl mx-auto space-y-6">
+  <div class="max-w-6xl mx-auto space-y-6">
 
-<header class="card-dark p-5 rounded-2xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-  <div>
-    <h1 class="text-xl font-bold text-white" data-i18n="title"></h1>
-    <p class="text-xs text-slate-400" data-i18n="subtitle"></p>
-  </div>
-  <div class="flex flex-wrap items-center gap-3 w-full md:w-auto hdr-actions">
-    <select id="langSelect" onchange="changeLanguage(this.value)" class="input-dark px-3 py-2 rounded-lg text-xs font-bold border-blue-500">
-      <option value="pt" selected>🇵🇹 Português</option>
-      <option value="fr">🇫🇷 Français</option>
-      <option value="en">🇬🇧 English</option>
-    </select>
-    <input type="text" id="fileName" value="Minha_Empresa_2026" class="input-dark px-3 py-2 rounded-lg text-sm w-44 font-medium">
-    <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">💾 Excel</button>
-    <label class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition cursor-pointer">📂 Import
-      <input type="file" accept=".xlsx,.xls" onchange="importFromExcel(event)" class="hidden">
-    </label>
-    <button onclick="openModal('driveModal')" class="btn-ghost">☁️ Drive</button>
-    <button onclick="openModal('supportModal')" class="btn-support">☕ Apoiar</button>
-  </div>
-</header>
-
-<!-- KPIs -->
-<section class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-  <div class="card-dark p-5 rounded-2xl"><span class="text-xs font-medium text-slate-400" data-i18n="kpi1"></span>
-    <div id="kpiTotalCosts" class="text-2xl font-bold text-white mt-1">€0</div><span class="text-[10px] text-slate-500">[MENSAL REAL]</span></div>
-  <div class="card-dark p-5 rounded-2xl"><span class="text-xs font-medium text-slate-400" data-i18n="kpi2"></span>
-    <div id="kpiNetMonthly" class="text-2xl font-bold text-emerald-500 mt-1">€0</div><span class="text-[10px] text-slate-500">[MENSAL REAL]</span></div>
-  <div class="card-dark p-5 rounded-2xl"><span class="text-xs font-medium text-slate-400" data-i18n="kpi3"></span>
-    <div id="kpiRetentionRate" class="text-2xl font-bold text-emerald-500 mt-1">0%</div><span class="text-[10px] text-slate-500">[PROPORÇÃO MENSAL]</span></div>
-</section>
-
-<!-- Guia de parâmetros -->
-<section class="card-dark p-5 rounded-2xl">
-  <details>
-    <summary class="text-lg font-bold text-white flex justify-between items-center"><span data-i18n="guideTitle"></span><span class="text-xs text-slate-400">▾</span></summary>
-    <ul class="mt-3 space-y-2 text-xs text-slate-300 leading-relaxed" id="guideList"></ul>
-  </details>
-</section>
-
-<!-- 1 -->
-<section class="card-dark p-6 rounded-2xl space-y-4">
-  <h2 class="text-lg font-bold text-white" data-i18n="sec1"></h2>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-    <div><label class="text-xs text-slate-400 font-medium block mb-1">Rate Diária (€/dia · até 100 000)</label>
-      <input type="number" id="dailyRate" value="250" min="0" max="100000" oninput="validateLimits(this,0,100000);updateAll()" class="input-dark w-full px-3 py-2 rounded-xl font-bold text-emerald-400"></div>
-    <div><label class="text-xs text-slate-400 font-medium block mb-1">Dias Trabalhados / Mês (1 a 31)</label>
-      <input type="number" id="daysPerMonth" value="20" min="1" max="31" oninput="validateLimits(this,1,31);updateAll()" class="input-dark w-full px-3 py-2 rounded-xl font-bold"></div>
-    <div><label class="text-xs text-slate-400 font-medium block mb-1">Meses Ativos / Ano (1 a 14)</label>
-      <input type="number" id="monthsPerYear" value="11" min="1" max="14" oninput="validateLimits(this,1,14);updateAll()" class="input-dark w-full px-3 py-2 rounded-xl font-bold"></div>
-    <div><label class="text-xs text-slate-400 font-medium block mb-1">Reserva Transitada (Ano Anterior)</label>
-      <input type="number" id="carriedReserve" value="0" oninput="updateAll()" class="input-dark w-full px-3 py-2 rounded-xl font-bold text-blue-400"></div>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div class="input-dark p-3.5 rounded-xl flex justify-between items-center"><span class="text-xs font-semibold text-slate-300">Faturação Média Mensal [MENSAL]:</span><span id="monthlyRevenueDisplay" class="text-lg font-bold text-white">€ 0</span></div>
-    <div class="input-dark p-3.5 rounded-xl flex justify-between items-center"><span class="text-xs font-semibold text-slate-300">Faturação Bruta Total [ANUAL]:</span><span id="annualRevenueDisplay" class="text-lg font-bold text-emerald-400">€ 0</span></div>
-  </div>
-</section>
-
-<!-- 2 -->
-<section class="card-dark p-6 rounded-2xl space-y-6">
-  <h2 class="text-lg font-bold text-white" data-i18n="sec2"></h2>
-  <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden flex">
-    <div id="barGerente" class="bg-blue-500 h-full transition-all duration-300"></div>
-    <div id="barIsentos" class="bg-emerald-500 h-full transition-all duration-300"></div>
-    <div id="barDespesas" class="bg-amber-500 h-full transition-all duration-300"></div>
-  </div>
-  <div class="flex flex-wrap gap-4 text-[10px] text-slate-400">
-    <span><b class="text-blue-400">■</b> Gerente + TSU</span><span><b class="text-emerald-400">■</b> Benefícios isentos</span><span><b class="text-amber-400">■</b> Despesas</span>
-  </div>
-
-  <div class="space-y-4">
-    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-      <span class="text-sm font-semibold text-blue-400">Remuneração & Encargos do Gerente [MENSAL]</span>
-      <span id="catGerenteTotal" class="text-sm font-bold text-white">€0</span></div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Salário Bruto de Gerente (€/mês)</span>
-          <input type="number" id="inputSalary" min="920" value="1200" oninput="salaryTyped()" class="input-dark w-28 px-2 py-0.5 rounded text-right font-bold"></div>
-        <input type="range" id="sliderSalary" min="920" max="8000" step="25" value="1200" oninput="syncSalary()" class="w-full">
+    <header class="card-dark rounded-2xl hdr">
+      <div class="hdr-top">
+        <div>
+          <h1 class="text-xl font-bold text-white" data-i18n="title"></h1>
+          <p class="text-xs text-slate-400" data-i18n="subtitle"></p>
+        </div>
+        <select id="langSelect" onchange="changeLanguage(this.value)"
+          class="input-dark px-3 py-2 rounded-lg text-xs font-bold border-blue-500" aria-label="Idioma">
+          <option value="pt" selected>🇵🇹 Português</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="en">🇬🇧 English</option>
+        </select>
       </div>
-      <div>
-        <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Segurança Social Patronal (TSU 23,75%)</span><span class="font-bold text-white">€ <span id="valTsu">0</span></span></div>
-        <div class="text-[11px] text-slate-500">Calculada automaticamente sobre o salário bruto.</div>
+      <div class="toolbar">
+        <div class="tool-group tool-file">
+          <span class="tg-label">Ficheiro</span>
+          <input type="text" id="fileName" value="Minha_Empresa_2026"
+            class="input-dark px-3 rounded-lg text-sm font-medium">
+        </div>
+        <div class="tool-group">
+          <span class="tg-label">Excel</span>
+          <div class="row">
+            <button onclick="exportToExcel()" class="tbtn tbtn-green">💾 Excel</button>
+            <label class="tbtn tbtn-blue">📂 Import
+              <input type="file" accept=".xlsx,.xls" onchange="importFromExcel(event)" class="hidden">
+            </label>
+          </div>
+        </div>
+        <div class="tool-group">
+          <span class="tg-label">Nuvem</span>
+          <button onclick="openModal('driveModal')" class="btn-ghost">☁️ Drive</button>
+        </div>
+        <div class="tool-group tool-end">
+          <span class="tg-label">Apoio</span>
+          <button onclick="openModal('supportModal')" class="btn-support">☕ Apoiar</button>
+        </div>
       </div>
-    </div>
-  </div>
+    </header>
 
-  <div class="space-y-4">
-    <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-      <span class="text-sm font-semibold text-emerald-400">Benefícios Isentos de IRS e SS [MENSAL]</span>
-      <span id="catIsentosTotal" class="text-sm font-bold text-white">€0</span></div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Cheques Alimentação (máx. 12,40€/dia)</span><span class="font-bold text-white">€ <span id="valEdenred">0</span> <span class="text-slate-500 font-normal">/ máx <span id="maxEdenred">0</span></span></span></div>
-        <input type="range" id="sliderEdenred" min="0" max="248" step="0.5" value="225" oninput="syncInputs('Edenred')" class="w-full">
+    <!-- KPIs -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+      <div class="card-dark p-5 rounded-2xl"><span class="text-xs font-medium text-slate-400" data-i18n="kpi1"></span>
+        <div id="kpiTotalCosts" class="text-2xl font-bold text-white mt-1">€0</div><span
+          class="text-[10px] text-slate-500">[MENSAL REAL]</span>
       </div>
-      <div>
-        <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Ajudas de Custo em Deslocação (máx. ~50,20€/dia)</span><span class="font-bold text-white">€ <span id="valAjudas">0</span> <span class="text-slate-500 font-normal">/ máx <span id="maxAjudas">0</span></span></span></div>
-        <input type="range" id="sliderAjudas" min="0" max="1004" step="5" value="300" oninput="syncInputs('Ajudas')" class="w-full">
+      <div class="card-dark p-5 rounded-2xl"><span class="text-xs font-medium text-slate-400" data-i18n="kpi2"></span>
+        <div id="kpiNetMonthly" class="text-2xl font-bold text-emerald-500 mt-1">€0</div><span
+          class="text-[10px] text-slate-500">[MENSAL REAL]</span>
       </div>
+      <div class="card-dark p-5 rounded-2xl"><span class="text-xs font-medium text-slate-400" data-i18n="kpi3"></span>
+        <div id="kpiRetentionRate" class="text-2xl font-bold text-emerald-500 mt-1">0%</div><span
+          class="text-[10px] text-slate-500">[PROPORÇÃO ANUAL]</span>
+      </div>
+    </section>
+
+    <!-- Guia de parâmetros -->
+    <section class="card-dark p-5 rounded-2xl">
+      <details>
+        <summary class="text-lg font-bold text-white flex justify-between items-center"><span
+            data-i18n="guideTitle"></span><span class="text-xs text-slate-400">▾</span></summary>
+        <ul class="mt-3 space-y-2 text-xs text-slate-300 leading-relaxed" id="guideList"></ul>
+      </details>
+    </section>
+
+    <!-- 1 -->
+    <section class="card-dark p-6 rounded-2xl space-y-4">
+      <h2 class="text-lg font-bold text-white" data-i18n="sec1"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div><label class="text-xs text-slate-400 font-medium block mb-1">Rate Diária (€/dia · até 100 000)</label>
+          <input type="number" id="dailyRate" value="250" min="0" max="100000"
+            oninput="validateLimits(this,0,100000);updateAll()"
+            class="input-dark w-full px-3 py-2 rounded-xl font-bold text-emerald-400">
+        </div>
+        <div><label class="text-xs text-slate-400 font-medium block mb-1">Dias Trabalhados / Mês (1 a 31)</label>
+          <input type="number" id="daysPerMonth" value="20" min="1" max="31"
+            oninput="validateLimits(this,1,31);updateAll()" class="input-dark w-full px-3 py-2 rounded-xl font-bold">
+        </div>
+        <div><label class="text-xs text-slate-400 font-medium block mb-1">Meses Ativos / Ano (1 a 14)</label>
+          <input type="number" id="monthsPerYear" value="11" min="1" max="14"
+            oninput="validateLimits(this,1,14);updateAll()" class="input-dark w-full px-3 py-2 rounded-xl font-bold">
+        </div>
+        <div><label class="text-xs text-slate-400 font-medium block mb-1">Reserva Transitada (Ano Anterior)</label>
+          <input type="number" id="carriedReserve" value="0" oninput="updateAll()"
+            class="input-dark w-full px-3 py-2 rounded-xl font-bold text-blue-400">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="input-dark p-3.5 rounded-xl flex justify-between items-center"><span
+            class="text-xs font-semibold text-slate-300">Faturação Média Mensal [MENSAL]:</span><span
+            id="monthlyRevenueDisplay" class="text-lg font-bold text-white">€ 0</span></div>
+        <div class="input-dark p-3.5 rounded-xl flex justify-between items-center"><span
+            class="text-xs font-semibold text-slate-300">Faturação Bruta Total [ANUAL]:</span><span
+            id="annualRevenueDisplay" class="text-lg font-bold text-emerald-400">€ 0</span></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="card-dark p-6 rounded-2xl space-y-6">
+      <h2 class="text-lg font-bold text-white" data-i18n="sec2"></h2>
+      <div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden flex">
+        <div id="barGerente" class="bg-blue-500 h-full transition-all duration-300"></div>
+        <div id="barIsentos" class="bg-emerald-500 h-full transition-all duration-300"></div>
+        <div id="barDespesas" class="bg-amber-500 h-full transition-all duration-300"></div>
+      </div>
+      <div class="flex flex-wrap gap-4 text-[10px] text-slate-400">
+        <span><b class="text-blue-400">■</b> Gerente + TSU</span><span><b class="text-emerald-400">■</b> Benefícios
+          isentos</span><span><b class="text-amber-400">■</b> Despesas</span>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2 gap-2 flex-wrap">
+          <span class="text-sm font-semibold text-blue-400">Remuneração & Encargos do Gerente</span>
+          <span id="catGerenteTotal" class="text-sm font-bold text-white">€0</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div class="flex justify-between items-center text-xs text-slate-400 mb-1 gap-2"><span>Salário Bruto de
+                Gerente (€/mês · 14 pagamentos)</span>
+              <input type="number" id="inputSalary" min="920" value="1200" oninput="pairFromInput('Salary')"
+                class="input-dark w-28 px-2 py-0.5 rounded text-right font-bold">
+            </div>
+            <input type="range" id="sliderSalary" min="920" max="8000" step="25" value="1200"
+              oninput="pairFromSlider('Salary')" class="w-full">
+          </div>
+          <div>
+            <div class="flex justify-between text-xs text-slate-400 mb-1"><span>Segurança Social Patronal (TSU 23,75%)
+                por pagamento</span><span class="font-bold text-white">€ <span id="valTsu">0</span></span></div>
+            <div class="text-[11px] text-slate-500">Calculada sobre o salário bruto, nos 14 pagamentos (12 meses +
+              subsídios de férias e Natal).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex justify-between items-center border-b border-slate-800 pb-2 gap-2 flex-wrap">
+          <span class="text-sm font-semibold text-emerald-400">Benefícios Isentos de IRS e SS</span>
+          <span id="catIsentosTotal" class="text-sm font-bold text-white">€0</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div class="flex justify-between items-center text-xs text-slate-400 mb-1 gap-2"><span>Cheques Alimentação
+                (€/dia · máx. 12,40)</span>
+              <input type="number" id="inputMeal" min="0" max="12.4" step="0.05" value="11.25"
+                oninput="pairFromInput('Meal',12.4)" class="input-dark w-24 px-2 py-0.5 rounded text-right font-bold">
+            </div>
+            <input type="range" id="sliderMeal" min="0" max="12.4" step="0.05" value="11.25"
+              oninput="pairFromSlider('Meal')" class="w-full">
+            <div id="hintMeal" class="text-[11px] text-slate-500 mt-1"></div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center text-xs text-slate-400 mb-1 gap-2"><span>Ajudas de Custo em
+                Deslocação (€/dia · máx. ~50,20)</span>
+              <input type="number" id="inputAllow" min="0" max="50.2" step="0.5" value="15"
+                oninput="pairFromInput('Allow',50.2)" class="input-dark w-24 px-2 py-0.5 rounded text-right font-bold">
+            </div>
+            <input type="range" id="sliderAllow" min="0" max="50.2" step="0.5" value="15"
+              oninput="pairFromSlider('Allow')" class="w-full">
+            <div id="hintAllow" class="text-[11px] text-slate-500 mt-1"></div>
+          </div>
+          <div>
+            <div class="flex justify-between items-center text-xs text-slate-400 mb-1 gap-2"><span>Creche (€/mês · 12
+                meses)</span>
+              <input type="number" id="inputCreche" min="0" value="0" oninput="updateAll()"
+                class="input-dark w-28 px-2 py-0.5 rounded text-right font-bold">
+            </div>
+            <div id="hintCreche" class="text-[11px] text-slate-500 mt-1"></div>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-2">
+          <div class="text-xs text-slate-300 font-semibold">Outros valores <span
+              class="text-slate-500 font-normal">(extras que não estão acima; pode acrescentar quando precisar)</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-6 gap-3">
+            <input type="text" id="othDesc" placeholder="Descrição"
+              class="input-dark px-3 py-2 rounded-xl text-xs md:col-span-2">
+            <input type="number" id="othAmount" placeholder="Valor (€)" class="input-dark px-3 py-2 rounded-xl text-xs">
+            <select id="othPeriod" class="input-dark px-3 py-2 rounded-xl text-xs">
+              <option value="mensal">Mensal (×12)</option>
+              <option value="anual">Anual (único)</option>
+            </select>
+            <select id="othKind" class="input-dark px-3 py-2 rounded-xl text-xs">
+              <option value="gerente">Benefício do gerente</option>
+              <option value="empresa">Custo da empresa</option>
+            </select>
+            <button onclick="addOther()"
+              class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-xl text-xs transition">+
+              Adicionar</button>
+          </div>
+          <ul id="othersList" class="space-y-2"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3: Comparativo -->
+    <section class="card-dark p-6 rounded-2xl space-y-4">
+      <div class="flex justify-between items-center flex-wrap gap-2">
+        <h2 class="text-lg font-bold text-white" data-i18n="sec3"></h2>
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="chkRegressar" checked onchange="updateAll()" class="w-4 h-4 accent-blue-600">
+          <label for="chkRegressar" class="text-xs text-slate-300 font-medium">Programa Regressar (Isenção 50%
+            IRS)</label>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="input-dark p-5 rounded-2xl space-y-3">
+          <div class="text-xs text-slate-400 font-bold">Cenário: Unipessoal Lda</div>
+          <div class="flex justify-between gap-2"><span class="text-xs text-slate-300">Ordenado Líquido Pessoal
+              [MENSAL]:</span><span id="ldaNetSalary" class="text-lg font-bold text-white">€0</span></div>
+          <div class="flex justify-between gap-2"><span class="text-xs text-slate-300">Sobra Retida na Empresa
+              [MENSAL]:</span><span id="ldaRetainedMonthly" class="text-lg font-bold text-blue-400">€0</span></div>
+          <div class="border-t border-slate-800 pt-2 flex justify-between gap-2"><span
+              class="text-xs text-slate-300 font-semibold">Total Valor Gerado [MENSAL REAL]:</span><span
+              id="ldaTotalValue" class="text-xl font-extrabold text-emerald-400">€0</span></div>
+          <div class="text-[10px] text-slate-500">Médias mensais (valor anual ÷ 12), já com os benefícios isentos e
+            depois de IRC.</div>
+        </div>
+        <div class="input-dark p-5 rounded-2xl space-y-3">
+          <div class="text-xs text-slate-400 font-bold">Cenário: Trabalhador Independente (TI)</div>
+          <div class="flex justify-between gap-2"><span class="text-xs text-slate-300">Rendimento Líquido
+              [MENSAL]:</span><span id="tiNetMonthly" class="text-lg font-bold text-white">€0</span></div>
+          <div class="flex justify-between text-xs text-slate-400 gap-2"><span>Impostos pagos (IRS + SS):</span><span
+              id="tiTaxesMonthly">€0 / mês</span></div>
+          <div class="border-t border-slate-800 pt-2 flex justify-between items-center gap-2"><span
+              class="text-xs text-slate-300 font-semibold">Diferencial vs Empresa:</span><span id="diffBadge"
+              class="text-sm font-bold px-3 py-1 rounded-full border">€0</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4: Despesas -->
+    <section class="card-dark p-6 rounded-2xl space-y-4">
+      <h2 class="text-lg font-bold text-white" data-i18n="sec4"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-6 gap-3 pt-2">
+        <input type="text" id="invoiceDesc" placeholder="Descrição da Despesa"
+          class="input-dark px-3 py-2 rounded-xl text-xs md:col-span-2">
+        <input type="text" id="invoiceNum" placeholder="Nº Fatura (Opcional)"
+          class="input-dark px-3 py-2 rounded-xl text-xs">
+        <input type="date" id="invoiceDate" class="input-dark px-3 py-2 rounded-xl text-xs">
+        <input type="number" id="invoiceAmount" placeholder="Montante (€)"
+          class="input-dark px-3 py-2 rounded-xl text-xs">
+        <select id="invoiceInstallments" class="input-dark px-3 py-2 rounded-xl text-xs" disabled
+          title="Só para faturas únicas">
+          <option value="1">1 Mês (A pronto)</option>
+          <option value="2">2 Meses</option>
+          <option value="3">3 Meses</option>
+          <option value="6">6 Meses</option>
+          <option value="12" selected>12 Meses</option>
+          <option value="14">14 Meses</option>
+        </select>
+      </div>
+      <div class="flex flex-wrap items-center gap-4 text-xs">
+        <span class="text-slate-400">Tipo de fatura:</span>
+        <label class="rad"><input type="radio" name="invType" value="mensal" checked onchange="syncInvType()"
+            class="accent-blue-600"> 🔁 Fixa todos os meses (valor mensal × 12)</label>
+        <label class="rad"><input type="radio" name="invType" value="unica" onchange="syncInvType()"
+            class="accent-blue-600"> 1️⃣ Única, estanque no ano fiscal (valor total)</label>
+      </div>
+      <button onclick="addInvoice()"
+        class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-xl text-xs transition">+
+        Adicionar Despesa</button>
+      <div class="overflow-x-auto pt-4">
+        <table id="invoiceTable" class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="text-slate-400 border-b border-slate-800">
+              <th class="p-2.5">Data</th>
+              <th class="p-2.5">Descrição</th>
+              <th class="p-2.5">Nº Fatura</th>
+              <th class="p-2.5">Montante (€)</th>
+              <th class="p-2.5">Tipo</th>
+              <th class="p-2.5">Divisão (Meses)</th>
+              <th class="p-2.5">Custo Mensal Real</th>
+              <th class="p-2.5">Total no Ano</th>
+              <th class="p-2.5 text-right">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="invoiceTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section class="card-dark p-6 rounded-2xl space-y-4">
+      <h2 class="text-lg font-bold text-white" data-i18n="sec5"></h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+        <div class="input-dark p-4 rounded-xl"><span class="text-slate-400 block mb-1">Lucro Bruto [ANUAL]:</span><span
+            id="companyEbit" class="text-lg font-bold text-white">€0</span></div>
+        <div class="input-dark p-4 rounded-xl"><span class="text-slate-400 block mb-1">IRC Estimado [ANUAL]:</span><span
+            id="companyIrc" class="text-lg font-bold text-amber-400">€0</span></div>
+        <div class="input-dark p-4 rounded-xl"><span class="text-slate-400 block mb-1">Reserva Final Acumulada
+            [TOTAL]:</span><span id="companyFinalReserve" class="text-lg font-bold text-blue-400">€0</span></div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-slate-300 pb-2">Demonstração de Resultados Anual</h3>
+        <div id="plBody"></div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-slate-300 pb-2" id="pieTitle">Distribuição da Faturação Anual</h3>
+        <div id="pieLegend" class="pie-legend"></div>
+        <div id="pieSvg" class="pie-wrap"></div>
+        <p id="pieNote" class="text-[11px] text-amber-400 text-center"></p>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" id="chkDividends" onchange="updateAll()" class="w-4 h-4 accent-emerald-500">
+          <label for="chkDividends" class="text-xs font-bold text-white cursor-pointer">Simular Levantamento de
+            Dividendos no Fim do Ano (28%)</label>
+        </div>
+        <div id="dividendsBreakdown" class="hidden text-xs text-slate-300 pt-2 border-t border-slate-800 space-y-1">
+          <div class="flex justify-between"><span>Lucro Anual Disponível (Após IRC):</span><span id="divGross"
+              class="font-bold">€0</span></div>
+          <div class="flex justify-between text-amber-400"><span>Imposto sobre Dividendos (28%):</span><span
+              id="divTax">- €0</span></div>
+          <div class="flex justify-between text-base font-extrabold text-emerald-400 pt-1"><span>Valor Final Líquido
+              [ANUAL]:</span><span id="divNet">€0</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6: Checklist (último passo) -->
+    <section class="card-dark p-6 rounded-2xl space-y-4">
+      <div class="flex justify-between items-center flex-wrap gap-2">
+        <h2 class="text-lg font-bold text-white" data-i18n="sec6"></h2>
+        <button onclick="requestNotificationPermission()"
+          class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">🔔
+          Ativar Notificações no Navegador</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+        <input type="text" id="todoText" placeholder="Ex: Pagar Guia de TSU / Enviar e-fatura"
+          class="input-dark px-3 py-2 rounded-xl text-xs md:col-span-2">
+        <input type="datetime-local" id="todoDate" class="input-dark px-3 py-2 rounded-xl text-xs">
+        <button onclick="addTodo()"
+          class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-xl text-xs transition">+
+          Adicionar Tarefa</button>
+      </div>
+      <ul id="todoList" class="space-y-2"></ul>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="card-dark p-5 rounded-2xl text-center space-y-2">
+      <p class="text-xs text-slate-300" data-i18n="coffee"></p>
+      <button onclick="openModal('supportModal')" class="btn-support">☕ Apoiar / Buy me a coffee</button>
+      <p class="text-[10px] text-slate-500" data-i18n="disclaimer"></p>
+    </footer>
+
+  </div>
+  <!-- Popup: Apoiar -->
+  <div id="supportModal" class="modal hidden" onclick="if(event.target===this)closeModal('supportModal')">
+    <div class="modal-box" role="dialog" aria-labelledby="supTitle">
+      <button class="modal-x" onclick="closeModal('supportModal')" aria-label="Fechar">✕</button>
+      <h3 class="modal-title" id="supTitle">☕ Apoiar / Buy Me a Coffee</h3>
+      <p class="modal-text">Se esta ferramenta te ajudou a simular e organizar a tua atividade, considera apoiar o
+        desenvolvimento contínuo!</p>
+      <a id="lnkPaypal" class="opt opt-blue" href="#" target="_blank" rel="noopener">
+        <span class="opt-ico">P</span><span class="opt-body"><b>PayPal</b><small>Doação rápida e
+            segura</small></span><i>↗</i></a>
+      <a id="lnkRevolut" class="opt opt-violet" href="#" target="_blank" rel="noopener">
+        <span class="opt-ico">R</span><span class="opt-body"><b>Revolut</b><small>Transferência instantânea via
+            Revolut</small></span><i>↗</i></a>
+      <a id="lnkKofi" class="opt opt-amber" href="#" target="_blank" rel="noopener">
+        <span class="opt-ico">☕</span><span class="opt-body"><b>Buy Me a Ko-Fi</b><small>Oferecer um café
+            virtual</small></span><i>↗</i></a>
     </div>
-    <p class="text-[11px] text-slate-500">Os limites multiplicam-se pelos dias trabalhados por mês, por isso mudam sempre que alterar os dias.</p>
   </div>
-</section>
 
-<!-- 3 -->
-<section class="card-dark p-6 rounded-2xl space-y-4">
-  <h2 class="text-lg font-bold text-white" data-i18n="sec3"></h2>
-  <div class="grid grid-cols-1 md:grid-cols-6 gap-3 pt-2">
-    <input type="text" id="invoiceDesc" placeholder="Descrição da Despesa" class="input-dark px-3 py-2 rounded-xl text-xs md:col-span-2">
-    <input type="text" id="invoiceNum" placeholder="Nº Fatura (Opcional)" class="input-dark px-3 py-2 rounded-xl text-xs">
-    <input type="date" id="invoiceDate" class="input-dark px-3 py-2 rounded-xl text-xs">
-    <input type="number" id="invoiceAmount" placeholder="Montante Total (€)" class="input-dark px-3 py-2 rounded-xl text-xs">
-    <select id="invoiceInstallments" class="input-dark px-3 py-2 rounded-xl text-xs">
-      <option value="1">1 Mês (A pronto)</option><option value="2">2 Meses</option><option value="3">3 Meses</option>
-      <option value="6">6 Meses</option><option value="12" selected>12 Meses</option><option value="14">14 Meses</option>
-    </select>
-  </div>
-  <button onclick="addInvoice()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-xl text-xs transition">+ Adicionar Despesa</button>
-  <div class="overflow-x-auto pt-4">
-    <table class="w-full text-left text-xs border-collapse">
-      <thead><tr class="text-slate-400 border-b border-slate-800">
-        <th class="p-2.5">Data</th><th class="p-2.5">Descrição</th><th class="p-2.5">Nº Fatura</th><th class="p-2.5">Total (€)</th><th class="p-2.5">Divisão (Meses)</th><th class="p-2.5">Custo Mensal Real</th><th class="p-2.5 text-right">Ação</th>
-      </tr></thead>
-      <tbody id="invoiceTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<!-- 4 -->
-<section class="card-dark p-6 rounded-2xl space-y-4">
-  <div class="flex justify-between items-center flex-wrap gap-2">
-    <h2 class="text-lg font-bold text-white" data-i18n="sec4"></h2>
-    <div class="flex items-center gap-2">
-      <input type="checkbox" id="chkRegressar" checked onchange="updateAll()" class="w-4 h-4 accent-blue-600">
-      <label for="chkRegressar" class="text-xs text-slate-300 font-medium">Programa Regressar (Isenção 50% IRS)</label>
+  <!-- Popup: Google Drive -->
+  <div id="driveModal" class="modal hidden" onclick="if(event.target===this)closeModal('driveModal')">
+    <div class="modal-box" role="dialog" aria-labelledby="drvTitle">
+      <button class="modal-x" onclick="closeModal('driveModal')" aria-label="Fechar">✕</button>
+      <h3 class="modal-title" id="drvTitle">☁️ Google Drive</h3>
+      <p class="modal-text">Guarde e abra o seu Excel diretamente na sua conta Google. A aplicação só vê os ficheiros
+        que ela própria criou.</p>
+      <label class="modal-lbl" for="gClientId">Client ID (Google Cloud)</label>
+      <input id="gClientId" type="text" placeholder="xxxx.apps.googleusercontent.com"
+        class="input-dark w-full px-3 py-2 rounded-xl text-xs">
+      <details class="modal-help">
+        <summary>Como obter o Client ID (uma só vez)</summary>
+        <ol>
+          <li>Em console.cloud.google.com crie um projeto.</li>
+          <li>APIs e serviços → Biblioteca → ative a <b>Google Drive API</b>.</li>
+          <li>Ecrã de consentimento OAuth → Externo → adicione o seu e-mail como utilizador de teste.</li>
+          <li>Credenciais → Criar credenciais → ID de cliente OAuth → Aplicação Web.</li>
+          <li>Em «Origens JavaScript autorizadas» coloque o endereço onde esta página está alojada (ex.:
+            https://o-seu-user.github.io).</li>
+          <li>Copie o Client ID para o campo acima.</li>
+        </ol>
+        <p>Não funciona se abrir o ficheiro diretamente do computador (file://). Precisa de https ou http://localhost.
+        </p>
+      </details>
+      <div class="drive-actions">
+        <button onclick="driveSave()"
+          class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">⬆
+          Guardar no Drive</button>
+        <button onclick="driveList()"
+          class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">⬇
+          Abrir do Drive</button>
+      </div>
+      <div id="driveMsg" class="modal-text"></div>
+      <ul id="driveFiles"></ul>
     </div>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="input-dark p-5 rounded-2xl space-y-3">
-      <div class="text-xs text-slate-400 font-bold">Cenário: Unipessoal Lda</div>
-      <div class="flex justify-between"><span class="text-xs text-slate-300">Ordenado Líquido Pessoal [MENSAL]:</span><span id="ldaNetSalary" class="text-lg font-bold text-white">€0</span></div>
-      <div class="flex justify-between"><span class="text-xs text-slate-300">Sobra Retida na Empresa [MENSAL]:</span><span id="ldaRetainedMonthly" class="text-lg font-bold text-blue-400">€0</span></div>
-      <div class="border-t border-slate-800 pt-2 flex justify-between"><span class="text-xs text-slate-300 font-semibold">Total Valor Gerado [MENSAL REAL]:</span><span id="ldaTotalValue" class="text-xl font-extrabold text-emerald-400">€0</span></div>
-    </div>
-    <div class="input-dark p-5 rounded-2xl space-y-3">
-      <div class="text-xs text-slate-400 font-bold">Cenário: Trabalhador Independente (TI)</div>
-      <div class="flex justify-between"><span class="text-xs text-slate-300">Rendimento Líquido [MENSAL]:</span><span id="tiNetMonthly" class="text-lg font-bold text-white">€0</span></div>
-      <div class="flex justify-between text-xs text-slate-400"><span>Impostos pagos (IRS + SS):</span><span id="tiTaxesMonthly">€0 / mês</span></div>
-      <div class="border-t border-slate-800 pt-2 flex justify-between items-center"><span class="text-xs text-slate-300 font-semibold">Diferencial vs Empresa:</span><span id="diffBadge" class="text-sm font-bold px-3 py-1 rounded-full">€0</span></div>
-    </div>
-  </div>
-</section>
 
-<!-- 5 -->
-<section class="card-dark p-6 rounded-2xl space-y-4">
-  <h2 class="text-lg font-bold text-white" data-i18n="sec5"></h2>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-    <div class="input-dark p-4 rounded-xl"><span class="text-slate-400 block mb-1">Lucro Bruto [ANUAL]:</span><span id="companyEbit" class="text-lg font-bold text-white">€0</span></div>
-    <div class="input-dark p-4 rounded-xl"><span class="text-slate-400 block mb-1">IRC Estimado [ANUAL]:</span><span id="companyIrc" class="text-lg font-bold text-amber-400">€0</span></div>
-    <div class="input-dark p-4 rounded-xl"><span class="text-slate-400 block mb-1">Reserva Final Acumulada [TOTAL]:</span><span id="companyFinalReserve" class="text-lg font-bold text-blue-400">€0</span></div>
-  </div>
-  <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
-    <div class="flex items-center gap-3">
-      <input type="checkbox" id="chkDividends" onchange="updateAll()" class="w-4 h-4 accent-emerald-500">
-      <label for="chkDividends" class="text-xs font-bold text-white cursor-pointer">Simular Levantamento de Dividendos no Fim do Ano (28%)</label>
-    </div>
-    <div id="dividendsBreakdown" class="hidden text-xs text-slate-300 pt-2 border-t border-slate-800 space-y-1">
-      <div class="flex justify-between"><span>Lucro Anual Disponível (Após IRC):</span><span id="divGross" class="font-bold">€0</span></div>
-      <div class="flex justify-between text-amber-400"><span>Imposto sobre Dividendos (28%):</span><span id="divTax">- €0</span></div>
-      <div class="flex justify-between text-base font-extrabold text-emerald-400 pt-1"><span>Valor Final Líquido [ANUAL]:</span><span id="divNet">€0</span></div>
-    </div>
-  </div>
-</section>
 
-<!-- 6: Checklist (último passo) -->
-<section class="card-dark p-6 rounded-2xl space-y-4">
-  <div class="flex justify-between items-center flex-wrap gap-2">
-    <h2 class="text-lg font-bold text-white" data-i18n="sec6"></h2>
-    <button onclick="requestNotificationPermission()" class="bg-amber-600 hover:bg-amber-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">🔔 Ativar Notificações no Navegador</button>
-  </div>
-  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
-    <input type="text" id="todoText" placeholder="Ex: Pagar Guia de TSU / Enviar e-fatura" class="input-dark px-3 py-2 rounded-xl text-xs md:col-span-2">
-    <input type="datetime-local" id="todoDate" class="input-dark px-3 py-2 rounded-xl text-xs">
-    <button onclick="addTodo()" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded-xl text-xs transition">+ Adicionar Tarefa</button>
-  </div>
-  <ul id="todoList" class="space-y-2"></ul>
-</section>
+  <script>
+    /*CALC-START*/
+    const SAL_MONTHS = 14, MEAL_MAX = 12.40, ALLOW_MAX = 50.20, SS_CAP_MONTH = 6270; // teto SS ≈ 12 × IAS
+    const TSU_RATE = 0.2375, SS_WORKER = 0.11, DIV_RATE = 0.28;
+    // IRS progressivo (escalões aproximados, continente)
+    const BR = [[8342, .13], [12587, .165], [17838, .22], [23089, .25], [29397, .32], [43090, .355], [46566, .435], [86634, .45], [Infinity, .48]];
+    function irs(base) {
+      let t = 0, prev = 0;
+      for (const [lim, r] of BR) {if (base > prev) t += (Math.min(base, lim) - prev) * r; prev = lim;}
+      if (base > 250000) t += (base - 250000) * .05 + (250000 - 80000) * .025; else if (base > 80000) t += (base - 80000) * .025;
+      return t;
+    }
+    // IRC 2026 (PME, continente): 15% até 50 000 €, 19% no excedente
+    function ircTax(ebt) {return ebt <= 0 ? 0 : (ebt <= 50000 ? ebt * 0.15 : 50000 * 0.15 + (ebt - 50000) * 0.19);}
 
-<!-- Rodapé -->
-<footer class="card-dark p-5 rounded-2xl text-center space-y-2">
-  <p class="text-xs text-slate-300" data-i18n="coffee"></p>
-  <button onclick="openModal('supportModal')" class="btn-support">☕ Apoiar / Buy me a coffee</button>
-  <p class="text-[10px] text-slate-500" data-i18n="disclaimer"></p>
-</footer>
+    function compute(i) {
+      const annualRev = i.rate * i.days * i.months;
+      const salaryYear = i.salary * SAL_MONTHS;
+      const tsuYear = salaryYear * TSU_RATE;
+      const mealYear = i.mealDay * i.days * i.months;
+      const allowYear = i.allowDay * i.days * i.months;
+      const crecheYear = i.creche * 12;
+      let othersBen = 0, othersCost = 0;
+      (i.others || []).forEach(o => {
+        const y = (parseFloat(o.amount) || 0) * (o.period === 'anual' ? 1 : 12);
+        if (o.kind === 'empresa') othersCost += y; else othersBen += y;
+      });
+      let invYear = 0;
+      (i.invoices || []).forEach(v => {const a = parseFloat(v.amount) || 0; invYear += v.type === 'unica' ? a : a * 12;});
+      const benefitsYear = mealYear + allowYear + crecheYear + othersBen;
+      const expensesYear = invYear + othersCost;
+      const totalCostYear = salaryYear + tsuYear + benefitsYear + expensesYear;
+      const ebt = annualRev - totalCostYear;
+      const irc = ircTax(ebt);
+      const netProfit = ebt - irc;
 
-</div>
+      // Cenário Lda: ordenado do gerente (14 pagamentos) + benefícios isentos
+      const ssW = salaryYear * SS_WORKER;
+      const irsW = irs(i.regressar ? salaryYear * 0.5 : salaryYear);
+      const ldaNetYear = salaryYear - ssW - irsW + benefitsYear;
 
-<!-- Popup: Apoiar -->
-<div id="supportModal" class="modal hidden" onclick="if(event.target===this)closeModal('supportModal')">
-  <div class="modal-box" role="dialog" aria-labelledby="supTitle">
-    <button class="modal-x" onclick="closeModal('supportModal')" aria-label="Fechar">✕</button>
-    <h3 class="modal-title" id="supTitle">☕ Apoiar / Buy Me a Coffee</h3>
-    <p class="modal-text">Se esta ferramenta te ajudou a simular e organizar a tua atividade, considera apoiar o desenvolvimento contínuo!</p>
-    <a id="lnkPaypal" class="opt opt-blue" href="#" target="_blank" rel="noopener">
-      <span class="opt-ico">P</span><span class="opt-body"><b>PayPal</b><small>Doação rápida e segura</small></span><i>↗</i></a>
-    <a id="lnkRevolut" class="opt opt-violet" href="#" target="_blank" rel="noopener">
-      <span class="opt-ico">R</span><span class="opt-body"><b>Revolut</b><small>Transferência instantânea via Revolut</small></span><i>↗</i></a>
-    <a id="lnkKofi" class="opt opt-amber" href="#" target="_blank" rel="noopener">
-      <span class="opt-ico">☕</span><span class="opt-body"><b>Buy Me a Ko-Fi</b><small>Oferecer um café virtual</small></span><i>↗</i></a>
-  </div>
-</div>
+      // Cenário TI (regime simplificado: 75% tributável; SS sobre 70% com teto)
+      const tiBase = annualRev * 0.75;
+      const tiIrs = irs(i.regressar ? tiBase * 0.5 : tiBase);
+      const tiSS = Math.min(annualRev * 0.70, SS_CAP_MONTH * 12) * 0.214;
+      const tiNetYear = annualRev - tiIrs - tiSS;
 
-<!-- Popup: Google Drive -->
-<div id="driveModal" class="modal hidden" onclick="if(event.target===this)closeModal('driveModal')">
-  <div class="modal-box" role="dialog" aria-labelledby="drvTitle">
-    <button class="modal-x" onclick="closeModal('driveModal')" aria-label="Fechar">✕</button>
-    <h3 class="modal-title" id="drvTitle">☁️ Google Drive</h3>
-    <p class="modal-text">Guarde e abra o seu Excel diretamente na sua conta Google. A aplicação só vê os ficheiros que ela própria criou.</p>
-    <label class="modal-lbl" for="gClientId">Client ID (Google Cloud)</label>
-    <input id="gClientId" type="text" placeholder="xxxx.apps.googleusercontent.com" class="input-dark w-full px-3 py-2 rounded-xl text-xs">
-    <details class="modal-help">
-      <summary>Como obter o Client ID (uma só vez)</summary>
-      <ol>
-        <li>Em console.cloud.google.com crie um projeto.</li>
-        <li>APIs e serviços → Biblioteca → ative a <b>Google Drive API</b>.</li>
-        <li>Ecrã de consentimento OAuth → Externo → adicione o seu e-mail como utilizador de teste.</li>
-        <li>Credenciais → Criar credenciais → ID de cliente OAuth → Aplicação Web.</li>
-        <li>Em «Origens JavaScript autorizadas» coloque o endereço onde esta página está alojada (ex.: https://o-seu-user.github.io).</li>
-        <li>Copie o Client ID para o campo acima.</li>
-      </ol>
-      <p>Não funciona se abrir o ficheiro diretamente do computador (file://). Precisa de https ou http://localhost.</p>
-    </details>
-    <div class="drive-actions">
-      <button onclick="driveSave()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">⬆ Guardar no Drive</button>
-      <button onclick="driveList()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">⬇ Abrir do Drive</button>
-    </div>
-    <div id="driveMsg" class="modal-text"></div>
-    <ul id="driveFiles"></ul>
-  </div>
-</div>
+      const divBase = Math.max(netProfit, 0), divTax = divBase * DIV_RATE;
+      return {
+        annualRev, salaryYear, tsuYear, mealYear, allowYear, crecheYear, othersBen, othersCost, invYear,
+        benefitsYear, expensesYear, totalCostYear, ebt, irc, netProfit, finalReserve: netProfit + (i.carried || 0),
+        ssW, irsW, ldaNetYear, tiIrs, tiSS, tiNetYear, divBase, divTax, divNet: divBase - divTax
+      };
+    }
+    /*CALC-END*/
 
-<script>
-const i18n = {
- pt:{title:"📊 Livro de Registos & Simulador Financeiro",subtitle:"Contabilidade Mensal, Amortizações, Notificações e Comparativo Fiscal PT",
-  kpi1:"Custos totais com o gerente & despesas",kpi2:"Resultado líquido/sobra mensal na empresa",kpi3:"Taxa de retenção na empresa",
-  guideTitle:"📖 Como usar: o que faz cada parâmetro",
-  sec1:"1. Parâmetros de Entrada de Dinheiro",sec2:"2. Remunerações & Benefícios",sec3:"3. Despesas Potenciais da Empresa",
-  sec4:"4. Comparativo Fiscal: Lda vs. Freelancer (TI)",sec5:"5. Estado Financeiro Anual & Dividendos",sec6:"6. ✅ Checklist de Tarefas & Alertas",
-  coffee:"Se gostou da aplicação e quiser contribuir, pode sempre pagar-me um café ☕",
-  disclaimer:"Simulação indicativa com taxas aproximadas. Confirme sempre com o seu contabilista certificado.",
-  guide:[
-  "<b>Rate diária:</b> o que fatura por dia de trabalho (0 a 100 000 €). É a base de toda a simulação.",
-  "<b>Dias trabalhados/mês:</b> dias faturados em cada mês ativo. Também define os limites diários dos cheques refeição e ajudas de custo.",
-  "<b>Meses ativos/ano:</b> quantos meses fatura no ano (1 a 14). A faturação anual é diluída por 12 meses para obter a média mensal.",
-  "<b>Reserva transitada:</b> dinheiro já guardado na empresa do ano anterior; soma-se à reserva final.",
-  "<b>Salário bruto do gerente:</b> o que a empresa lhe paga antes de impostos. Escreva o valor ou use a barra (mínimo 920 €). A TSU patronal (23,75%) é somada ao custo da empresa.",
-  "<b>Cheques alimentação:</b> isentos de IRS e SS até 12,40 € por dia trabalhado. O máximo muda com os dias do mês.",
-  "<b>Ajudas de custo:</b> deslocações isentas até ~50,20 € por dia. Também limitadas pelos dias trabalhados.",
-  "<b>Despesas:</b> tudo o que a empresa paga. Divida compras grandes por vários meses (ex.: leasing 6 240 € em 12 meses = 520 €/mês). Pode editar qualquer linha.",
-  "<b>Programa Regressar:</b> aplica 50% de isenção ao IRS nos dois cenários. Desative se não for elegível.",
-  "<b>Dividendos:</b> simula levantar o lucro do ano após IRC, com 28% de imposto autónomo.",
-  "<b>Excel / Import:</b> guarda e recarrega parâmetros, despesas e tarefas num ficheiro.",
-  "<b>Checklist:</b> tarefas com data e hora. Ative as notificações para receber um aviso 15 minutos antes."]},
- fr:{title:"📊 Registre Comptable & Simulateur Financier",subtitle:"Comptabilité mensuelle, amortissements, notifications et fiscalité PT",
-  kpi1:"Coûts totaux gérant & dépenses",kpi2:"Résultat net mensuel restant dans la société",kpi3:"Taux de rétention de la société",
-  guideTitle:"📖 Mode d'emploi : rôle de chaque paramètre",
-  sec1:"1. Paramètres d'entrée d'argent",sec2:"2. Rémunérations & avantages",sec3:"3. Dépenses potentielles de la société",
-  sec4:"4. Comparatif fiscal : Lda vs. Indépendant (TI)",sec5:"5. Situation financière annuelle & dividendes",sec6:"6. ✅ Liste de tâches & alertes",
-  coffee:"Si l'application vous a plu et que vous voulez contribuer, vous pouvez toujours m'offrir un café ☕",
-  disclaimer:"Simulation indicative avec des taux approximatifs. Vérifiez toujours avec votre comptable.",
-  guide:[
-  "<b>Tarif journalier :</b> ce que vous facturez par jour (0 à 100 000 €). Base de toute la simulation.",
-  "<b>Jours travaillés/mois :</b> jours facturés par mois actif. Fixe aussi les plafonds journaliers des titres-repas et indemnités.",
-  "<b>Mois actifs/an :</b> mois facturés dans l'année (1 à 14). Le total annuel est lissé sur 12 mois.",
-  "<b>Réserve reportée :</b> argent déjà en société de l'an dernier, ajouté à la réserve finale.",
-  "<b>Salaire brut du gérant :</b> avant impôts. Saisissez-le ou utilisez la barre (minimum 920 €). La TSU patronale (23,75%) s'ajoute au coût.",
-  "<b>Titres-repas :</b> exonérés jusqu'à 12,40 € par jour travaillé. Le maximum suit les jours du mois.",
-  "<b>Indemnités de déplacement :</b> exonérées jusqu'à ~50,20 € par jour, limitées par les jours travaillés.",
-  "<b>Dépenses :</b> tout ce que la société paie. Étalez les gros achats (ex. leasing 6 240 € sur 12 mois = 520 €/mois). Chaque ligne est modifiable.",
-  "<b>Programme Regressar :</b> exonération de 50% de l'IRS dans les deux scénarios.",
-  "<b>Dividendes :</b> simule le retrait du bénéfice après IRC, avec 28% d'impôt autonome.",
-  "<b>Excel / Import :</b> sauvegarde et recharge paramètres, dépenses et tâches.",
-  "<b>Liste de tâches :</b> tâches datées. Activez les notifications pour un rappel 15 minutes avant."]},
- en:{title:"📊 Accounting Log & Financial Simulator",subtitle:"Monthly accounting, amortizations, notifications and PT tax comparison",
-  kpi1:"Total manager costs & expenses",kpi2:"Net income / monthly surplus in the company",kpi3:"Retention rate in the company",
-  guideTitle:"📖 How to use: what each parameter does",
-  sec1:"1. Income Inputs",sec2:"2. Pay & Benefits",sec3:"3. Potential Company Expenses",
-  sec4:"4. Tax Comparison: Lda vs. Freelancer (TI)",sec5:"5. Annual Financial Status & Dividends",sec6:"6. ✅ Task Checklist & Alerts",
-  coffee:"If you liked the app and want to contribute, you can always buy me a coffee ☕",
-  disclaimer:"Indicative simulation with approximate rates. Always confirm with your certified accountant.",
-  guide:[
-  "<b>Daily rate:</b> what you bill per working day (0 to 100,000 €). The base of the whole simulation.",
-  "<b>Days worked/month:</b> billed days per active month. Also sets the daily limits for meal vouchers and allowances.",
-  "<b>Active months/year:</b> months billed in the year (1 to 14). Annual revenue is spread over 12 months.",
-  "<b>Carried reserve:</b> cash already in the company from last year, added to the final reserve.",
-  "<b>Manager gross salary:</b> pre-tax pay. Type a value or use the slider (minimum 920 €). Employer social security (23.75%) is added to company cost.",
-  "<b>Meal vouchers:</b> tax-exempt up to 12.40 € per working day. The maximum follows the days worked.",
-  "<b>Travel allowances:</b> exempt up to ~50.20 € per day, also limited by days worked.",
-  "<b>Expenses:</b> everything the company pays. Spread big purchases over months (e.g. car lease 6,240 € over 12 months = 520 €/month). Every row is editable.",
-  "<b>Regressar programme:</b> applies a 50% income tax exemption in both scenarios.",
-  "<b>Dividends:</b> simulates withdrawing the year's profit after corporate tax, with 28% autonomous tax.",
-  "<b>Excel / Import:</b> saves and reloads parameters, expenses and tasks.",
-  "<b>Checklist:</b> dated tasks. Enable notifications for a reminder 15 minutes before."]}
-};
+    const $ = id => document.getElementById(id);
+    const eur = n => '€' + Math.round(n).toLocaleString('pt-PT');
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+    const num = id => parseFloat($(id).value) || 0;
 
-function changeLanguage(l){
-  const d=i18n[l];
-  document.querySelectorAll('[data-i18n]').forEach(e=>e.innerHTML=d[e.dataset.i18n]);
-  document.documentElement.lang=l;
-  document.getElementById('guideList').innerHTML=d.guide.map(g=>`<li class="input-dark rounded-lg px-3 py-2">${g}</li>`).join('');
-}
+    const i18n = {
+      pt: {
+        title: "📊 Livro de Registos & Simulador Financeiro", subtitle: "Contabilidade Mensal, Amortizações, Notificações e Comparativo Fiscal PT",
+        kpi1: "Custos totais com o gerente & despesas", kpi2: "Resultado líquido/sobra mensal na empresa", kpi3: "Taxa de retenção na empresa",
+        guideTitle: "📖 Como usar: o que faz cada parâmetro",
+        sec1: "1. Parâmetros de Entrada de Dinheiro", sec2: "2. Remunerações & Benefícios", sec3: "3. Comparativo Fiscal: Lda vs. Freelancer (TI)",
+        sec4: "4. Despesas Potenciais da Empresa", sec5: "5. Estado Financeiro Anual & Dividendos", sec6: "6. ✅ Checklist de Tarefas & Alertas",
+        coffee: "Se gostou da aplicação e quiser contribuir, pode sempre pagar-me um café ☕",
+        disclaimer: "Simulação indicativa com taxas aproximadas (IRC 2026: PME 15% até 50 000 € e 19% no excedente). Confirme sempre com o seu contabilista certificado.",
+        guide: [
+          "<b>Rate diária:</b> o que fatura por dia de trabalho (0 a 100 000 €). É a base de toda a simulação.",
+          "<b>Dias trabalhados/mês:</b> dias faturados em cada mês ativo. Também multiplica os valores diários de alimentação e ajudas de custo.",
+          "<b>Meses ativos/ano:</b> meses em que fatura (1 a 14). Faturação anual = rate × dias × meses.",
+          "<b>Reserva transitada:</b> dinheiro já guardado na empresa do ano anterior; soma-se à reserva final.",
+          "<b>Salário bruto do gerente:</b> valor por mês, pago em 14 pagamentos (12 meses + subsídios de férias e Natal). A TSU patronal (23,75%) incide sobre os 14 pagamentos.",
+          "<b>Cheques alimentação:</b> escolha o valor por dia (máx. 12,40 €). Multiplica pelos dias e meses ativos e soma ao líquido do gerente.",
+          "<b>Ajudas de custo:</b> valor por dia (máx. ~50,20 €), tratado como a alimentação.",
+          "<b>Creche:</b> valor por mês, durante 12 meses. Soma ao líquido do gerente e aos custos da empresa.",
+          "<b>Outros valores:</b> extras futuros. Escolha mensal ou anual e se é benefício do gerente (soma ao líquido) ou só custo da empresa.",
+          "<b>Programa Regressar:</b> aplica 50% de isenção ao IRS nos dois cenários do comparativo (secção 3). Desative se não for elegível.",
+          "<b>Despesas (secção 4):</b> «Fixa todos os meses» multiplica o valor por 12; «Única» conta o valor total uma só vez no ano fiscal. A divisão em meses só se aplica às únicas.",
+          "<b>Resultados e gráfico:</b> o IRC usa 15% até 50 000 € e 19% no excedente. Os dividendos são tributados a 28%.",
+          "<b>Excel, Import e Drive:</b> guardam e recarregam parâmetros, despesas, outros valores e tarefas.",
+          "<b>Checklist:</b> tarefas com data e hora. Ative as notificações para receber um aviso 15 minutos antes."]
+      },
+      fr: {
+        title: "📊 Registre Comptable & Simulateur Financier", subtitle: "Comptabilité mensuelle, amortissements, notifications et fiscalité PT",
+        kpi1: "Coûts totaux gérant & dépenses", kpi2: "Résultat net mensuel restant dans la société", kpi3: "Taux de rétention de la société",
+        guideTitle: "📖 Mode d'emploi : rôle de chaque paramètre",
+        sec1: "1. Paramètres d'entrée d'argent", sec2: "2. Rémunérations & avantages", sec3: "3. Comparatif fiscal : Lda vs. Indépendant (TI)",
+        sec4: "4. Dépenses potentielles de la société", sec5: "5. Situation financière annuelle & dividendes", sec6: "6. ✅ Liste de tâches & alertes",
+        coffee: "Si l'application vous a plu et que vous voulez contribuer, vous pouvez toujours m'offrir un café ☕",
+        disclaimer: "Simulation indicative avec des taux approximatifs (IRC 2026 : PME 15% jusqu'à 50 000 € et 19% au-delà). Vérifiez toujours avec votre comptable.",
+        guide: [
+          "<b>Tarif journalier :</b> ce que vous facturez par jour (0 à 100 000 €). Base de toute la simulation.",
+          "<b>Jours travaillés/mois :</b> jours facturés par mois actif. Multiplie aussi les montants journaliers des repas et indemnités.",
+          "<b>Mois actifs/an :</b> mois facturés (1 à 14). Facturation annuelle = tarif × jours × mois.",
+          "<b>Réserve reportée :</b> argent déjà en société de l'an dernier, ajouté à la réserve finale.",
+          "<b>Salaire brut du gérant :</b> montant mensuel, versé en 14 paiements (12 mois + primes de vacances et de Noël). La TSU patronale (23,75%) porte sur les 14 paiements.",
+          "<b>Titres-repas :</b> choisissez le montant par jour (max. 12,40 €). Multiplié par les jours et mois actifs, ajouté au net du gérant.",
+          "<b>Indemnités de déplacement :</b> montant par jour (max. ~50,20 €), traité comme les repas.",
+          "<b>Crèche :</b> montant par mois, sur 12 mois. S'ajoute au net du gérant et aux coûts de la société.",
+          "<b>Autres montants :</b> extras futurs. Choisissez mensuel ou annuel, et avantage du gérant (s'ajoute au net) ou simple coût de la société.",
+          "<b>Programme Regressar :</b> exonération de 50% de l'IRS dans les deux scénarios du comparatif (section 3).",
+          "<b>Dépenses (section 4) :</b> « Fixe chaque mois » multiplie par 12 ; « Unique » compte le montant total une seule fois dans l'exercice. L'étalement ne concerne que les uniques.",
+          "<b>Résultats et graphique :</b> l'IRC applique 15% jusqu'à 50 000 € et 19% au-delà. Les dividendes sont taxés à 28%.",
+          "<b>Excel, Import et Drive :</b> sauvegardent et rechargent paramètres, dépenses, autres montants et tâches.",
+          "<b>Liste de tâches :</b> tâches datées. Activez les notifications pour un rappel 15 minutes avant."]
+      },
+      en: {
+        title: "📊 Accounting Log & Financial Simulator", subtitle: "Monthly accounting, amortizations, notifications and PT tax comparison",
+        kpi1: "Total manager costs & expenses", kpi2: "Net income / monthly surplus in the company", kpi3: "Retention rate in the company",
+        guideTitle: "📖 How to use: what each parameter does",
+        sec1: "1. Income Inputs", sec2: "2. Pay & Benefits", sec3: "3. Tax Comparison: Lda vs. Freelancer (TI)",
+        sec4: "4. Potential Company Expenses", sec5: "5. Annual Financial Status & Dividends", sec6: "6. ✅ Task Checklist & Alerts",
+        coffee: "If you liked the app and want to contribute, you can always buy me a coffee ☕",
+        disclaimer: "Indicative simulation with approximate rates (2026 corporate tax: SMEs 15% up to €50,000 and 19% above). Always confirm with your certified accountant.",
+        guide: [
+          "<b>Daily rate:</b> what you bill per working day (0 to 100,000 €). The base of the whole simulation.",
+          "<b>Days worked/month:</b> billed days per active month. It also multiplies the daily meal and allowance amounts.",
+          "<b>Active months/year:</b> months billed (1 to 14). Annual revenue = rate × days × months.",
+          "<b>Carried reserve:</b> cash already in the company from last year, added to the final reserve.",
+          "<b>Manager gross salary:</b> monthly amount, paid in 14 payments (12 months + holiday and Christmas bonuses). Employer social security (23.75%) applies to all 14.",
+          "<b>Meal vouchers:</b> choose the amount per day (max 12.40 €). Multiplied by days and active months, added to the manager's net pay.",
+          "<b>Travel allowances:</b> amount per day (max ~50.20 €), treated like meals.",
+          "<b>Childcare:</b> amount per month, for 12 months. Added to the manager's net pay and to company costs.",
+          "<b>Other amounts:</b> future extras. Choose monthly or annual, and whether it is a manager benefit (added to net pay) or a company cost only.",
+          "<b>Regressar programme:</b> 50% income tax exemption in both comparison scenarios (section 3).",
+          "<b>Expenses (section 4):</b> «Fixed every month» multiplies by 12; «One-off» counts the full amount once in the fiscal year. Splitting over months only applies to one-offs.",
+          "<b>Results and chart:</b> corporate tax uses 15% up to 50,000 € and 19% above. Dividends are taxed at 28%.",
+          "<b>Excel, Import and Drive:</b> save and reload parameters, expenses, other amounts and tasks.",
+          "<b>Checklist:</b> dated tasks. Enable notifications for a reminder 15 minutes before."]
+      }
+    };
+    function changeLanguage(l) {
+      const d = i18n[l];
+      document.querySelectorAll('[data-i18n]').forEach(e => e.innerHTML = d[e.dataset.i18n]);
+      document.documentElement.lang = l;
+      $('guideList').innerHTML = d.guide.map(g => `<li class="input-dark rounded-lg px-3 py-2">${g}</li>`).join('');
+    }
 
-let invoices=[
- {id:1,desc:"Avença Contabilista Certificado",num:"FT 2026/001",date:"2026-01-01",amount:200,installments:1},
- {id:2,desc:"Despesas Suplementares Contabilista",num:"FT 2026/002",date:"2026-01-01",amount:50,installments:1},
- {id:3,desc:"Internet & Telecomunicações",num:"FT 2026/003",date:"2026-01-01",amount:20,installments:1},
- {id:4,desc:"Seguro de Saúde Familiar",num:"FT 2026/004",date:"2026-01-01",amount:50,installments:1},
- {id:5,desc:"Despesas de Representação (Marca no Cliente)",num:"FT 2026/005",date:"2026-01-01",amount:240,installments:1},
- {id:6,desc:"Deslocações Locais (Correios, Fotocópias)",num:"FT 2026/006",date:"2026-01-01",amount:60,installments:1},
- {id:7,desc:"Deslocações Bélgica (Bruxelas / Rixensart)",num:"FT 2026/007",date:"2026-01-01",amount:450,installments:1},
- {id:8,desc:"Material Informático (Ecrã, Impressora)",num:"FT 2026/008",date:"2026-01-01",amount:600,installments:12},
- {id:9,desc:"Telemóvel Profissional",num:"FT 2026/009",date:"2026-01-01",amount:1200,installments:12},
- {id:10,desc:"Material de Escritório (Papel, Tinteiros)",num:"FT 2026/010",date:"2026-01-01",amount:30,installments:1},
- {id:11,desc:"Sistemas Informáticos (Claude Pro, MS Office, iCloud)",num:"FT 2026/011",date:"2026-01-01",amount:65,installments:1},
- {id:12,desc:"Software Informático para Faturação Certified",num:"FT 2026/012",date:"2026-01-01",amount:25,installments:1},
- {id:13,desc:"Seguros de Atividade da Empresa",num:"FT 2026/013",date:"2026-01-01",amount:35,installments:1},
- {id:14,desc:"Leasing Viatura Elétrica (520 €/mês × 12 meses)",num:"FT 2026/014",date:"2026-01-01",amount:6240,installments:12}
-];
-let todos=[
- {id:1,text:"Alteração de morada da empresa (Nov/Dez 2026)",date:"2026-11-15T10:00",done:false},
- {id:2,text:"Constituição na Conservatória / Empresa na Hora",date:"2026-10-15T09:00",done:true},
- {id:3,text:"Registo do Beneficiário Efetivo (RCBE) via Advogado",date:"2026-10-20T14:30",done:false},
- {id:4,text:"Abertura de Conta Bancária Empresarial",date:"2026-10-12T11:00",done:true},
- {id:5,text:"Início de Atividade nas Finanças",date:"2026-10-14T10:00",done:true},
- {id:6,text:"Criação de Email Profissional & Número Vodafone",date:"2026-10-16T16:00",done:false}
-];
+    /* ===== Estado ===== */
+    let invoices = [
+      {id: 1, desc: "Avença Contabilista Certificado", num: "FT 2026/001", date: "2026-01-01", amount: 200, type: "mensal", installments: 1},
+      {id: 2, desc: "Despesas Suplementares Contabilista", num: "FT 2026/002", date: "2026-01-01", amount: 1, type: "mensal", installments: 1},
+      {id: 3, desc: "Internet & Telecomunicações", num: "FT 2026/003", date: "2026-01-01", amount: 20, type: "mensal", installments: 1},
+      {id: 4, desc: "Seguro de Saúde Familiar", num: "FT 2026/004", date: "2026-01-01", amount: 50, type: "mensal", installments: 1},
+      {id: 5, desc: "Despesas de Representação (Marca no Cliente)", num: "FT 2026/005", date: "2026-01-01", amount: 240, type: "mensal", installments: 1},
+      {id: 6, desc: "Deslocações Locais (Correios, Fotocópias)", num: "FT 2026/006", date: "2026-01-01", amount: 100, type: "mensal", installments: 1},
+      {id: 10, desc: "Material de Escritório (Papel, Tinteiros)", num: "FT 2026/010", date: "2026-01-01", amount: 30, type: "mensal", installments: 1},
+      {id: 13, desc: "Seguros de Atividade da Empresa", num: "FT 2026/013", date: "2026-01-01", amount: 35, type: "mensal", installments: 1}
+    ];
+    let others = [];
+    let todos = [];
 
-const MEAL_DAY=12.40, ALLOW_DAY=50.20, SS_CAP_MONTH=6270; // 12 × IAS aprox.
-const $=id=>document.getElementById(id);
-const eur=n=>'€'+Math.round(n).toLocaleString('pt-PT');
-const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+    /* ===== Notificações ===== */
+    function requestNotificationPermission() {
+      if (!("Notification" in window)) return alert("O seu navegador não suporta notificações nativas.");
+      Notification.requestPermission().then(p => {
+        if (p === "granted") {alert("Notificações ativadas com sucesso!"); new Notification("Simulador Contabilístico PT", {body: "O sistema de alertas está ativo."});}
+        else alert("As notificações foram bloqueadas nas definições do navegador.");
+      });
+    }
+    setInterval(() => {
+      if ("Notification" in window && Notification.permission === "granted") {
+        const now = new Date();
+        todos.forEach(t => {if (!t.done && t.date) {const m = (new Date(t.date) - now) / 60000; if (m > 0 && m <= 15) new Notification("⏰ Lembrete de Tarefa", {body: t.text});} });
+      }
+    }, 60000);
 
-// IRS progressivo (escalões aproximados, continente)
-const BR=[[8342,.13],[12587,.165],[17838,.22],[23089,.25],[29397,.32],[43090,.355],[46566,.435],[86634,.45],[Infinity,.48]];
-function irs(base){
-  let t=0,prev=0;
-  for(const [lim,r] of BR){ if(base>prev) t+=(Math.min(base,lim)-prev)*r; prev=lim; }
-  if(base>250000) t+=(base-250000)*.05+(250000-80000)*.025; else if(base>80000) t+=(base-80000)*.025;
-  return t;
-}
+    /* ===== Campos numéricos ===== */
+    function validateLimits(el, min, max) {
+      if (el.value === '') return;               // deixa apagar sem forçar 0
+      const v = parseFloat(el.value);
+      if (!isNaN(v) && v > max) el.value = max;
+    }
+    document.addEventListener('focusout', e => {  // ao sair do campo aplica o mínimo
+      const el = e.target;
+      if (el.matches && el.matches('#dailyRate,#daysPerMonth,#monthsPerYear,#inputSalary,#inputMeal,#inputAllow,#inputCreche')) {
+        const min = parseFloat(el.min) || 0, v = parseFloat(el.value);
+        if (isNaN(v) || v < min) {el.value = min; pairSync(el); updateAll();}
+      }
+    });
+    function pairSync(el) {
+      const m = el.id.match(/^input(Salary|Meal|Allow)$/);
+      if (m) $('slider' + m[1]).value = el.value;
+    }
+    function pairFromSlider(n) {$('input' + n).value = $('slider' + n).value; updateAll();}
+    function pairFromInput(n, cap) {
+      const el = $('input' + n);
+      if (el.value !== '') {
+        let v = parseFloat(el.value);
+        if (cap && v > cap) {v = cap; el.value = cap;}
+        $('slider' + n).value = v;
+      }
+      updateAll();
+    }
 
-function requestNotificationPermission(){
-  if(!("Notification" in window)) return alert("O seu navegador não suporta notificações nativas.");
-  Notification.requestPermission().then(p=>{
-    if(p==="granted"){alert("Notificações ativadas com sucesso!");new Notification("Simulador Contabilístico PT",{body:"O sistema de alertas está ativo."});}
-    else alert("As notificações foram bloqueadas nas definições do navegador.");
-  });
-}
-setInterval(()=>{
-  if("Notification" in window && Notification.permission==="granted"){
-    const now=new Date();
-    todos.forEach(t=>{ if(!t.done&&t.date){const m=(new Date(t.date)-now)/60000; if(m>0&&m<=15) new Notification("⏰ Lembrete de Tarefa",{body:t.text});}});
-  }
-},60000);
+    /* ===== Leitura dos campos ===== */
+    function readInputs() {
+      return {
+        rate: num('dailyRate'), days: Math.min(num('daysPerMonth'), 31), months: Math.min(num('monthsPerYear'), 14), carried: num('carriedReserve'),
+        salary: num('inputSalary'), mealDay: Math.min(num('inputMeal'), MEAL_MAX), allowDay: Math.min(num('inputAllow'), ALLOW_MAX), creche: num('inputCreche'),
+        others: others, invoices: invoices, regressar: $('chkRegressar').checked
+      };
+    }
+    const f2 = n => n.toLocaleString('pt-PT', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-function validateLimits(el,min,max){
-  // Enquanto escreve: só limita o máximo e deixa o campo ficar vazio
-  if(el.value==='') return;
-  const v=parseFloat(el.value);
-  if(!isNaN(v)&&v>max) el.value=max;
-}
-// Ao sair do campo: aplica o mínimo (campo vazio ou abaixo do mínimo)
-document.addEventListener('focusout',e=>{
-  const el=e.target;
-  if(el.matches&&el.matches('#dailyRate,#daysPerMonth,#monthsPerYear')){
-    const min=parseFloat(el.min)||0, v=parseFloat(el.value);
-    if(isNaN(v)||v<min){ el.value=min; updateAll(); }
-  }
-});
-function syncInputs(f){ $('val'+f).innerText=$('slider'+f).value; updateAll(); }
-function syncSalary(){ $('inputSalary').value=$('sliderSalary').value; updateAll(); }
-function salaryTyped(){
-  const v=parseFloat($('inputSalary').value)||0;
-  $('sliderSalary').max=Math.max($('sliderSalary').max,v);
-  $('sliderSalary').value=v; updateAll();
-}
+    /* ===== Atualização geral (tudo recalcula em tempo real) ===== */
+    function updateAll() {
+      const i = readInputs(), r = compute(i);
 
-function updateAll(){
-  const rate=parseFloat($('dailyRate').value)||0;
-  const days=Math.min(Math.max(parseFloat($('daysPerMonth').value)||0,0),31);
-  const months=Math.min(Math.max(parseFloat($('monthsPerYear').value)||0,0),14);
-  const carried=parseFloat($('carriedReserve').value)||0;
+      $('monthlyRevenueDisplay').innerText = '€ ' + Math.round(r.annualRev / 12).toLocaleString('pt-PT');
+      $('annualRevenueDisplay').innerText = '€ ' + Math.round(r.annualRev).toLocaleString('pt-PT');
 
-  const annualRev=rate*days*months, monthlyRev=annualRev/12;
-  $('monthlyRevenueDisplay').innerText='€ '+Math.round(monthlyRev).toLocaleString('pt-PT');
-  $('annualRevenueDisplay').innerText='€ '+Math.round(annualRev).toLocaleString('pt-PT');
+      // Limite do slider do salário acompanha a faturação
+      const sSal = $('sliderSalary');
+      const salMax = Math.max(1000, Math.ceil(r.annualRev / (SAL_MONTHS * (1 + TSU_RATE)) / 25) * 25);
+      sSal.max = Math.max(salMax, i.salary);
+      sSal.step = sSal.max > 200000 ? 5000 : sSal.max > 50000 ? 1000 : sSal.max > 10000 ? 250 : sSal.max > 5000 ? 100 : 25;
+      sSal.value = i.salary;
 
-  // Limites dinâmicos (coerência com dias e faturação)
-  const sSal=$('sliderSalary');
-  const salMax=Math.max(1000,Math.ceil(monthlyRev/1.2375/25)*25);
-  sSal.max=Math.max(salMax,parseFloat($('inputSalary').value)||0);
-  sSal.step=sSal.max>200000?5000:sSal.max>50000?1000:sSal.max>10000?250:sSal.max>5000?100:25;
-  let salary=Math.max(parseFloat($('inputSalary').value)||0,0);
-  if(salary>salMax && salMax>=920 && salary>sSal.max) salary=salMax;
-  if(document.activeElement!==$('inputSalary')) $('inputSalary').value=Math.round(salary);
-  sSal.value=salary;
+      $('valTsu').innerText = Math.round(i.salary * TSU_RATE).toLocaleString('pt-PT');
+      $('hintMeal').innerText = '= € ' + f2(i.mealDay * i.days) + ' /mês · € ' + f2(r.mealYear) + ' /ano';
+      $('hintAllow').innerText = '= € ' + f2(i.allowDay * i.days) + ' /mês · € ' + f2(r.allowYear) + ' /ano';
+      $('hintCreche').innerText = '= € ' + f2(r.crecheYear) + ' /ano';
 
-  const sEd=$('sliderEdenred'), sAj=$('sliderAjudas');
-  const maxEd=Math.round(MEAL_DAY*days*100)/100, maxAj=Math.round(ALLOW_DAY*days*100)/100;
-  sEd.max=maxEd; sAj.max=maxAj;
-  if(parseFloat(sEd.value)>maxEd) sEd.value=maxEd;
-  if(parseFloat(sAj.value)>maxAj) sAj.value=maxAj;
-  $('maxEdenred').innerText=maxEd.toFixed(2); $('maxAjudas').innerText=maxAj.toFixed(2);
-  const edenred=parseFloat(sEd.value)||0, ajudas=parseFloat(sAj.value)||0;
-  $('valEdenred').innerText=edenred.toFixed(2); $('valAjudas').innerText=Math.round(ajudas);
+      const gerYear = r.salaryYear + r.tsuYear;
+      $('catGerenteTotal').innerText = eur(gerYear / 12) + ' /mês · ' + eur(gerYear) + ' /ano';
+      $('catIsentosTotal').innerText = eur(r.benefitsYear / 12) + ' /mês · ' + eur(r.benefitsYear) + ' /ano';
 
-  const tsu=salary*0.2375;
-  $('valTsu').innerText=Math.round(tsu).toLocaleString('pt-PT');
+      $('kpiTotalCosts').innerText = eur(r.totalCostYear / 12);
+      const netM = r.netProfit / 12, ret = r.annualRev > 0 ? r.netProfit / r.annualRev * 100 : 0;
+      $('kpiNetMonthly').innerText = eur(netM);
+      $('kpiNetMonthly').className = 'text-2xl font-bold mt-1 ' + (netM >= 0 ? 'text-emerald-500' : 'text-red-400');
+      $('kpiRetentionRate').innerText = Math.round(ret) + '%';
+      $('kpiRetentionRate').className = 'text-2xl font-bold mt-1 ' + (ret >= 0 ? 'text-emerald-500' : 'text-red-400');
 
-  let monthlyInv=0;
-  invoices.forEach(i=>{monthlyInv+=(parseFloat(i.amount)||0)/Math.min(Math.max(parseInt(i.installments)||1,1),14);});
+      const tb = r.totalCostYear > 0 ? r.totalCostYear : 1;
+      $('barGerente').style.width = gerYear / tb * 100 + '%';
+      $('barIsentos').style.width = r.benefitsYear / tb * 100 + '%';
+      $('barDespesas').style.width = r.expensesYear / tb * 100 + '%';
 
-  const catG=salary+tsu, catI=edenred+ajudas, catD=monthlyInv;
-  const totalCost=catG+catI+catD;
-  const net=monthlyRev-totalCost;
-  const ret=monthlyRev>0?net/monthlyRev*100:0;
+      // Comparativo (médias mensais = anual ÷ 12)
+      const ldaNet = r.ldaNetYear / 12;
+      $('ldaNetSalary').innerText = eur(ldaNet);
+      $('ldaRetainedMonthly').innerText = eur(netM);
+      $('ldaTotalValue').innerText = eur(ldaNet + netM);
+      $('tiNetMonthly').innerText = eur(r.tiNetYear / 12);
+      $('tiTaxesMonthly').innerText = eur((r.tiIrs + r.tiSS) / 12) + ' / mês';
+      const diff = ldaNet + netM - r.tiNetYear / 12, b = $('diffBadge');
+      b.className = 'text-sm font-bold px-3 py-1 rounded-full border ' + (diff >= 0 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-red-500/10 text-red-400 border-red-500/30');
+      b.innerText = (diff >= 0 ? '+ ' : '- ') + eur(Math.abs(diff)) + ' / mês vs TI';
 
-  $('kpiTotalCosts').innerText=eur(totalCost);
-  $('kpiNetMonthly').innerText=eur(net);
-  $('kpiNetMonthly').className='text-2xl font-bold mt-1 '+(net>=0?'text-emerald-500':'text-red-400');
-  $('kpiRetentionRate').innerText=Math.round(ret)+'%';
-  $('kpiRetentionRate').className='text-2xl font-bold mt-1 '+(ret>=0?'text-emerald-500':'text-red-400');
-  $('catGerenteTotal').innerText=eur(catG); $('catIsentosTotal').innerText=eur(catI);
+      // Estado anual
+      $('companyEbit').innerText = eur(r.ebt);
+      $('companyIrc').innerText = eur(r.irc);
+      $('companyFinalReserve').innerText = eur(r.finalReserve);
+      renderPL(i, r); renderPie(i, r);
 
-  const tb=totalCost>0?totalCost:1;
-  $('barGerente').style.width=catG/tb*100+'%'; $('barIsentos').style.width=catI/tb*100+'%'; $('barDespesas').style.width=catD/tb*100+'%';
+      const dv = $('dividendsBreakdown');
+      if ($('chkDividends').checked) {
+        dv.classList.remove('hidden');
+        $('divGross').innerText = eur(r.divBase); $('divTax').innerText = '- ' + eur(r.divTax); $('divNet').innerText = eur(r.divNet);
+      } else dv.classList.add('hidden');
 
-  // Lda: IRS progressivo sobre salário anualizado (12 meses)
-  const reg=$('chkRegressar').checked;
-  const salYear=salary*12;
-  const ssW=salary*0.11;
-  const irsW=irs(reg?salYear*0.5:salYear)/12;
-  const ldaNet=salary-ssW-irsW+catI;
-  $('ldaNetSalary').innerText=eur(ldaNet);
-  $('ldaRetainedMonthly').innerText=eur(net);
-  $('ldaTotalValue').innerText=eur(ldaNet+net);
+      renderInvoiceTable();
+    }
 
-  // TI: 75% da faturação tributável; SS 21,4% sobre 70% limitada ao teto
-  const tiBase=annualRev*0.75;
-  const tiIrs=irs(reg?tiBase*0.5:tiBase);
-  const tiSS=Math.min(annualRev*0.70,SS_CAP_MONTH*12)*0.214;
-  const tiNet=(annualRev-tiIrs-tiSS)/12;
-  $('tiNetMonthly').innerText=eur(tiNet);
-  $('tiTaxesMonthly').innerText=eur((tiIrs+tiSS)/12)+' / mês';
-  const diff=ldaNet+net-tiNet, b=$('diffBadge');
-  b.className='text-sm font-bold px-3 py-1 rounded-full border '+(diff>=0?'bg-emerald-500/10 text-emerald-400 border-emerald-500/30':'bg-red-500/10 text-red-400 border-red-500/30');
-  b.innerText=(diff>=0?'+ ':'- ')+eur(Math.abs(diff))+' / mês vs TI';
+    /* ===== Demonstração de resultados ===== */
+    function renderPL(i, r) {
+      const rows = [
+        ['Faturação Total (Receitas)', '€ ' + f2(i.rate) + ' × ' + i.days + ' dias × ' + i.months + ' meses', r.annualRev, '+', 1],
+        ['Salário Base do Gerente', '€ ' + f2(i.salary) + ' × ' + SAL_MONTHS + ' pagamentos', r.salaryYear, '-'],
+        ['TSU a cargo da empresa', '23,75% sobre o salário (' + eur(r.salaryYear) + ')', r.tsuYear, '-'],
+        ['Benefícios isentos', 'Alimentação ' + eur(r.mealYear) + ' · Ajudas ' + eur(r.allowYear) + ' · Creche ' + eur(r.crecheYear) + ' · Outros ' + eur(r.othersBen), r.benefitsYear, '-'],
+        ['Despesas da empresa', 'Tabela de despesas ' + eur(r.invYear) + ' · Outros custos ' + eur(r.othersCost), r.expensesYear, '-'],
+        ['Total de Custos Operacionais', 'Soma de todas as despesas acima', r.totalCostYear, '-', 1],
+        ['Lucro Antes de Impostos', 'Receitas (' + eur(r.annualRev) + ') − Custos (' + eur(r.totalCostYear) + ')', r.ebt, '=', 1],
+        ['Imposto sobre o Lucro (IRC)', '15% até 50 000 € · 19% no excedente (PME 2026)', r.irc, '-'],
+        ['Lucro Líquido Disponível', 'O montante que sobra efetivamente na empresa', r.netProfit, '=', 1]];
+      $('plBody').innerHTML = rows.map(x => `<div class="pl-row ${x[4] ? 'pl-strong' : ''}"><span class="pl-a">${x[0]}</span><span class="pl-b">${x[1]}</span><span class="pl-c">${x[3]} ${eur(Math.abs(x[2]))}${x[2] < 0 && x[3] === '=' ? ' (défice)' : ''}</span></div>`).join('');
+    }
 
-  // IRC e reserva
-  const ebit=net*12;
-  let irc=0;
-  if(ebit>0) irc=ebit<=50000?ebit*0.125:50000*0.125+(ebit-50000)*0.21;
-  const profit=ebit-irc;
-  $('companyEbit').innerText=eur(ebit); $('companyIrc').innerText=eur(irc); $('companyFinalReserve').innerText=eur(profit+carried);
+    /* ===== Gráfico circular ===== */
+    function renderPie(i, r) {
+      const all = [
+        {n: 'Salário Base (' + SAL_MONTHS + ' meses)', v: r.salaryYear, c: '#1d4ed8'},
+        {n: 'TSU (23,75%)', v: r.tsuYear, c: '#ea580c'},
+        {n: 'Ajudas, Alimentação e Creche', v: r.benefitsYear, c: '#7c3aed'},
+        {n: 'Despesas e Contabilista', v: r.expensesYear, c: '#c026d3'},
+        {n: 'IRC (15% / 19%)', v: r.irc, c: '#4f46e5'},
+        {n: 'Lucro Líquido (fica na empresa)', v: Math.max(r.netProfit, 0), c: '#15803d'}];
+      const sl = all.filter(s => s.v > 0.5), tot = sl.reduce((a, s) => a + s.v, 0);
+      $('pieTitle').innerText = 'Distribuição da Faturação Anual (' + i.months + ' Meses)';
+      $('pieNote').innerText = r.netProfit < 0 ? '⚠️ Os custos (' + eur(r.totalCostYear) + ') superam a faturação (' + eur(r.annualRev) + '): défice de ' + eur(-r.netProfit) + '.' : '';
+      if (tot <= 0) {$('pieSvg').innerHTML = '<p class="modal-text">Sem valores para mostrar.</p>'; $('pieLegend').innerHTML = ''; return;}
+      $('pieLegend').innerHTML = sl.map(s => `<span class="leg"><i style="background:${s.c}"></i>${s.n}: ${(s.v / tot * 100).toFixed(1)}%</span>`).join('');
+      const R = 100, C = 110; let a0 = -Math.PI / 2, out = '';
+      sl.forEach(s => {
+        const f = s.v / tot, a1 = a0 + f * 2 * Math.PI;
+        if (f >= 0.9999) out += `<circle cx="${C}" cy="${C}" r="${R}" fill="${s.c}"/>`;
+        else {
+          const x0 = C + R * Math.cos(a0), y0 = C + R * Math.sin(a0), x1 = C + R * Math.cos(a1), y1 = C + R * Math.sin(a1);
+          out += `<path d="M${C} ${C}L${x0.toFixed(2)} ${y0.toFixed(2)}A${R} ${R} 0 ${f > .5 ? 1 : 0} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}Z" fill="${s.c}" stroke="#16181e" stroke-width="1.5"/>`;
+        }
+        if (f >= 0.07) {
+          const m = (a0 + a1) / 2, tx = (C + R * .62 * Math.cos(m)).toFixed(1), ty = (C + R * .62 * Math.sin(m)).toFixed(1);
+          out += `<text text-anchor="middle" fill="#fff" font-size="9" font-weight="700"><tspan x="${tx}" y="${ty}">${eur(s.v)}</tspan><tspan x="${tx}" dy="11">(${(f * 100).toFixed(1)}%)</tspan></text>`;
+        }
+        a0 = a1;
+      });
+      $('pieSvg').innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="Distribuição da faturação anual" style="width:100%;max-width:300px">${out}</svg>`;
+    }
 
-  const dv=$('dividendsBreakdown');
-  if($('chkDividends').checked){
-    dv.classList.remove('hidden');
-    const base=Math.max(profit,0), tax=base*0.28;
-    $('divGross').innerText=eur(base); $('divTax').innerText='- '+eur(tax); $('divNet').innerText=eur(base-tax);
-  } else dv.classList.add('hidden');
-
-  renderInvoiceTable();
-}
-
-function addTodo(){
-  const text=$('todoText').value, date=$('todoDate').value;
-  if(!text) return alert("Escreva a descrição da tarefa.");
-  todos.push({id:Date.now(),text,date,done:false}); $('todoText').value=''; renderTodoList();
-}
-function toggleTodo(id){ todos=todos.map(t=>t.id===id?{...t,done:!t.done}:t); renderTodoList(); }
-function removeTodo(id){ todos=todos.filter(t=>t.id!==id); renderTodoList(); }
-function renderTodoList(){
-  $('todoList').innerHTML=todos.map(t=>`
+    /* ===== Checklist ===== */
+    function addTodo() {
+      const text = $('todoText').value, date = $('todoDate').value;
+      if (!text) return alert("Escreva a descrição da tarefa.");
+      todos.push({id: Date.now(), text, date, done: false}); $('todoText').value = ''; renderTodoList();
+    }
+    function toggleTodo(id) {todos = todos.map(t => t.id === id ? {...t, done: !t.done} : t); renderTodoList();}
+    function removeTodo(id) {todos = todos.filter(t => t.id !== id); renderTodoList();}
+    function renderTodoList() {
+      if (!todos.length) {
+        $('todoList').innerHTML = `
+     <li class="todo-example"><span><input type="checkbox" disabled> Exemplo: Pagar guia de TSU</span><span>2026-12-20 10:00</span></li>
+     <li class="modal-text" style="margin:0">💡 Isto é só um exemplo (não é guardado). Escreva a tarefa, escolha a data e hora e clique em «Adicionar Tarefa». Marque a caixa quando estiver feita e use ✕ para apagar. Ative as notificações para receber um aviso 15 minutos antes.</li>`;
+        return;
+      }
+      $('todoList').innerHTML = todos.map(t => `
    <li class="flex items-center justify-between input-dark p-2.5 rounded-xl">
      <div class="flex items-center gap-3">
-       <input type="checkbox" ${t.done?'checked':''} onchange="toggleTodo(${t.id})" class="w-4 h-4 accent-emerald-500">
-       <span class="${t.done?'line-through text-slate-500':'text-slate-200'} text-xs font-medium">${esc(t.text)}</span>
+       <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTodo(${t.id})" class="w-4 h-4 accent-emerald-500">
+       <span class="${t.done ? 'line-through text-slate-500' : 'text-slate-200'} text-xs font-medium">${esc(t.text)}</span>
      </div>
      <div class="flex items-center gap-3">
-       <span class="text-[10px] text-amber-400 font-bold">${t.date?String(t.date).replace('T',' '):''}</span>
+       <span class="text-[10px] text-amber-400 font-bold">${t.date ? String(t.date).replace('T', ' ') : ''}</span>
        <button onclick="removeTodo(${t.id})" class="text-red-400 hover:text-red-300 text-xs font-bold">✕</button>
      </div>
    </li>`).join('');
-}
-
-function addInvoice(){
-  const desc=$('invoiceDesc').value, amount=parseFloat($('invoiceAmount').value);
-  if(!desc||isNaN(amount)||amount<=0) return alert("Preencha a descrição e montante da despesa.");
-  invoices.push({id:Date.now(),desc,num:$('invoiceNum').value||"FT 2026/DOC",date:$('invoiceDate').value||new Date().toISOString().split('T')[0],amount,installments:parseInt($('invoiceInstallments').value)||1});
-  $('invoiceDesc').value='';$('invoiceNum').value='';$('invoiceAmount').value='';
-  updateAll();
-}
-function updateInvoiceRow(id,f,v){
-  invoices=invoices.map(i=>{ if(i.id===id){ if(f==='amount') i.amount=parseFloat(v)||0; else if(f==='installments') i.installments=Math.min(Math.max(parseInt(v)||1,1),14); else i[f]=v; } return i; });
-  updateAll();
-}
-function removeInvoice(id){ invoices=invoices.filter(i=>i.id!==id); updateAll(); }
-function renderInvoiceTable(){
-  if(document.activeElement&&document.activeElement.closest('#invoiceTableBody')) return;
-  $('invoiceTableBody').innerHTML=invoices.map(i=>{
-    const inst=Math.min(Math.max(parseInt(i.installments)||1,1),14);
-    return `<tr class="border-b border-slate-800/60">
-     <td class="p-2"><input type="date" value="${i.date}" onchange="updateInvoiceRow(${i.id},'date',this.value)" class="bg-transparent text-slate-400 text-xs"></td>
-     <td class="p-2"><input type="text" value="${esc(i.desc)}" onchange="updateInvoiceRow(${i.id},'desc',this.value)" class="bg-transparent text-white font-medium text-xs w-full min-w-[180px]"></td>
-     <td class="p-2"><input type="text" value="${esc(i.num)}" onchange="updateInvoiceRow(${i.id},'num',this.value)" class="bg-transparent text-slate-400 text-xs w-24"></td>
-     <td class="p-2 text-white">€<input type="number" value="${i.amount}" onchange="updateInvoiceRow(${i.id},'amount',this.value)" class="bg-transparent text-white text-xs w-20 font-bold"></td>
-     <td class="p-2 text-slate-300"><input type="number" min="1" max="14" value="${inst}" onchange="updateInvoiceRow(${i.id},'installments',this.value)" class="bg-transparent text-slate-300 text-xs w-12 font-bold">x</td>
-     <td class="p-2 text-amber-400 font-bold">€${((parseFloat(i.amount)||0)/inst).toFixed(2)} / mês</td>
-     <td class="p-2 text-right"><button onclick="removeInvoice(${i.id})" class="text-red-400 hover:text-red-300 font-bold">✕</button></td>
-    </tr>`;}).join('');
-}
-
-/* ===== Apoio (edite os seus links) ===== */
-const SUPPORT={
-  paypal:'https://www.paypal.me/O_SEU_USER',
-  revolut:'https://revolut.me/O_SEU_USER',
-  kofi:'https://ko-fi.com/O_SEU_USER'
-};
-
-/* ===== Modais ===== */
-function openModal(id){
-  $(id).classList.remove('hidden'); document.body.style.overflow='hidden';
-  if(id==='driveModal'){ try{ $('gClientId').value=localStorage.getItem('gClientId')||''; }catch(e){} }
-}
-function closeModal(id){ $(id).classList.add('hidden'); document.body.style.overflow=''; }
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') document.querySelectorAll('.modal:not(.hidden)').forEach(m=>closeModal(m.id));
-});
-
-/* ===== Excel local ===== */
-const XLSX_MIME='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-
-function buildWb(){
-  const wb=XLSX.utils.book_new();
-  const p=[{"Rate Diaria":$('dailyRate').value,"Dias Mes":$('daysPerMonth').value,"Meses Ano":$('monthsPerYear').value,"Reserva Transitada":$('carriedReserve').value,"Salario Bruto":$('inputSalary').value,"Edenred":$('sliderEdenred').value,"Ajudas Custo":$('sliderAjudas').value}];
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(p),"Parametros");
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(invoices),"Despesas");
-  XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet(todos),"Tarefas");
-  return wb;
-}
-function exportToExcel(){
-  XLSX.writeFile(buildWb(),($('fileName').value||'Simulacao_Empresa')+'.xlsx');
-}
-function loadWb(buf){
-  const wb=XLSX.read(new Uint8Array(buf),{type:'array'});
-  if(wb.SheetNames.includes("Parametros")){
-    const p=XLSX.utils.sheet_to_json(wb.Sheets["Parametros"])[0];
-    if(p){
-      const set=(id,k)=>{ if(p[k]!==undefined) $(id).value=p[k]; };
-      set('dailyRate',"Rate Diaria");set('daysPerMonth',"Dias Mes");set('monthsPerYear',"Meses Ano");set('carriedReserve',"Reserva Transitada");
-      set('inputSalary',"Salario Bruto");set('sliderEdenred',"Edenred");set('sliderAjudas',"Ajudas Custo");
-      $('sliderSalary').max=Math.max($('sliderSalary').max,p["Salario Bruto"]||0); $('sliderSalary').value=$('inputSalary').value;
     }
-  }
-  if(wb.SheetNames.includes("Despesas")) invoices=XLSX.utils.sheet_to_json(wb.Sheets["Despesas"]);
-  if(wb.SheetNames.includes("Tarefas")) todos=XLSX.utils.sheet_to_json(wb.Sheets["Tarefas"]);
-  updateAll(); renderTodoList();
-}
-function importFromExcel(e){
-  const file=e.target.files[0]; if(!file) return;
-  const r=new FileReader();
-  r.onload=ev=>{ loadWb(ev.target.result); alert("Dados recarregados com sucesso!"); };
-  r.readAsArrayBuffer(file); e.target.value='';
-}
 
-/* ===== Google Drive (OAuth no browser, âmbito drive.file) ===== */
-let driveToken=null;
-function driveMsg(t){ $('driveMsg').innerText=t; }
-
-function driveAuth(cb){
-  const id=$('gClientId').value.trim();
-  if(!id) return driveMsg('Cole primeiro o Client ID do Google Cloud.');
-  try{ localStorage.setItem('gClientId',id); }catch(e){}
-  if(!(window.google&&google.accounts&&google.accounts.oauth2)) return driveMsg('A biblioteca da Google não carregou. Verifique a ligação à internet.');
-  google.accounts.oauth2.initTokenClient({
-    client_id:id,
-    scope:'https://www.googleapis.com/auth/drive.file',
-    callback:r=>{
-      if(r.error){ driveMsg('Erro Google: '+r.error); return; }
-      driveToken=r.access_token; if(cb) cb();
+    /* ===== Outros valores ===== */
+    function addOther() {
+      const desc = $('othDesc').value.trim(), amount = parseFloat($('othAmount').value);
+      if (!desc || isNaN(amount) || amount <= 0) return alert("Preencha a descrição e o valor.");
+      others.push({id: Date.now(), desc, amount, period: $('othPeriod').value, kind: $('othKind').value});
+      $('othDesc').value = ''; $('othAmount').value = '';
+      renderOthers(); updateAll();
     }
-  }).requestAccessToken();
-}
-function withDrive(fn){ if(driveToken) fn(); else driveAuth(fn); }
+    function removeOther(id) {others = others.filter(o => o.id !== id); renderOthers(); updateAll();}
+    function renderOthers() {
+      $('othersList').innerHTML = others.length ? others.map(o => `
+   <li class="flex items-center justify-between input-dark p-2.5 rounded-xl gap-2">
+     <span class="text-xs text-slate-200 font-medium">${esc(o.desc)}</span>
+     <span class="flex items-center gap-3">
+       <span class="text-[11px] text-slate-400">€ ${f2(parseFloat(o.amount) || 0)} · ${o.period === 'anual' ? 'anual' : 'mensal ×12'} · ${o.kind === 'empresa' ? 'custo da empresa' : 'benefício do gerente'}</span>
+       <button onclick="removeOther(${o.id})" class="text-red-400 hover:text-red-300 text-xs font-bold">✕</button>
+     </span>
+   </li>`).join('') : '<li class="text-[11px] text-slate-500">Ainda sem valores extra.</li>';
+    }
 
-async function dfetch(url,opt){
-  const r=await fetch(url,Object.assign({},opt,{headers:{Authorization:'Bearer '+driveToken}}));
-  if(r.status===401){ driveToken=null; throw new Error('Sessão expirada. Clique outra vez para voltar a ligar.'); }
-  if(!r.ok) throw new Error('Erro do Google Drive ('+r.status+')');
-  return r;
-}
+    /* ===== Despesas (fixa mensal ou única no ano fiscal) ===== */
+    const instOf = v => Math.min(Math.max(parseInt(v.installments) || 1, 1), 14);
+    const invMonthly = v => {const a = parseFloat(v.amount) || 0; return v.type === 'unica' ? a / instOf(v) : a;};
+    const invYear = v => {const a = parseFloat(v.amount) || 0; return v.type === 'unica' ? a : a * 12;};
 
-function driveSave(){
-  withDrive(async()=>{
-    try{
-      driveMsg('A guardar…');
-      const name=($('fileName').value||'Simulacao_Empresa')+'.xlsx';
-      const blob=new Blob([XLSX.write(buildWb(),{bookType:'xlsx',type:'array'})],{type:XLSX_MIME});
-      const q=encodeURIComponent("name='"+name.replace(/'/g,"\\'")+"' and trashed=false");
-      const ex=(await (await dfetch('https://www.googleapis.com/drive/v3/files?q='+q+'&fields=files(id)')).json()).files[0];
-      const fd=new FormData();
-      fd.append('metadata',new Blob([JSON.stringify({name:name,mimeType:XLSX_MIME})],{type:'application/json'}));
-      fd.append('file',blob);
-      await dfetch('https://www.googleapis.com/upload/drive/v3/files'+(ex?'/'+ex.id:'')+'?uploadType=multipart',{method:ex?'PATCH':'POST',body:fd});
-      driveMsg('✅ Guardado no Google Drive: '+name);
-      driveList(true);
-    }catch(e){ driveMsg(e.message); }
-  });
-}
+    function syncInvType() {
+      $('invoiceInstallments').disabled = document.querySelector('input[name=invType]:checked').value === 'mensal';
+    }
+    function addInvoice() {
+      const desc = $('invoiceDesc').value, amount = parseFloat($('invoiceAmount').value);
+      if (!desc || isNaN(amount) || amount <= 0) return alert("Preencha a descrição e montante da despesa.");
+      const type = document.querySelector('input[name=invType]:checked').value;
+      invoices.push({
+        id: Date.now(), desc, num: $('invoiceNum').value || "FT 2026/DOC", date: $('invoiceDate').value || new Date().toISOString().split('T')[0],
+        amount, type, installments: type === 'unica' ? (parseInt($('invoiceInstallments').value) || 1) : 1
+      });
+      $('invoiceDesc').value = ''; $('invoiceNum').value = ''; $('invoiceAmount').value = '';
+      updateAll();
+    }
+    function updateInvoiceRow(id, f, v) {
+      const inv = invoices.find(x => x.id === id); if (!inv) return;
+      if (f === 'amount') inv.amount = parseFloat(v) || 0;
+      else if (f === 'installments') inv.installments = parseInt(v) || 1;
+      else inv[f] = v;
+      if (f === 'type') {if (v === 'mensal') inv.installments = 1; else if (inv.installments < 2) inv.installments = 12; document.activeElement.blur();}
+      const mc = $('mc-' + id), ya = $('ya-' + id);
+      if (mc) mc.innerText = '€' + f2(invMonthly(inv)) + ' / mês';
+      if (ya) ya.innerText = '€' + f2(invYear(inv));
+      updateAll();
+    }
+    function removeInvoice(id) {
+      document.activeElement.blur();
+      invoices = invoices.filter(x => x.id !== id); updateAll();
+    }
+    function renderInvoiceTable() {
+      if (document.activeElement && document.activeElement.closest && document.activeElement.closest('#invoiceTableBody')) return;
+      $('invoiceTableBody').innerHTML = invoices.map(v => {
+        const u = v.type === 'unica';
+        return `<tr class="border-b border-slate-800/60">
+     <td class="p-2"><input type="date" value="${v.date}" onchange="updateInvoiceRow(${v.id},'date',this.value)" class="bg-transparent text-slate-400 text-xs"></td>
+     <td class="p-2"><input type="text" value="${esc(v.desc)}" onchange="updateInvoiceRow(${v.id},'desc',this.value)" class="bg-transparent text-white font-medium text-xs w-full min-w-[180px]"></td>
+     <td class="p-2"><input type="text" value="${esc(v.num)}" onchange="updateInvoiceRow(${v.id},'num',this.value)" class="bg-transparent text-slate-400 text-xs w-24"></td>
+     <td class="p-2 text-white">€<input type="number" value="${v.amount}" oninput="updateInvoiceRow(${v.id},'amount',this.value)" class="bg-transparent text-white text-xs w-20 font-bold"></td>
+     <td class="p-2"><label class="rad"><input type="radio" name="t${v.id}" ${!u ? 'checked' : ''} onchange="updateInvoiceRow(${v.id},'type','mensal')" class="accent-blue-600"> Fixa/mês</label>
+       <label class="rad"><input type="radio" name="t${v.id}" ${u ? 'checked' : ''} onchange="updateInvoiceRow(${v.id},'type','unica')" class="accent-blue-600"> Única</label></td>
+     <td class="p-2 text-slate-300"><input type="number" min="1" max="14" value="${instOf(v)}" ${u ? '' : 'disabled'} oninput="updateInvoiceRow(${v.id},'installments',this.value)" class="bg-transparent text-slate-300 text-xs w-12 font-bold">x</td>
+     <td class="p-2 text-amber-400 font-bold" id="mc-${v.id}">€${f2(invMonthly(v))} / mês</td>
+     <td class="p-2 text-white font-bold" id="ya-${v.id}">€${f2(invYear(v))}</td>
+     <td class="p-2 text-right"><button onclick="removeInvoice(${v.id})" class="text-red-400 hover:text-red-300 font-bold">✕</button></td>
+    </tr>`;
+      }).join('');
+    }
 
-function driveList(quiet){
-  withDrive(async()=>{
-    try{
-      const q=encodeURIComponent("mimeType='"+XLSX_MIME+"' and trashed=false");
-      const j=await (await dfetch('https://www.googleapis.com/drive/v3/files?q='+q+'&orderBy='+encodeURIComponent('modifiedTime desc')+'&pageSize=20&fields=files(id,name,modifiedTime)')).json();
-      $('driveFiles').innerHTML=j.files.length?j.files.map(f=>`
+
+    /* ===== Apoio (edite os seus links) ===== */
+    const SUPPORT = {
+      paypal: 'https://www.paypal.me/O_SEU_USER',
+      revolut: 'https://revolut.me/O_SEU_USER',
+      kofi: 'https://ko-fi.com/O_SEU_USER'
+    };
+
+    /* ===== Modais ===== */
+    function openModal(id) {
+      $(id).classList.remove('hidden'); document.body.style.overflow = 'hidden';
+      if (id === 'driveModal') {try {$('gClientId').value = localStorage.getItem('gClientId') || '';} catch (e) { } }
+    }
+    function closeModal(id) {$(id).classList.add('hidden'); document.body.style.overflow = '';}
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('.modal:not(.hidden)').forEach(m => closeModal(m.id));
+    });
+
+    /* ===== Excel local ===== */
+    const XLSX_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+    function buildWb() {
+      const wb = XLSX.utils.book_new();
+      const p = [{"Rate Diaria": $('dailyRate').value, "Dias Mes": $('daysPerMonth').value, "Meses Ano": $('monthsPerYear').value, "Reserva Transitada": $('carriedReserve').value, "Salario Bruto": $('inputSalary').value, "Edenred Dia": $('inputMeal').value, "Ajudas Dia": $('inputAllow').value, "Creche Mes": $('inputCreche').value}];
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(p), "Parametros");
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(invoices), "Despesas");
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(others), "Outros");
+      XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(todos), "Tarefas");
+      return wb;
+    }
+    function exportToExcel() {
+      XLSX.writeFile(buildWb(), ($('fileName').value || 'Simulacao_Empresa') + '.xlsx');
+    }
+    function loadWb(buf) {
+      const wb = XLSX.read(new Uint8Array(buf), {type: 'array'});
+      if (wb.SheetNames.includes("Parametros")) {
+        const p = XLSX.utils.sheet_to_json(wb.Sheets["Parametros"])[0];
+        if (p) {
+          const set = (id, k) => {if (p[k] !== undefined) $(id).value = p[k];};
+          set('dailyRate', "Rate Diaria"); set('daysPerMonth', "Dias Mes"); set('monthsPerYear', "Meses Ano"); set('carriedReserve', "Reserva Transitada");
+          set('inputSalary', "Salario Bruto"); set('inputMeal', "Edenred Dia"); set('inputAllow', "Ajudas Dia"); set('inputCreche', "Creche Mes");
+          const d = parseFloat($('daysPerMonth').value) || 20; // ficheiros antigos: valores mensais
+          if (p["Edenred Dia"] === undefined && p["Edenred"] !== undefined) $('inputMeal').value = Math.min(12.4, Math.round(p["Edenred"] / d * 100) / 100);
+          if (p["Ajudas Dia"] === undefined && p["Ajudas Custo"] !== undefined) $('inputAllow').value = Math.min(50.2, Math.round(p["Ajudas Custo"] / d * 100) / 100);
+          ['Salary', 'Meal', 'Allow'].forEach(n => $('slider' + n).value = $('input' + n).value);
+        }
+      }
+      if (wb.SheetNames.includes("Despesas")) invoices = XLSX.utils.sheet_to_json(wb.Sheets["Despesas"]).map(v => {
+        const inst = parseInt(v.installments) || 1;
+        return Object.assign({}, v, {type: v.type || (inst > 1 ? 'unica' : 'mensal'), installments: inst});
+      });
+      others = wb.SheetNames.includes("Outros") ? XLSX.utils.sheet_to_json(wb.Sheets["Outros"]) : [];
+      todos = wb.SheetNames.includes("Tarefas") ? XLSX.utils.sheet_to_json(wb.Sheets["Tarefas"]) : [];
+      renderOthers(); updateAll(); renderTodoList();
+    }
+    function importFromExcel(e) {
+      const file = e.target.files[0]; if (!file) return;
+      const r = new FileReader();
+      r.onload = ev => {loadWb(ev.target.result); alert("Dados recarregados com sucesso!");};
+      r.readAsArrayBuffer(file); e.target.value = '';
+    }
+
+    /* ===== Google Drive (OAuth no browser, âmbito drive.file) ===== */
+    let driveToken = null;
+    function driveMsg(t) {$('driveMsg').innerText = t;}
+
+    function driveAuth(cb) {
+      const id = $('gClientId').value.trim();
+      if (!id) return driveMsg('Cole primeiro o Client ID do Google Cloud.');
+      try {localStorage.setItem('gClientId', id);} catch (e) { }
+      if (!(window.google && google.accounts && google.accounts.oauth2)) return driveMsg('A biblioteca da Google não carregou. Verifique a ligação à internet.');
+      google.accounts.oauth2.initTokenClient({
+        client_id: id,
+        scope: 'https://www.googleapis.com/auth/drive.file',
+        callback: r => {
+          if (r.error) {driveMsg('Erro Google: ' + r.error); return;}
+          driveToken = r.access_token; if (cb) cb();
+        }
+      }).requestAccessToken();
+    }
+    function withDrive(fn) {if (driveToken) fn(); else driveAuth(fn);}
+
+    async function dfetch(url, opt) {
+      const r = await fetch(url, Object.assign({}, opt, {headers: {Authorization: 'Bearer ' + driveToken}}));
+      if (r.status === 401) {driveToken = null; throw new Error('Sessão expirada. Clique outra vez para voltar a ligar.');}
+      if (!r.ok) throw new Error('Erro do Google Drive (' + r.status + ')');
+      return r;
+    }
+
+    function driveSave() {
+      withDrive(async () => {
+        try {
+          driveMsg('A guardar…');
+          const name = ($('fileName').value || 'Simulacao_Empresa') + '.xlsx';
+          const blob = new Blob([XLSX.write(buildWb(), {bookType: 'xlsx', type: 'array'})], {type: XLSX_MIME});
+          const q = encodeURIComponent("name='" + name.replace(/'/g, "\\'") + "' and trashed=false");
+          const ex = (await (await dfetch('https://www.googleapis.com/drive/v3/files?q=' + q + '&fields=files(id)')).json()).files[0];
+          const fd = new FormData();
+          fd.append('metadata', new Blob([JSON.stringify({name: name, mimeType: XLSX_MIME})], {type: 'application/json'}));
+          fd.append('file', blob);
+          await dfetch('https://www.googleapis.com/upload/drive/v3/files' + (ex ? '/' + ex.id : '') + '?uploadType=multipart', {method: ex ? 'PATCH' : 'POST', body: fd});
+          driveMsg('✅ Guardado no Google Drive: ' + name);
+          driveList(true);
+        } catch (e) {driveMsg(e.message);}
+      });
+    }
+
+    function driveList(quiet) {
+      withDrive(async () => {
+        try {
+          const q = encodeURIComponent("mimeType='" + XLSX_MIME + "' and trashed=false");
+          const j = await (await dfetch('https://www.googleapis.com/drive/v3/files?q=' + q + '&orderBy=' + encodeURIComponent('modifiedTime desc') + '&pageSize=20&fields=files(id,name,modifiedTime)')).json();
+          $('driveFiles').innerHTML = j.files.length ? j.files.map(f => `
         <li class="drive-file"><span>${esc(f.name)}<small>${new Date(f.modifiedTime).toLocaleString('pt-PT')}</small></span>
         <button onclick="driveOpen('${f.id}')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">Abrir</button></li>`).join('')
-        :'<li class="modal-text">Ainda não há ficheiros guardados por esta aplicação.</li>';
-      if(!quiet) driveMsg('Ligado ✅');
-    }catch(e){ driveMsg(e.message); }
-  });
-}
+            : '<li class="modal-text">Ainda não há ficheiros guardados por esta aplicação.</li>';
+          if (!quiet) driveMsg('Ligado ✅');
+        } catch (e) {driveMsg(e.message);}
+      });
+    }
 
-function driveOpen(id){
-  withDrive(async()=>{
-    try{
-      driveMsg('A abrir…');
-      const buf=await (await dfetch('https://www.googleapis.com/drive/v3/files/'+id+'?alt=media')).arrayBuffer();
-      loadWb(buf); closeModal('driveModal'); alert("Dados carregados do Google Drive!");
-    }catch(e){ driveMsg(e.message); }
-  });
-}
+    function driveOpen(id) {
+      withDrive(async () => {
+        try {
+          driveMsg('A abrir…');
+          const buf = await (await dfetch('https://www.googleapis.com/drive/v3/files/' + id + '?alt=media')).arrayBuffer();
+          loadWb(buf); closeModal('driveModal'); alert("Dados carregados do Google Drive!");
+        } catch (e) {driveMsg(e.message);}
+      });
+    }
 
-window.onload=()=>{
-  changeLanguage('pt'); updateAll(); renderTodoList();
-  $('lnkPaypal').href=SUPPORT.paypal; $('lnkRevolut').href=SUPPORT.revolut; $('lnkKofi').href=SUPPORT.kofi;
-};
-</script>
+    window.onload = () => {
+      changeLanguage('pt'); renderOthers(); syncInvType(); updateAll(); renderTodoList();
+      $('lnkPaypal').href = SUPPORT.paypal; $('lnkRevolut').href = SUPPORT.revolut; $('lnkKofi').href = SUPPORT.kofi;
+    };
+  </script>
 </body>
+
 </html>
