@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Arquivo Murdoku — 80 Casos</title>
+<title>Arquivo Murdoku — 80</title>
 <style>
-:root{--g:#c9a24b;--r:#a3202a;--p:#17120f;--t:#e8dcc3}
+:root{--g:#c9a24b;--p:#17120f;--t:#e8dcc3}
 *{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at top,#1d1511,#090706 70%);color:var(--t);font-family:Georgia,"Times New Roman",serif;min-height:100vh}
 header{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #3a2d1a;background:#0a0807}
@@ -15,28 +15,31 @@ button,input{font:inherit}
 .b{background:#1f1813;color:var(--t);border:1px solid #5a4b2b;padding:7px 12px;cursor:pointer;border-radius:3px}
 .b:hover{border-color:var(--g);color:var(--g)}
 .b.on{background:var(--g);color:#120d08}
+.b.xs{border-style:dashed}
 nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 #cn{font-family:"Courier New",monospace;color:var(--g);min-width:70px;text-align:center}
 main{display:flex;flex-wrap:wrap;gap:20px;padding:20px;max-width:1180px;margin:auto}
 .L{flex:0 1 560px}.Rr{flex:1 1 340px;min-width:300px}
 .card{background:var(--p);border:1px solid #3a2d1a;padding:14px;border-radius:4px;margin-bottom:14px}
-h2{margin:0 0 8px;font:600 12px "Courier New",monospace;letter-spacing:.2em;color:var(--g);text-transform:uppercase}
+h2{margin:8px 0;font:600 12px "Courier New",monospace;letter-spacing:.2em;color:var(--g);text-transform:uppercase}
 h3{margin:0 0 4px;font-size:20px}
 .bd{display:grid;grid-template-columns:22px repeat(6,var(--cs));--cs:clamp(46px,11.5vw,70px);width:max-content;max-width:100%;margin:8px 0}
 .l{color:#8a7a55;font:11px monospace;display:flex;align-items:center;justify-content:center;height:var(--cs);font-style:normal}
 .l.h{height:20px}
 .c{width:var(--cs);height:var(--cs);position:relative;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:calc(var(--cs)*.45);user-select:none}
 .c:hover{filter:brightness(1.35)}
-.rl{position:absolute;top:1px;left:3px;font:8px/1 sans-serif;color:#d9c48aaa;pointer-events:none;max-width:92%}
+.gy::after{content:"";position:absolute;inset:0;background:rgba(150,150,150,.55);pointer-events:none;z-index:1}
+.rl{position:absolute;top:1px;left:3px;font:8px/1 sans-serif;color:#d9c48aaa;pointer-events:none;max-width:92%;z-index:2}
 .wn{position:absolute;right:1px;bottom:0;font-size:9px;opacity:.85}
-.sn{font:700 calc(var(--cs)*.19)/1.1 sans-serif;color:#fff;background:#7a1c24;padding:2px 4px;border-radius:2px}
+.sn{position:relative;z-index:2;font:700 calc(var(--cs)*.19)/1.1 sans-serif;color:#fff;background:#7a1c24;padding:2px 4px;border-radius:2px}
+.sn.ex{background:#1f4b6e}
 .vc{color:#ff4a4a;filter:drop-shadow(0 0 6px #f00)}
 .bad{outline:2px solid #ff3b3b;outline-offset:-4px}
 .tools{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
 ul,ol{margin:0;padding-left:20px;line-height:1.5}
 li{margin-bottom:3px}
 #an{background:#0d0a08;color:var(--t);border:1px solid #5a4b2b;padding:8px;width:60%;border-radius:3px}
-#msg{color:#e3736e;min-height:18px;font-size:14px;margin-top:6px}
+#msg,#chk{color:#e3736e;min-height:18px;font-size:14px;margin-top:6px}
 .ok{color:#7fc47f}.no{color:#e3736e}
 #md,#ixm{position:fixed;inset:0;background:#000d;display:none;align-items:center;justify-content:center;z-index:9;padding:16px}
 #md.s,#ixm.s{display:flex}
@@ -53,163 +56,245 @@ small{color:#8a7a55}
   <h1>ARQUIVO MURDOKU</h1>
   <nav>
     <button class="b" id="pv">◀</button><span id="cn"></span><button class="b" id="nx">▶</button>
-    <button class="b" id="ixb">Índice</button><button class="b" id="sd">🔊 Som</button>
+    <button class="b" id="ixb" data-i="idx"></button><button class="b" id="eb"></button><button class="b" id="sd"></button><button class="b" id="lg"></button>
   </nav>
 </header>
 <main>
   <section class="L">
     <div class="card">
-      <h2>Dossiê</h2><h3 id="tt"></h3><p id="st"></p>
+      <h2 data-i="dossier"></h2><h3 id="tt"></h3><p id="st"></p>
       <div class="tools" id="pal"></div>
-      <div class="tools"><button class="b" data-m="p">Colocar</button><button class="b" data-m="x">✕ Anotar</button><button class="b" data-m="e">Apagar</button><button class="b" id="clr">Limpar grelha</button></div>
+      <div class="tools" id="tools"><button class="b" data-m="p" data-i="place"></button><button class="b" data-m="x" data-i="mark"></button><button class="b" data-m="e" data-i="erase"></button><button class="b" id="clr" data-i="clear"></button></div>
       <div class="bd" id="bd"></div>
-      <small>Um suspeito por linha e por coluna. O culpado estava sozinho com a vítima (💀) na mesma divisão. Os móveis bloqueiam casas.</small>
+      <small data-i="rules"></small>
     </div>
+    <div class="card" id="edt" style="display:none"></div>
   </section>
   <section class="Rr">
-    <div class="card"><h2>Pistas</h2><ol id="cl"></ol></div>
-    <div class="card"><h2>Acusação</h2>
-      <form id="ac" autocomplete="off"><input id="an" list="dl" placeholder="Nome do assassino"><datalist id="dl"></datalist> <button class="b">Acusar</button></form>
+    <div class="card"><h2 data-i="clues"></h2><ol id="cl"></ol></div>
+    <div class="card"><h2 data-i="accuse"></h2>
+      <form id="ac" autocomplete="off"><input id="an" list="dl"><datalist id="dl"></datalist> <button class="b" data-i="go"></button></form>
       <div id="msg"></div></div>
-    <div class="card"><h2>O meu registo</h2><ul id="hs"></ul></div>
-    <div class="card"><h2>Lógica e solução</h2><div id="sv"></div></div>
+    <div class="card"><h2 data-i="log"></h2><ul id="hs"></ul></div>
+    <div class="card"><h2 data-i="sol"></h2><div id="sv"></div></div>
   </section>
 </main>
-<div id="md"><div><div id="tx"></div><p><button class="b" id="mc">Fechar</button> <button class="b" id="mn" style="display:none">Próximo caso ▶</button></p></div></div>
-<div id="ixm"><div><h2>Índice de casos</h2><div class="ix" id="ix"></div><button class="b" id="ixc">Fechar</button></div></div>
-
+<div id="md"><div><div id="tx"></div><p><button class="b" id="mc" data-i="close"></button> <button class="b" id="mn" data-i="next" style="display:none"></button></p></div></div>
+<div id="ixm"><div><h2 data-i="indexT"></h2><div class="ix" id="ix"></div><button class="b" id="ixc" data-i="close"></button></div></div>
 <script>
 /*GEN*/
 const NAMES="Hugo,Beatriz,Carlos,Diana,Eduardo,Fátima,Gonçalo,Helena,Ivo,Joana,Leonor,Miguel,Natália,Óscar,Paula,Rui,Sofia,Tiago,Úrsula,Vasco,Alice,Bruno,Clara,Duarte,Elisa,Filipe,Graça,Henrique,Inês,Jorge,Karina,Luís,Marta,Nuno,Olga,Pedro,Rafael,Sara,Telmo,Zita".split(",");
 const FEM=new Set("Beatriz,Diana,Fátima,Helena,Joana,Leonor,Natália,Paula,Sofia,Úrsula,Alice,Clara,Elisa,Graça,Inês,Karina,Marta,Olga,Sara,Zita".split(","));
-const gd=(n,m,f)=>FEM.has(n)?f:m;
+const OB=[["📚","Estante","Bookcase"],["🪴","Planta","Plant"],["🧾","Caixa registadora","Cash register"],["🛋️","Sofá","Sofa"],["🪑","Cadeira","Chair"],["📦","Caixote","Crate"],["🖼️","Quadro","Painting"],["🗿","Estátua","Statue"],["🕰️","Relógio","Clock"],["🍷","Garrafeira","Wine rack"],["🗄️","Arquivo","Filing cabinet"],["🖥️","Computador","Computer"],["🖨️","Fotocopiadora","Photocopier"],["☕","Máquina de café","Coffee machine"],["🍽️","Mesa","Table"],["🔪","Balcão","Counter"],["🧪","Bancada","Lab bench"],["🔬","Microscópio","Microscope"],["🛎️","Campainha","Bell"],["🧳","Mala","Suitcase"],["🎭","Cenário","Stage set"],["🎹","Piano","Piano"],["🏺","Vitrine","Display case"],["⚓","Âncora","Anchor"],["🧰","Caixa de ferramentas","Toolbox"],["💡","Luz","Light"],["📺","Televisão","TV"],["🛏️","Cama","Bed"],["🪞","Espelho","Mirror"],["🔥","Lareira","Fireplace"]];
 const TH=[
-["Livraria do Beco","Sala de Leitura,Cave dos Raros,Balcão,Cafetaria,Armazém","📚|Estante,🪴|Planta,🧾|Caixa registadora,🛋️|Sofá,🪑|Cadeira,📦|Caixote"],
-["Galeria Meridiano","Salão Principal,Ala Moderna,Oficina,Bilheteira,Cofre","🖼️|Quadro,🗿|Estátua,🪴|Planta,🪑|Banco,🧾|Caixa registadora,📦|Caixote"],
-["Mansão dos Veiga","Hall,Biblioteca,Sala de Jantar,Cozinha,Estufa","🕰️|Relógio,🪴|Planta,🛋️|Sofá,📚|Estante,🍷|Garrafeira,🪑|Cadeira"],
-["Escritório Sá & Nobre","Receção,Sala de Reuniões,Gabinete do Sócio,Arquivo,Copa","🗄️|Arquivo,🖥️|Secretária,🪴|Planta,🖨️|Fotocopiadora,🪑|Cadeira,☕|Máquina de café"],
-["Restaurante Le Brasier","Sala,Cozinha,Esplanada,Bar,Despensa","🍽️|Mesa,🧾|Caixa registadora,🪴|Planta,🍷|Garrafeira,🔪|Talho,🪑|Cadeira"],
-["Instituto Química Nova","Laboratório,Gabinete,Sala de Reagentes,Biblioteca,Cantina","🧪|Bancada,🔬|Microscópio,🪴|Planta,🗄️|Armário,🖥️|Computador,🪑|Cadeira"],
-["Hotel Aurora","Receção,Restaurante,Piscina,Biblioteca,Cave","🛎️|Campainha,🪴|Planta,🛋️|Sofá,🧾|Caixa registadora,🪑|Cadeira,🧳|Mala"],
-["Teatro Real do Porto","Palco,Plateia,Camarim,Bastidores,Bilheteira","🎭|Cenário,🪴|Planta,🪑|Cadeira,🧾|Caixa registadora,🎹|Piano,📦|Caixote"],
-["Museu das Sombras","Sala Egípcia,Sala Medieval,Loja,Restauro,Pátio","🏺|Vitrine,🗿|Estátua,🪴|Planta,🧾|Caixa registadora,🪑|Banco,📦|Caixote"],
-["Cruzeiro Estrela do Sul","Convés,Salão,Cabine,Casa das Máquinas,Cozinha","⚓|Âncora,🪴|Planta,🛋️|Sofá,🧰|Caixa de ferramentas,🪑|Cadeira,🍷|Garrafeira"]
-];
-const MOT=["tinha dívidas por saldar com a vítima","queria esconder um segredo antigo","não suportou ser trocado(a) por outro","cobiçava uma herança","temia ser denunciado(a)","foi chantageado(a) durante anos","queria vingar uma humilhação antiga","queria apagar um erro do passado"];
+["Livraria do Beco","Alley Bookshop","Sala de Leitura,Cave dos Raros,Balcão,Cafetaria,Armazém","Reading Room,Rare Books Cellar,Counter,Café,Storeroom",[0,1,2,3,4,5]],
+["Galeria Meridiano","Meridian Gallery","Salão Principal,Ala Moderna,Oficina,Bilheteira,Cofre","Main Hall,Modern Wing,Workshop,Ticket Office,Vault",[6,7,1,4,2,5]],
+["Mansão dos Veiga","Veiga Manor","Hall,Biblioteca,Sala de Jantar,Cozinha,Estufa","Hall,Library,Dining Room,Kitchen,Greenhouse",[8,1,3,0,9,4]],
+["Escritório Sá & Nobre","Sá & Nobre Law Firm","Receção,Sala de Reuniões,Gabinete do Sócio,Arquivo,Copa","Reception,Meeting Room,Partner's Office,Archive,Pantry",[10,11,1,12,4,13]],
+["Restaurante Le Brasier","Le Brasier Restaurant","Sala,Cozinha,Esplanada,Bar,Despensa","Dining Room,Kitchen,Terrace,Bar,Pantry",[14,2,1,9,15,4]],
+["Instituto Química Nova","New Chemistry Institute","Laboratório,Gabinete,Sala de Reagentes,Biblioteca,Cantina","Laboratory,Office,Reagent Room,Library,Canteen",[16,17,1,10,11,4]],
+["Hotel Aurora","Aurora Hotel","Receção,Restaurante,Piscina,Biblioteca,Cave","Reception,Restaurant,Pool,Library,Cellar",[18,1,3,2,4,19]],
+["Teatro Real do Porto","Royal Theatre of Porto","Palco,Plateia,Camarim,Bastidores,Bilheteira","Stage,Stalls,Dressing Room,Backstage,Box Office",[20,1,4,2,21,5]],
+["Museu das Sombras","Museum of Shadows","Sala Egípcia,Sala Medieval,Loja,Restauro,Pátio","Egyptian Hall,Medieval Hall,Gift Shop,Restoration,Courtyard",[22,7,1,2,4,5]],
+["Cruzeiro Estrela do Sul","Southern Star Cruise","Convés,Salão,Cabine,Casa das Máquinas,Cozinha","Deck,Lounge,Cabin,Engine Room,Galley",[23,1,3,24,4,9]]];
 const rng=s=>{let a=s>>>0;return()=>{a+=0x6D2B79F5;let t=a;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}};
 const shuf=(R,a)=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(R()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
 const nb=i=>{const r=i/6|0,c=i%6,o=[];if(r>0)o.push(i-6);if(r<5)o.push(i+6);if(c>0)o.push(i-1);if(c<5)o.push(i+1);return o};
+const hA=(C,c,t)=>nb(c).some(j=>C.furnAt[j]===t);
+function mk(d,C){const R=C.rooms,{s,u,r,o,h}=d;
+ switch(d.k){
+ case"room":return{w:[s],f:P=>R[P[s]]===r};
+ case"nroom":return{w:[s],f:P=>R[P[s]]!==r};
+ case"adj":return{w:[s],f:P=>hA(C,P[s],o)===h};
+ case"same":return{w:[s,u],f:P=>(R[P[s]]===R[P[u]])===h};
+ case"side":return{w:[s,u],f:P=>nb(P[s]).includes(P[u])};
+ case"above":return{w:[s,u],f:P=>(P[s]/6|0)<(P[u]/6|0)};
+ case"left":return{w:[s,u],f:P=>P[s]%6<P[u]%6}}}
 function mkRooms(R){for(;;){const g=Array(36).fill(-1);shuf(R,[...Array(36).keys()]).slice(0,5).forEach((s,i)=>g[s]=i);
  for(let left=31;left;left--){const cd=[];for(let i=0;i<36;i++)if(g[i]<0)nb(i).forEach(j=>{if(g[j]>=0)cd.push([i,g[j]])});const[i,r]=cd[Math.floor(R()*cd.length)];g[i]=r}
  const n=Array(5).fill(0);g.forEach(x=>n[x]++);if(Math.min(...n)>=4)return g}}
-function count(C,cl,cap){const by=[[],[],[],[],[],[]];cl.forEach(c=>by[Math.max(...c.w)].push(c));const P=Array(6).fill(-1);let n=0;
+function count(C,cl,cap){const by=[[],[],[],[],[],[]];cl.forEach(c=>by[Math.max(...c.w)].push(c));const P=Array(6).fill(-1);let n=0,first=null;
  (function rec(s,ur,uc){if(n>=cap)return;
-  if(s==6){let k=0;for(let i=0;i<6;i++)if(C.rooms[P[i]]===C.rooms[C.victim])k++;if(k==1)n++;return}
+  if(s==6){let k=0;for(let i=0;i<6;i++)if(C.rooms[P[i]]===C.rooms[C.victim])k++;if(k==1){n++;if(!first)first=[...P]}return}
   for(let cell=0;cell<36;cell++){const r=cell/6|0,c=cell%6;if((ur>>r&1)||(uc>>c&1)||C.furnAt[cell]>=0||cell===C.victim)continue;P[s]=cell;
-   if(by[s].every(q=>q.f(P)))rec(s+1,ur|1<<r,uc|1<<c)}P[s]=-1})(0,0,0);return n}
+   if(by[s].every(q=>q.f(P)))rec(s+1,ur|1<<r,uc|1<<c)}P[s]=-1})(0,0,0);return{n,first}}
 const CACHE={};
 function build(n){if(CACHE[n])return CACHE[n];
- const R=rng(n*7919+13),[tt,rs,fs]=TH[(n-1)%10],rn=rs.split(","),fu=fs.split(",").map(x=>x.split("|"));
+ const R=rng(n*7919+13),ti=(n-1)%10,ob=TH[ti][4];
  for(;;){
   const rooms=mkRooms(R),nm=shuf(R,NAMES).slice(0,7),sus=nm.slice(0,6).sort((a,b)=>a.localeCompare(b,"pt")),vic=nm[6];
   const rp=shuf(R,[0,1,2,3,4,5]),cp=shuf(R,[0,1,2,3,4,5]),S=rp.map((r,s)=>r*6+cp[s]);
   const free=shuf(R,[...Array(36).keys()].filter(i=>!S.includes(i)));
-  const furnAt=Array(36).fill(-1);free.slice(0,6).forEach((c,t)=>furnAt[c]=t);
+  const furnAt=Array(36).fill(-1);free.slice(0,6).forEach((c,t)=>furnAt[c]=ob[t]);
   const cand=free.slice(6).filter(c=>S.filter(x=>rooms[x]===rooms[c]).length===1);
   if(!cand.length)continue;
-  const victim=cand[0],murd=S.findIndex(x=>rooms[x]===rooms[victim]),C={rooms,furnAt,victim};
-  const hasAdj=(c,t)=>nb(c).some(j=>furnAt[j]===t),rr=c=>c/6|0,cc=c=>c%6,pl=[];
-  for(let s=0;s<6;s++){const a=sus[s],ro=rooms[S[s]];
-   pl.push({w:[s],f:P=>rooms[P[s]]===ro,t:`${a} estava na divisão «${rn[ro]}».`});
-   for(let k=0;k<5;k++)if(k!==ro)pl.push({w:[s],f:P=>rooms[P[s]]!==k,t:`${a} não estava na divisão «${rn[k]}».`});
-   for(let t=0;t<6;t++){const h=hasAdj(S[s],t);pl.push({w:[s],f:P=>hasAdj(P[s],t)===h,t:`${a} ${h?"estava mesmo ao lado de":"não estava ao lado de"}: ${fu[t][0]} ${fu[t][1]}.`})}
-   for(let u=s+1;u<6;u++){const b=sus[u],same=rooms[S[s]]===rooms[S[u]];
-    pl.push({w:[s,u],f:P=>(rooms[P[s]]===rooms[P[u]])===same,t:`${a} e ${b} ${same?"estavam":"não estavam"} na mesma divisão.`});
-    if(nb(S[s]).includes(S[u]))pl.push({w:[s,u],f:P=>nb(P[s]).includes(P[u]),t:`${a} e ${b} estavam lado a lado (na horizontal ou na vertical).`});
-    const[x,y]=rr(S[s])<rr(S[u])?[s,u]:[u,s];pl.push({w:[x,y],f:P=>rr(P[x])<rr(P[y]),t:`${sus[x]} estava numa linha acima de ${sus[y]}.`});
-    const[p,q]=cc(S[s])<cc(S[u])?[s,u]:[u,s];pl.push({w:[p,q],f:P=>cc(P[p])<cc(P[q]),t:`${sus[p]} estava numa coluna à esquerda de ${sus[q]}.`})}}
-  let cl=[];for(const q of shuf(R,pl)){cl.push(q);if(count(C,cl,2)===1)break}
-  if(count(C,cl,2)!==1)continue;
-  for(let i=cl.length-1;i>=0;i--){const t=cl.filter((_,j)=>j!==i);if(count(C,t,2)===1)cl=t}
+  const victim=cand[0],murd=S.findIndex(x=>rooms[x]===rooms[victim]),C={rooms,furnAt,victim},pl=[];
+  for(let s=0;s<6;s++){const ro=rooms[S[s]];
+   pl.push({k:"room",s,r:ro});
+   for(let k=0;k<5;k++)if(k!==ro)pl.push({k:"nroom",s,r:k});
+   for(let t=0;t<6;t++)pl.push({k:"adj",s,o:ob[t],h:hA(C,S[s],ob[t])});
+   for(let u=s+1;u<6;u++){
+    pl.push({k:"same",s,u,h:rooms[S[s]]===rooms[S[u]]});
+    if(nb(S[s]).includes(S[u]))pl.push({k:"side",s,u});
+    pl.push((S[s]/6|0)<(S[u]/6|0)?{k:"above",s,u}:{k:"above",s:u,u:s});
+    pl.push(S[s]%6<S[u]%6?{k:"left",s,u}:{k:"left",s:u,u:s})}}
+  const fn=a=>a.map(d=>mk(d,C));let cl=[];
+  for(const q of shuf(R,pl)){cl.push(q);if(count(C,fn(cl),2).n===1)break}
+  if(count(C,fn(cl),2).n!==1)continue;
+  for(let i=cl.length-1;i>=0;i--){const t=cl.filter((_,j)=>j!==i);if(count(C,fn(t),2).n===1)cl=t}
   const edge=[...Array(36).keys()].filter(i=>i<6||i>29||i%6==0||i%6==5);
-  return CACHE[n]={n,title:`Caso ${n} — ${tt}`,rooms,furnAt,victim,sus,vic,rn,fu,S,murd,cl:cl.map(q=>q.t),win:shuf(R,edge).slice(0,4),motive:MOT[Math.floor(R()*MOT.length)],tt}}}
+  return CACHE[n]={n,ti,rooms,furnAt,victim,sus,vic,S,murd,cl,win:shuf(R,edge).slice(0,4)}}}
 /*ENDGEN*/
-
+const MO={pt:["tinha dívidas por saldar com a vítima","queria esconder um segredo antigo","não suportou ser trocado(a) por outro","cobiçava uma herança","temia ser denunciado(a)","foi chantageado(a) durante anos","queria vingar uma humilhação antiga","queria apagar um erro do passado"],
+en:["owed the victim an unpaid debt","wanted to hide an old secret","could not bear being replaced","coveted an inheritance","feared being reported","had been blackmailed for years","wanted revenge for an old humiliation","wanted to erase a mistake from the past"]};
+const I={pt:{idx:"Índice",indexT:"Índice de casos",edit:"✎ Editar cenário",done:"✔ Sair da edição",sound:"Som",dossier:"Dossiê",case:"Caso",
+rules:"Um suspeito por linha e por coluna. O culpado estava sozinho com a vítima (💀) na mesma divisão. Os objetos bloqueiam casas. Ao colocares um nome, a linha e a coluna ficam cinzentas.",
+place:"Colocar",mark:"✕ Anotar",erase:"Apagar",clear:"Limpar grelha",clues:"Pistas",accuse:"Acusação",ph:"Nome do assassino",go:"Acusar",log:"O meu registo",nolog:"Ainda sem acusações neste caso.",
+sol:"Lógica e solução",reveal:"Revelar solução (spoiler)",apply:"Aplicar à minha grelha",view:"ver grelha",ok:"✓ certo",ko:"✗ errado",unk:"Esse nome não consta do dossiê.",
+cclear:"Limpar a grelha deste caso?",crev:"Isto revela a solução. Continuar?",close:"Fechar",next:"Próximo caso ▶",
+story:(v,r,f)=>`O corpo de ${v} foi ${f?"encontrada":"encontrado"} na divisão «${r}». Seis suspeitos estavam no local. Descobre quem estava a sós com a vítima.`,
+win:(n,v,r,m,f)=>`CASO RESOLVIDO\n\n${n} estava ${f?"sozinha":"sozinho"} com ${v} na divisão «${r}». Não resistiu ao interrogatório: ${m}.`,
+lose:n=>`ACUSAÇÃO FALHADA\n\n${n} apresenta um álibi irrefutável. O verdadeiro culpado continua à solta… Revê a grelha, detetive.`,
+expl:(v,r,m)=>`Raciocínio: cada pista elimina casas possíveis. Como há um só suspeito por linha e por coluna, ao fixares alguns suspeitos os restantes ficam forçados. No fim, ${v} jazia na divisão «${r}» e o único suspeito lá dentro era ${m}.`,
+many:"Nota: o cenário editado tem várias soluções; mostro uma delas.",
+rooms:"Divisões (clica numa casa para a pintar)",objs:"Objetos (clica numa casa para colocar; repete para tirar)",addroom:"+ Divisão",renroom:"✎ Renomear divisão",vic:"💀 Mover vítima",del:"Apagar objeto",reset:"Repor original",addp:"+ Pessoa",renv:"✎ Vítima",
+askname:"Nome:",askroom:"Nome da divisão:",askren:"Novo nome (nos figurantes, vazio = apagar):",creset:"Repor cenário, nomes e pessoas originais? A grelha será limpa.",
+chk:["Sem solução: o cenário editado contradiz as pistas.","Solução única ✓ — pronto a jogar.","Várias soluções: as pistas já não chegam para o cenário editado."],noval:"Não consigo validar: o cenário editado não tem solução única."},
+en:{idx:"Index",indexT:"Case index",edit:"✎ Edit scene",done:"✔ Exit editing",sound:"Sound",dossier:"Dossier",case:"Case",
+rules:"One suspect per row and per column. The killer was alone with the victim (💀) in the same room. Objects block cells. When you place a name, its row and column turn grey.",
+place:"Place",mark:"✕ Note",erase:"Erase",clear:"Clear grid",clues:"Clues",accuse:"Accusation",ph:"Killer's name",go:"Accuse",log:"My record",nolog:"No accusations in this case yet.",
+sol:"Logic and solution",reveal:"Reveal solution (spoiler)",apply:"Apply to my grid",view:"view grid",ok:"✓ correct",ko:"✗ wrong",unk:"That name is not in the dossier.",
+cclear:"Clear the grid for this case?",crev:"This reveals the solution. Continue?",close:"Close",next:"Next case ▶",
+story:(v,r)=>`${v}'s body was found in the «${r}». Six suspects were on the premises. Find out who was alone with the victim.`,
+win:(n,v,r,m)=>`CASE SOLVED\n\n${n} was alone with ${v} in the «${r}». Cracked under questioning: ${m}.`,
+lose:n=>`FAILED ACCUSATION\n\n${n} has an airtight alibi. The real killer is still at large… Review the grid, detective.`,
+expl:(v,r,m)=>`Reasoning: each clue removes possible cells. With exactly one suspect per row and column, fixing a few suspects forces the rest. In the end ${v} lay in the «${r}» and the only suspect inside was ${m}.`,
+many:"Note: the edited scene has several solutions; showing one of them.",
+rooms:"Rooms (click a cell to paint it)",objs:"Objects (click a cell to place; click again to remove)",addroom:"+ Room",renroom:"✎ Rename room",vic:"💀 Move victim",del:"Erase object",reset:"Restore original",addp:"+ Person",renv:"✎ Victim",
+askname:"Name:",askroom:"Room name:",askren:"New name (for extras, empty = delete):",creset:"Restore original scene, names and people? The grid will be cleared.",
+chk:["No solution: the edited scene contradicts the clues.","Unique solution ✓ — ready to play.","Several solutions: the clues are no longer enough for the edited scene."],noval:"Cannot validate: the edited scene has no unique solution."}};
 const $=s=>document.querySelector(s);
 let DB;try{DB=JSON.parse(localStorage.getItem("mrd80"))}catch(e){}DB=DB||{cur:1,c:{}};
 const save=()=>{try{localStorage.setItem("mrd80",JSON.stringify(DB))}catch(e){}};
 const cs=n=>DB.c[n]||(DB.c[n]={g:{},x:[],a:[],ok:0});
-let K,st,mode="p",sel=0,rev=0,snd=true,ac;
-function beep(f,d,v){if(!snd)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),g=ac.createGain();o.type="square";o.frequency.value=f;g.gain.value=v||.03;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.stop(ac.currentTime+d)}catch(e){}}
+let lang=DB.lang||(/^pt/i.test(navigator.language)?"pt":"en"),K,st,mode="p",sel=0,rev=0,snd=true,ac,ed=false,et={t:"room",v:0};
+const T=(k,...a)=>{const v=I[lang][k];return typeof v==="function"?v(...a):v};
+const P_=()=>lang==="pt";
+const nmS=()=>st.nm||K.sus,vn=()=>st.vn||K.vic,all=()=>[...nmS(),...(st.ex||[])];
+const rname=k=>(st.rc&&st.rc[k])||(k<5?TH[K.ti][P_()?2:3].split(",")[k]:"#"+(k+1));
+const oname=o=>OB[o][P_()?1:2];
+const LY=()=>{const e=st.ed;return e?{rooms:e.rooms,fa:e.fa,vic:e.vic,nr:e.nr}:{rooms:K.rooms,fa:K.furnAt,vic:K.victim,nr:5}};
+const solveCur=()=>{const L=LY(),C={rooms:L.rooms,furnAt:L.fa,victim:L.vic};return count(C,K.cl.map(d=>mk(d,C)),2)};
+const ensureEd=()=>st.ed||(st.ed={rooms:[...K.rooms],fa:[...K.furnAt],vic:K.victim,nr:5});
+const drop=i=>{delete st.g[i];st.x=st.x.filter(v=>v!==i)};
 const nz=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase();
-const pos=c=>`linha ${(c/6|0)+1}, coluna ${"ABCDEF"[c%6]}`;
-
-function boardHTML(g,x){
- const rc=Array(6).fill(0),cc=Array(6).fill(0);Object.keys(g).forEach(k=>{rc[k/6|0]++;cc[k%6]++});
+const pos=c=>`${P_()?"linha":"row"} ${(c/6|0)+1}, ${P_()?"coluna":"column"} ${"ABCDEF"[c%6]}`;
+function beep(f,d,v){if(!snd)return;try{ac=ac||new AudioContext();const o=ac.createOscillator(),g=ac.createGain();o.type="square";o.frequency.value=f;g.gain.value=v||.03;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.stop(ac.currentTime+d)}catch(e){}}
+function txt(d){const N=nmS(),a=N[d.s],b=N[d.u],p=P_(),o=d.o!==undefined?`${OB[d.o][0]} ${oname(d.o)}`:"";
+ switch(d.k){
+ case"room":return p?`${a} estava na divisão «${rname(d.r)}».`:`${a} was in the «${rname(d.r)}».`;
+ case"nroom":return p?`${a} não estava na divisão «${rname(d.r)}».`:`${a} was not in the «${rname(d.r)}».`;
+ case"adj":return p?`${a} ${d.h?"estava mesmo ao lado de":"não estava ao lado de"}: ${o}.`:`${a} ${d.h?"was right next to":"was not next to"}: ${o}.`;
+ case"same":return p?`${a} e ${b} ${d.h?"estavam":"não estavam"} na mesma divisão.`:`${a} and ${b} ${d.h?"were":"were not"} in the same room.`;
+ case"side":return p?`${a} e ${b} estavam lado a lado (na horizontal ou na vertical).`:`${a} and ${b} were side by side (horizontally or vertically).`;
+ case"above":return p?`${a} estava numa linha acima de ${b}.`:`${a} was in a row above ${b}.`;
+ case"left":return p?`${a} estava numa coluna à esquerda de ${b}.`:`${a} was in a column to the left of ${b}.`}}
+const TINT=["#2e1e1e","#1d2c24","#1f2433","#302a18","#2c2030","#1e2e2e","#33241a","#242a1a","#2a1d28"];
+function boardHTML(g,x,L,gr){
+ const A=all(),rc=Array(6).fill(0),cc=Array(6).fill(0),rs=new Set(),cl=new Set();
+ Object.keys(g).forEach(k=>{if(g[k]<6){rc[k/6|0]++;cc[k%6]++;if(gr){rs.add(k/6|0);cl.add(k%6)}}});
  let h='<i class="l h"></i>'+[..."ABCDEF"].map(c=>`<i class="l h">${c}</i>`).join("");
- const tint=["#2e1e1e","#1d2c24","#1f2433","#302a18","#2c2030"];
  for(let r=0;r<6;r++){h+=`<i class="l">${r+1}</i>`;
-  for(let c=0;c<6;c++){const i=r*6+c,rm=K.rooms[i];
-   const B=(j,s)=>(j<0||K.rooms[j]!==rm)?`border-${s}:3px solid #c9a24b`:`border-${s}:1px dashed #4a3d25`;
+  for(let c=0;c<6;c++){const i=r*6+c,rm=L.rooms[i];
+   const B=(j,s)=>(j<0||L.rooms[j]!==rm)?`border-${s}:3px solid #c9a24b`:`border-${s}:1px dashed #4a3d25`;
    let t="",tl="";
-   if(K.furnAt[i]>=0){t=K.fu[K.furnAt[i]][0];tl=K.fu[K.furnAt[i]][1]}
-   else if(i===K.victim){t='<span class="vc">💀</span>';tl="Vítima: "+K.vic}
-   else if(g[i]!==undefined)t=`<span class="sn">${K.sus[g[i]]}</span>`;
+   if(L.fa[i]>=0){t=OB[L.fa[i]][0];tl=oname(L.fa[i])}
+   else if(i===L.vic){t='<span class="vc">💀</span>'}
+   else if(g[i]!==undefined)t=`<span class="sn${g[i]>=6?" ex":""}">${A[g[i]]}</span>`;
    else if(x.includes(i))t='<span style="color:#7a6a45">✕</span>';
-   const bad=g[i]!==undefined&&(rc[r]>1||cc[c]>1);
-   h+=`<div class="c${bad?" bad":""}" data-i="${i}" title="${tl}" style="background:${tint[rm]};${B(r?i-6:-1,"top")};${B(r<5?i+6:-1,"bottom")};${B(c?i-1:-1,"left")};${B(c<5?i+1:-1,"right")}">${K.rooms.indexOf(rm)===i?`<span class="rl">${K.rn[rm]}</span>`:""}${K.win.includes(i)?'<b class="wn">🪟</b>':""}${t}</div>`}}
+   const sp=g[i]!==undefined,bad=sp&&g[i]<6&&(rc[r]>1||cc[c]>1),gy=!sp&&(rs.has(r)||cl.has(c));
+   h+=`<div class="c${bad?" bad":""}${gy?" gy":""}" data-i="${i}" title="${tl}" style="background:${TINT[rm]};${B(r?i-6:-1,"top")};${B(r<5?i+6:-1,"bottom")};${B(c?i-1:-1,"left")};${B(c<5?i+1:-1,"right")}">${L.rooms.indexOf(rm)===i?`<span class="rl">${rname(rm)}</span>`:""}${K.win.includes(i)?'<b class="wn">🪟</b>':""}${t}</div>`}}
  return h}
-
-function draw(){
- $("#cn").textContent=`${K.n} / 80`;$("#tt").textContent=K.title;
- const room=K.rn[K.rooms[K.victim]];
- $("#st").textContent=`O corpo de ${K.vic} foi ${gd(K.vic,"encontrado","encontrada")} na divisão «${room}». Seis suspeitos estavam no local. Descobre quem estava ${"sozinho(a)"} com a vítima.`;
- $("#bd").innerHTML=boardHTML(st.g,st.x);
- const placed=new Set(Object.values(st.g));
- $("#pal").innerHTML=K.sus.map((n,s)=>`<button class="b${s===sel&&mode==="p"?" on":""}" data-s="${s}">${placed.has(s)?"✓ ":""}${n}</button>`).join("");
- document.querySelectorAll("[data-m]").forEach(b=>b.classList.toggle("on",b.dataset.m===mode));
- $("#cl").innerHTML=K.cl.map(t=>`<li>${t}</li>`).join("");
- $("#dl").innerHTML=K.sus.map(n=>`<option value="${n}">`).join("");
- $("#hs").innerHTML=st.a.length?st.a.map((a,i)=>`<li>${new Date(a.t).toLocaleString("pt-PT")} — ${a.n} <b class="${a.ok?"ok":"no"}">${a.ok?"✓ certo":"✗ errado"}</b> <button class="b" data-r="${i}" style="padding:2px 8px">ver grelha</button></li>`).reverse().join(""):"<small>Ainda sem acusações neste caso.</small>";
- solHTML()}
-
+function edHTML(){
+ const el=$("#edt");el.style.display=ed?"":"none";if(!ed)return;const L=LY(),B=(a,t,x)=>`<button class="b${a?" on":""}" ${x}>${t}</button>`;
+ el.innerHTML=`<h2>${T("rooms")}</h2><div class="tools">`+Array.from({length:L.nr},(_,k)=>B(et.t==="room"&&et.v===k,rname(k),`data-et="room:${k}"`)).join("")+B(0,T("addroom"),'id="ar"')+B(0,T("renroom"),'id="rr"')+
+ `</div><h2>${T("objs")}</h2><div class="tools">`+OB.map((o,i)=>B(et.t==="obj"&&et.v===i,o[0],`data-et="obj:${i}" title="${oname(i)}" style="padding:4px 7px"`)).join("")+
+ `</div><div class="tools">`+B(et.t==="del",T("del"),'data-et="del:0"')+B(et.t==="vic",T("vic"),'data-et="vic:0"')+B(0,T("addp"),'id="ap2"')+B(0,T("renv"),'id="rv2"')+B(0,T("reset"),'id="rs"')+`</div><div id="chk">${T("chk")[solveCur().n]}</div>`}
 function solHTML(){
- if(!rev){$("#sv").innerHTML='<button class="b" id="rv">Revelar solução (spoiler)</button>';return}
- const g=Object.fromEntries(K.S.map((c,s)=>[c,s]));
- $("#sv").innerHTML=`<div class="bd">${boardHTML(g,[])}</div><ul>${K.sus.map((n,s)=>`<li><b>${n}</b> — ${pos(K.S[s])}, «${K.rn[K.rooms[K.S[s]]]}»</li>`).join("")}</ul>
- <p>Raciocínio: cada pista elimina casas possíveis. Como há um só suspeito por linha e por coluna, ao fixares alguns suspeitos os restantes ficam forçados. No fim, ${K.vic} jazia na divisão «${K.rn[K.rooms[K.victim]]}» e o único suspeito lá dentro era <b>${K.sus[K.murd]}</b>.</p>
- <button class="b" id="ap">Aplicar à minha grelha</button>`}
-
+ if(!rev){$("#sv").innerHTML=`<button class="b" id="rv">${T("reveal")}</button>`;return}
+ const L=LY(),s=solveCur();if(!s.n){$("#sv").innerHTML=`<p>${T("chk")[0]}</p>`;return}
+ const g=Object.fromEntries(s.first.map((c,i)=>[c,i])),m=s.first.findIndex(c=>L.rooms[c]===L.rooms[L.vic]),N=nmS();
+ $("#sv").innerHTML=`<div class="bd">${boardHTML(g,[],L,false)}</div><ul>${N.map((n,i)=>`<li><b>${n}</b> — ${pos(s.first[i])}, «${rname(L.rooms[s.first[i]])}»</li>`).join("")}</ul><p>${T("expl",vn(),rname(L.rooms[L.vic]),N[m])}</p>${s.n>1?`<p class="no">${T("many")}</p>`:""}<button class="b" id="ap">${T("apply")}</button>`}
+function draw(){
+ document.documentElement.lang=lang;
+ document.querySelectorAll("[data-i]").forEach(e=>e.textContent=T(e.dataset.i));
+ $("#sd").textContent=(snd?"🔊 ":"🔇 ")+T("sound");$("#lg").textContent="🌐 "+(P_()?"English":"Português");$("#eb").textContent=ed?T("done"):T("edit");
+ $("#an").placeholder=T("ph");$("#tools").style.display=ed?"none":"";
+ $("#cn").textContent=`${K.n} / 80`;$("#tt").textContent=`${T("case")} ${K.n} — ${TH[K.ti][P_()?0:1]}`;
+ const L=LY();
+ $("#st").textContent=T("story",vn(),rname(L.rooms[L.vic]),FEM.has(vn()));
+ $("#bd").innerHTML=boardHTML(st.g,st.x,L,true);
+ const pl=new Set(Object.values(st.g));
+ $("#pal").innerHTML=all().map((n,s)=>`<button class="b${s===sel&&mode==="p"&&!ed?" on":""}${s>=6?" xs":""}" data-s="${s}">${ed?"✎ ":pl.has(s)?"✓ ":""}${n}</button>`).join("");
+ document.querySelectorAll("[data-m]").forEach(b=>b.classList.toggle("on",b.dataset.m===mode));
+ $("#cl").innerHTML=K.cl.map(d=>`<li>${txt(d)}</li>`).join("");
+ $("#dl").innerHTML=nmS().map(n=>`<option value="${n}">`).join("");
+ $("#hs").innerHTML=st.a.length?st.a.map((a,i)=>`<li>${new Date(a.t).toLocaleString(P_()?"pt-PT":"en-GB")} — ${a.n} <b class="${a.ok?"ok":"no"}">${T(a.ok?"ok":"ko")}</b> <button class="b" data-r="${i}" style="padding:2px 8px">${T("view")}</button></li>`).reverse().join(""):`<small>${T("nolog")}</small>`;
+ edHTML();solHTML()}
 function load(n){DB.cur=n;K=build(n);st=cs(n);rev=0;sel=0;$("#msg").textContent="";save();draw()}
 function tw(t,ok){const el=$("#tx");el.textContent="";let i=0;clearInterval(tw.i);tw.i=setInterval(()=>{el.textContent+=t[i++]||"";if(i%2)beep(700+Math.random()*300,.03,.015);if(i>=t.length){clearInterval(tw.i);if(ok)[523,659,784].forEach((f,k)=>setTimeout(()=>beep(f,.4,.05),k*160))}},26)}
-function modal(ok,n){$("#md").classList.add("s");$("#mn").style.display=ok&&K.n<80?"":"none";
- tw(ok?`CASO RESOLVIDO\n\n${n} estava ${gd(n,"sozinho","sozinha")} com ${K.vic} na divisão «${K.rn[K.rooms[K.victim]]}». Não resistiu ao interrogatório: ${K.motive}.`:`ACUSAÇÃO FALHADA\n\n${n} apresenta um álibi irrefutável. O verdadeiro culpado continua à solta… Revê a grelha, detetive.`,ok)}
-
-$("#bd").onclick=e=>{const c=e.target.closest(".c");if(!c)return;const i=+c.dataset.i;if(K.furnAt[i]>=0||i===K.victim)return;
+function modal(ok,n,L,m){$("#md").classList.add("s");$("#mn").style.display=ok&&K.n<80?"":"none";
+ tw(ok?T("win",n,vn(),rname(L.rooms[L.vic]),MO[lang][(K.n*5+K.ti)%8],FEM.has(n)):T("lose",n),ok)}
+$("#bd").onclick=e=>{const c=e.target.closest(".c");if(!c)return;const i=+c.dataset.i;
+ if(ed){const E=ensureEd();
+  if(et.t==="room")E.rooms[i]=et.v;
+  else if(et.t==="obj"){if(i===E.vic)return;E.fa[i]=E.fa[i]===et.v?-1:et.v;if(E.fa[i]>=0)drop(i)}
+  else if(et.t==="del")E.fa[i]=-1;
+  else if(et.t==="vic"){if(E.fa[i]>=0)return;E.vic=i;drop(i)}
+  beep(300,.05);save();draw();return}
+ const L=LY();if(L.fa[i]>=0||i===L.vic)return;
  if(mode==="p"){if(st.g[i]===sel)delete st.g[i];else{for(const k in st.g)if(st.g[k]===sel)delete st.g[k];st.g[i]=sel;st.x=st.x.filter(v=>v!==i);
-   const pl=new Set(Object.values(st.g));const nx=K.sus.findIndex((_,s)=>!pl.has(s));if(nx>=0)sel=nx}}
+   const pl=new Set(Object.values(st.g)),nx=all().findIndex((_,s)=>!pl.has(s));if(nx>=0)sel=nx}}
  else if(mode==="x"){if(st.g[i]!==undefined)return;st.x=st.x.includes(i)?st.x.filter(v=>v!==i):[...st.x,i]}
- else{delete st.g[i];st.x=st.x.filter(v=>v!==i)}
+ else drop(i);
  beep(300,.05);save();draw()};
-$("#pal").onclick=e=>{const b=e.target.closest("[data-s]");if(b){sel=+b.dataset.s;mode="p";draw()}};
+$("#pal").onclick=e=>{const b=e.target.closest("[data-s]");if(!b)return;const s=+b.dataset.s;
+ if(!ed){sel=s;mode="p";draw();return}
+ const v=prompt(T("askren"),all()[s]);if(v===null)return;const n=v.trim();
+ if(s<6){if(n){st.nm=[...nmS()];st.nm[s]=n}}
+ else if(n)st.ex[s-6]=n;
+ else{st.ex.splice(s-6,1);const g={};for(const k in st.g){const w=st.g[k];if(w!==s)g[k]=w>s?w-1:w}st.g=g;sel=0}
+ save();draw()};
+$("#edt").onclick=e=>{const b=e.target.closest("button");if(!b)return;
+ if(b.dataset.et){const[t,v]=b.dataset.et.split(":");et={t,v:+v}}
+ else if(b.id==="ar"){const E=ensureEd();if(E.nr>=9)return;const n=prompt(T("askroom"));if(!n||!n.trim())return;st.rc=st.rc||{};st.rc[E.nr]=n.trim();et={t:"room",v:E.nr};E.nr++}
+ else if(b.id==="rr"){if(et.t!=="room")return;const n=prompt(T("askroom"),rname(et.v));if(!n||!n.trim())return;st.rc=st.rc||{};st.rc[et.v]=n.trim()}
+ else if(b.id==="ap2"){const n=prompt(T("askname"));if(!n||!n.trim())return;(st.ex=st.ex||[]).push(n.trim())}
+ else if(b.id==="rv2"){const n=prompt(T("askname"),vn());if(!n||!n.trim())return;st.vn=n.trim()}
+ else if(b.id==="rs"){if(!confirm(T("creset")))return;st.ed=null;st.rc=null;st.nm=null;st.ex=[];st.vn=null;st.g={};st.x=[];sel=0}
+ save();draw()};
 document.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw()});
-$("#clr").onclick=()=>{if(confirm("Limpar a grelha deste caso?")){st.g={};st.x=[];save();draw()}};
-$("#ac").onsubmit=e=>{e.preventDefault();const s=K.sus.findIndex(n=>nz(n)===nz($("#an").value));
- if(s<0){$("#msg").textContent="Esse nome não consta do dossiê.";return}
- $("#msg").textContent="";const ok=s===K.murd;st.a.push({n:K.sus[s],ok,t:Date.now(),g:{...st.g},x:[...st.x]});if(ok)st.ok=1;save();$("#an").value="";draw();modal(ok,K.sus[s])};
-$("#hs").onclick=e=>{const b=e.target.closest("[data-r]");if(!b)return;const a=st.a[+b.dataset.r];st.g={...a.g};st.x=[...a.x];save();draw()};
-$("#sv").onclick=e=>{if(e.target.id==="rv"&&confirm("Isto revela a solução. Continuar?")){rev=1;draw()}
- if(e.target.id==="ap"){st.g=Object.fromEntries(K.S.map((c,s)=>[c,s]));save();draw()}};
+$("#clr").onclick=()=>{if(confirm(T("cclear"))){st.g={};st.x=[];save();draw()}};
+$("#ac").onsubmit=e=>{e.preventDefault();const A=all(),s=A.findIndex(n=>nz(n)===nz($("#an").value));
+ if(s<0){$("#msg").textContent=T("unk");return}
+ const sol=solveCur();if(sol.n!==1){$("#msg").textContent=T("noval");return}
+ $("#msg").textContent="";const L=LY(),m=sol.first.findIndex(c=>L.rooms[c]===L.rooms[L.vic]),ok=s===m;
+ st.a.push({n:A[s],ok,t:Date.now(),g:{...st.g},x:[...st.x],ed:st.ed?JSON.parse(JSON.stringify(st.ed)):null,nm:st.nm,ex:st.ex,vn:st.vn,rc:st.rc});
+ if(ok)st.ok=1;save();$("#an").value="";draw();modal(ok,A[s],L)};
+$("#hs").onclick=e=>{const b=e.target.closest("[data-r]");if(!b)return;const a=st.a[+b.dataset.r];
+ st.g={...a.g};st.x=[...a.x];st.ed=a.ed?JSON.parse(JSON.stringify(a.ed)):null;st.nm=a.nm;st.ex=a.ex;st.vn=a.vn;st.rc=a.rc;save();draw()};
+$("#sv").onclick=e=>{if(e.target.id==="rv"&&confirm(T("crev"))){rev=1;draw()}
+ if(e.target.id==="ap"){const s=solveCur();if(s.n){st.g=Object.fromEntries(s.first.map((c,i)=>[c,i]));save();draw()}}};
 $("#mc").onclick=()=>{$("#md").classList.remove("s");clearInterval(tw.i)};
 $("#mn").onclick=()=>{$("#md").classList.remove("s");load(K.n+1)};
 $("#pv").onclick=()=>K.n>1&&load(K.n-1);
 $("#nx").onclick=()=>K.n<80&&load(K.n+1);
-$("#sd").onclick=()=>{snd=!snd;$("#sd").textContent=(snd?"🔊":"🔇")+" Som"};
+$("#sd").onclick=()=>{snd=!snd;draw()};
+$("#lg").onclick=()=>{lang=P_()?"en":"pt";DB.lang=lang;save();draw()};
+$("#eb").onclick=()=>{ed=!ed;draw()};
 $("#ixb").onclick=()=>{$("#ix").innerHTML=Array.from({length:80},(_,i)=>{const c=DB.c[i+1];return`<button class="b ${c&&c.ok?"g":c&&c.a.length?"x":""}" data-n="${i+1}">${i+1}</button>`}).join("");$("#ixm").classList.add("s")};
 $("#ix").onclick=e=>{const b=e.target.closest("[data-n]");if(b){$("#ixm").classList.remove("s");load(+b.dataset.n)}};
 $("#ixc").onclick=()=>$("#ixm").classList.remove("s");
 document.onkeydown=e=>{if(e.target.tagName==="INPUT")return;if(e.key==="ArrowLeft")$("#pv").click();if(e.key==="ArrowRight")$("#nx").click()};
 load(DB.cur||1);
-</script>
-</body>
-</html>
+</script></body></html>
